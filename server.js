@@ -18,6 +18,10 @@ app
       app.render(req, res, actualPage, queryParams);
     });
 
+    server.get("/api/test1", (req, res) => {
+      res.status(200).send([{ id: 5 }]);
+    });
+
     server.get("*", (req, res) => {
       return handle(req, res);
     });

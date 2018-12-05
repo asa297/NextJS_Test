@@ -3,6 +3,9 @@ import React from "react";
 import Layout from "../components/MyLayout.js";
 import Link from "next/link";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { fetchUser } from "../stores/actions";
+import { Button } from "antd";
 
 const PostLink = props => (
   <li>
@@ -17,21 +20,22 @@ class test extends React.PureComponent {
     return { TESTENV: process.env.TESTENV };
   }
 
+  componentWillMount() {
+    this.props.fetchUser();
+  }
+
   render() {
     return (
       <Layout>
-        <h1>My Blog {this.props.TESTENV}</h1>
-        <ul>
-          <PostLink id="hello-nextjs" title="Hello Next.js" />
-          <PostLink id="learn-nextjs" title="Learn Next.js is awesome" />
-          <PostLink id="deploy-nextjs" title="Deploy apps with Zeit" />
-        </ul>
-        <Testna>aaaa</Testna>
+        <Button type="primary">Primary</Button>
       </Layout>
     );
   }
 }
-export default test;
+export default connect(
+  null,
+  { fetchUser }
+)(test);
 
 const Testna = styled.div`
   color: red;
