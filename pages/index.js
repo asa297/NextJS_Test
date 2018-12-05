@@ -1,4 +1,5 @@
 import React from "react";
+
 import Layout from "../components/MyLayout.js";
 import Link from "next/link";
 import styled from "styled-components";
@@ -13,7 +14,6 @@ const PostLink = props => (
 
 class test extends React.PureComponent {
   static async getInitialProps() {
-    console.log(process.env.TESTENV);
     return { TESTENV: process.env.TESTENV };
   }
 
