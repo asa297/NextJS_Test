@@ -16,7 +16,6 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <link rel="stylesheet" href="../static/css/antd.min.css" />
-          <title>My page</title>
           {this.props.styleTags}
         </Head>
         <body>

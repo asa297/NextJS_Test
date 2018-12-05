@@ -1,6 +1,6 @@
 import React from "react";
 
-import Layout from "../components/MyLayout.js";
+import Layout from "components/MyLayout.js";
 import Link from "next/link";
 import styled from "styled-components";
 import { connect } from "react-redux";
@@ -27,7 +27,7 @@ class test extends React.PureComponent {
   render() {
     return (
       <Layout>
-        <Button type="primary">Primary</Button>
+        <Button type="primary">Primary {this.props.TESTENV}</Button>
       </Layout>
     );
   }
