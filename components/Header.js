@@ -1,18 +1,71 @@
-import Link from "next/link";
+import { Menu, Icon } from "antd";
+import styled from "styled-components";
 
-const linkStyle = {
-  marginRight: 15
-};
+import Router from "next/router";
 
-const Header = () => (
-  <div>
-    <Link href="/">
-      <a style={linkStyle}>Home</a>
-    </Link>
-    <Link href="/about">
-      <a style={linkStyle}>About</a>
-    </Link>
-  </div>
-);
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+class Header extends React.Component {
+  state = {
+    current: "mail"
+  };
+
+  handleClick = e => {
+    console.log("click ", e);
+    this.setState({
+      current: e.key
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <MenuFixed
+          onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          mode="horizontal"
+        >
+          <Menu.Item key="mail">
+            <Icon type="mail" />
+            Navigation One
+          </Menu.Item>
+          <Menu.Item key="app" disabled>
+            <Icon type="appstore" />
+            Navigation Two
+          </Menu.Item>
+          <SubMenu
+            title={
+              <span className="submenu-title-wrapper">
+                <Icon type="setting" />
+                Navigation Three - Submenu
+              </span>
+            }
+          >
+            <MenuItemGroup title="Item 1">
+              <Menu.Item key="setting:1">Option 1</Menu.Item>
+              <Menu.Item key="setting:2">Option 2</Menu.Item>
+            </MenuItemGroup>
+            <MenuItemGroup title="Item 2">
+              <Menu.Item key="setting:3">Option 3</Menu.Item>
+              <Menu.Item key="setting:4">Option 4</Menu.Item>
+            </MenuItemGroup>
+          </SubMenu>
+          <Menu.Item key="alipay">
+            <a href="/about">Navigation Four - Link</a>
+          </Menu.Item>
+        </MenuFixed>
+      </>
+    );
+  }
+}
 
 export default Header;
+
+const MenuFixed = styled(Menu)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+`;
