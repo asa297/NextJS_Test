@@ -1,45 +1,30 @@
 import React from "react";
 
-import Layout from "components/MyLayout.js";
-import Link from "next/link";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { fetchUser } from "../stores/actions";
-import { Button, notification } from "antd";
+import { FetchUser } from "../stores/actions";
+import Header from "../components/Header";
+import Sider from "../components/Sider";
 
-// const PostLink = props => (
-//   <li>
-//     <Link as={`/p/${props.id}`} href={`/post?title=${props.title}`}>
-//       {props.title}
-//     </Link>
-//   </li>
-// );
-
-class test extends React.PureComponent {
-  static async getInitialProps() {
-    return { TESTENV: process.env.TESTENV };
-  }
-
+class Main extends React.PureComponent {
   componentWillMount() {
-    this.props.fetchUser();
+    this.props.FetchUser();
   }
-
   render() {
     return (
-      <Layout>
-        <Testna>test</Testna>
-      </Layout>
+      <Container>
+        <Header />
+        {/* <Sider /> */}
+      </Container>
     );
   }
 }
 
 export default connect(
   ({ auth }) => ({ auth }),
-  { fetchUser }
-)(test);
+  { FetchUser }
+)(Main);
 
-const Testna = styled.div`
-  margin-top: 50px;
-  height: 1500px;
-  color: red;
+const Container = styled.div`
+  width: 100%;
 `;

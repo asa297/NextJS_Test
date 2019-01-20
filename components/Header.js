@@ -1,60 +1,66 @@
-import { Menu, Icon } from "antd";
+import React, { Component } from "react";
+
 import styled from "styled-components";
+import { Icon, Modal, Button } from "antd";
+import LoginModal from "./Modal/Login";
 
-import Router from "next/router";
-
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-
-class Header extends React.Component {
+class Header extends Component {
   state = {
-    current: "mail"
+    loading: false,
+    visible: false,
+    namePage: "Login"
   };
 
-  handleClick = e => {
-    console.log("click ", e);
+  showModal = () => {
     this.setState({
-      current: e.key
+      visible: true
     });
   };
 
+  handleOk = () => {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      this.setState({ loading: false, visible: false });
+    }, 3000);
+  };
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
+
   render() {
+    const { visible } = this.state;
+
     return (
       <>
-        <MenuFixed
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
-          mode="horizontal"
+        <HeaderContainer>
+          <Icon type="bars" />
+
+          <RightHeaderContainer>
+            <LoginContainer>
+              <Icon type="login" />
+              <div
+                style={{ paddingLeft: "5px" }}
+                onClick={() => this.showModal()}
+              >
+                Login
+              </div>
+            </LoginContainer>
+          </RightHeaderContainer>
+        </HeaderContainer>
+        <Modal
+          visible={visible}
+          title={this.state.namePage}
+          centered={false}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={null}
         >
-          <Menu.Item key="mail">
-            <Icon type="mail" />
-            Navigation One
-          </Menu.Item>
-          <Menu.Item key="app" disabled>
-            <Icon type="appstore" />
-            Navigation Two
-          </Menu.Item>
-          <SubMenu
-            title={
-              <span className="submenu-title-wrapper">
-                <Icon type="setting" />
-                Navigation Three - Submenu
-              </span>
-            }
-          >
-            <MenuItemGroup title="Item 1">
-              <Menu.Item key="setting:1">Option 1</Menu.Item>
-              <Menu.Item key="setting:2">Option 2</Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup title="Item 2">
-              <Menu.Item key="setting:3">Option 3</Menu.Item>
-              <Menu.Item key="setting:4">Option 4</Menu.Item>
-            </MenuItemGroup>
-          </SubMenu>
-          <Menu.Item key="alipay">
-            <a href="/about">Navigation Four - Link</a>
-          </Menu.Item>
-        </MenuFixed>
+          <LoginModal
+            visible={visible}
+            changeComponent={namePage => this.setState({ namePage })}
+          />
+        </Modal>
       </>
     );
   }
@@ -62,10 +68,33 @@ class Header extends React.Component {
 
 export default Header;
 
-const MenuFixed = styled(Menu)`
+const HeaderContainer = styled.div`
+  height: auto;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  background: #91d5ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  z-index: 3;
+`;
+
+const RightHeaderContainer = styled.div`
+  display: none;
+  @media (min-width: 1600px) {
+    display: flex;
+  }
+`;
+
+const LoginContainer = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
