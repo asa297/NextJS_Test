@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { Input, Icon } from "antd";
 import { Formik, Form, Field, withFormik } from "formik";
+
 import * as Yup from "yup";
 import Link from "next/link";
 
@@ -24,57 +25,53 @@ const LoginField = ({ icon, field, form: { touched, errors }, ...props }) => {
   );
 };
 
-const RegisterText = ({ signup, resetForm }) => {
-  return (
-    <div>
-      <a
-        onClick={() => {
-          signup();
-          resetForm();
-        }}
-      >
-        Register Now
-      </a>
-    </div>
-  );
-};
+// const RegisterText = ({ signup, resetForm }) => {
+//   return (
+//     <div>
+//       <a
+//         onClick={() => {
+//           signup();
+//           resetForm();
+//         }}
+//       >
+//         Register Now
+//       </a>
+//     </div>
+//   );
+// };
 
-const LoginComponent = ({ signup, isSubmitting, resetForm }) => {
-  return (
-    <Form>
-      <Field
-        type="text"
-        icon="user"
-        name="email"
-        component={LoginField}
-        placeholder="user"
-      />
-      <Field
-        type="password"
-        icon="lock"
-        name="password"
-        component={LoginField}
-        placeholder="password"
-      />
-      <RegisterText signup={signup} resetForm={resetForm} />
+// const LoginComponent = ({ signup, isSubmitting, resetForm }) => {
+//   return (
+//     <Form>
+//       <Field
+//         type="text"
+//         icon="user"
+//         name="email"
+//         component={LoginField}
+//         placeholder="user"
+//       />
+//       <Field
+//         type="password"
+//         icon="lock"
+//         name="password"
+//         component={LoginField}
+//         placeholder="password"
+//       />
+//       <RegisterText signup={signup} resetForm={resetForm} />
 
-      <button type="submit" disabled={isSubmitting}>
-        Submit
-      </button>
-    </Form>
-  );
-};
+//       <button type="submit" disabled={isSubmitting}>
+//         Submit
+//       </button>
+//     </Form>
+//   );
+// };
 
-const LoginEnhancedForm = withFormik({
-  handleSubmit: async (values, { props, setSubmitting }) => {
-    props.Login(values);
-  }
-})(LoginComponent);
-
-const LoginConnect = connect(
-  null,
-  { Login }
-)(LoginEnhancedForm);
+// const LoginEnhancedForm = withFormik({
+//   handleSubmit: async (values, { props, setSubmitting }) => {
+//     console.log(props);
+//     await props.Login(values);
+//   }
+// })(LoginComponent);
 
 const SignUp = ({ login }) => {
   return (
@@ -121,29 +118,52 @@ class LoginContainer extends React.PureComponent {
   };
 
   render() {
+    // console.log(this.props);
     return (
       <>
-        {this.state.login_page ? (
-          <LoginConnect
-            signup={() => {
-              this.setState({ signup_page: true, login_page: false });
-              this.props.changeComponent("Sign Up");
-            }}
-          />
-        ) : (
-          <SignUp
-            login={() => {
-              this.setState({ signup_page: false, login_page: true });
-              this.props.changeComponent("Login");
-            }}
-          />
-        )}
+        <Formik
+          initialValues={{
+            email: "",
+            password: ""
+          }}
+          onSubmit={async (values, { setSubmitting }) => {
+            this.props.Login(values);
+
+            // console.log(values);
+          }}
+        >
+          {({ isSubmitting, values }) => (
+            <Form>
+              <Field
+                type="text"
+                icon="user"
+                name="email"
+                component={LoginField}
+                values={values.email}
+              />
+              <Field
+                type="password"
+                icon="lock"
+                name="password"
+                component={LoginField}
+                values={values.password}
+              />
+
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
       </>
     );
   }
 }
 
-export default LoginContainer;
+export default connect(
+  ({ auth }) => ({ auth }),
+  { Login }
+)(LoginContainer);
 
 const InputForm = styled(Input)`
   width: 100%;

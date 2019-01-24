@@ -8,6 +8,8 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const isAuthenticated = require("./middleware/Authenticated");
+
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://admin:admin1234@ds031845.mlab.com:31845/test-gn");
 
@@ -18,6 +20,7 @@ server.use(bodyParser.json());
 //require
 require("./modal/UserModal");
 require("dotenv").config();
+require("./services/passport");
 
 app
   .prepare()
@@ -28,7 +31,11 @@ app
     //   app.render(req, res, actualPage, queryParams);
     // });
 
-    require("./routes/Auth")(server);
+    require("./routes/Authorization")(server);
+
+    server.get("/api/testkub", isAuthenticated, (req, res) => {
+      res.send();
+    });
 
     server.get("*", (req, res) => {
       return handle(req, res);
