@@ -2,9 +2,9 @@ import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
-    const page = renderPage(App => props =>
+    const page = ctx.renderPage(App => props =>
       sheet.collectStyles(<App {...props} />)
     );
     const styleTags = sheet.getStyleElement();
@@ -15,10 +15,6 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          {/* <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.11.2/antd.css"
-          /> */}
           <link rel="stylesheet" href="../static/css/antd.css" />
           <link rel="stylesheet" href="../static/css/index.css" />
           {this.props.styleTags}

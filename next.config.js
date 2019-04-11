@@ -8,9 +8,16 @@ module.exports = withCSS({
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     // Perform customizations to webpack config
     // Important: return the modified config
+
     config.resolve.alias = {
-      components: path.resolve(__dirname, "components")
+      "<components>": path.resolve(__dirname, "./components"),
+      "<actions>": path.resolve(__dirname, "./stores/actions"),
+      "<reducers>": path.resolve(__dirname, "./stores/reducers"),
+      "<utils>": path.resolve(__dirname, "./utils"),
+      "<routes>": path.resolve(__dirname, "./routes"),
+      "<action_types>": path.resolve(__dirname, "./stores/type")
     };
+
     new Dotenv({
       path: path.join(__dirname, ".env"),
       safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
