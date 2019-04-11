@@ -6,4 +6,8 @@ class Main extends React.PureComponent {
   }
 }
 
+Main.getInitialProps = async ctx => {
+  return {};
+};
+
 export default Main;
