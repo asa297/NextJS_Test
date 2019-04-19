@@ -1,13 +1,20 @@
-import React from "react";
+import React from 'react'
+import { Button } from '@material-ui/core'
 
 class Main extends React.PureComponent {
   render() {
-    return <div />;
+    return (
+      <div>
+        <Button variant="outlined" color="secondary">
+          Default
+        </Button>
+      </div>
+    )
   }
 }
 
 Main.getInitialProps = async ctx => {
-  return {};
-};
+  return {}
+}
 
-export default Main;
+export default Main

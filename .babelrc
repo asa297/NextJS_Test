@@ -1,16 +1,24 @@
 {
   "presets": ["next/babel"],
   "plugins": [
+    ["styled-components", { "ssr": true, "displayName": true, "preprocess": false }],
     [
-      "styled-components",
-      { "ssr": true, "displayName": true, "preprocess": false }
+      "babel-plugin-import",
+      {
+        "libraryName": "@material-ui/core",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-core"
     ],
     [
-      "import",
+      "babel-plugin-import",
       {
-        "libraryName": "antd",
-        "style": false
-      }
+        "libraryName": "@material-ui/core/styles",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-styles"
     ]
   ]
 }
