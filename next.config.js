@@ -4,6 +4,11 @@ const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
 
 module.exports = withSass({
+  cssModules: true,
+  cssLoaderOptions: {
+    importLoaders: 1,
+    localIdentName: '[local]___[hash:base64:5]',
+  },
   /* config options here */
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     // Perform customizations to webpack config
@@ -16,6 +21,7 @@ module.exports = withSass({
       '<utils>': path.resolve(__dirname, './utils'),
       '<routes>': path.resolve(__dirname, './routes'),
       '<action_types>': path.resolve(__dirname, './stores/type'),
+      '<styles>': path.resolve(__dirname, './styles'),
     }
 
     new Dotenv({
