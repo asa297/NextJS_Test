@@ -1,4 +1,10 @@
 $font-size: 50px;
+$menu-hover: #bbdefb;
+
 .example {
   font-size: $font-size;
+}
+
+:export {
+  menu_hover: $menu-hover;
 }

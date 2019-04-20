@@ -1,0 +1,9 @@
+{
+  "Routing": [
+    {
+      "name": "Home",
+      "path": "/",
+      "role": [1]
+    }
+  ]
+}
