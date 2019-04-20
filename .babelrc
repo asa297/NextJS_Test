@@ -19,6 +19,24 @@
         "camel2DashComponentName": false
       },
       "tree-shaking-mui-styles"
+    ],
+    [
+      "babel-plugin-import",
+      {
+         "libraryName": "@material-ui/core/colors",
+         "libraryDirectory": "",
+         "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-colors"
+    ],
+    [
+      "babel-plugin-import",
+      {
+         "libraryName": "@material-ui/icons",
+         "libraryDirectory": "",
+         "camel2DashComponentName": false
+      },
+      "tree-shaking-mui-icons"
     ]
   ]
 }
