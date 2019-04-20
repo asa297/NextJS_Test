@@ -4,6 +4,8 @@ import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
 
+import { Header } from '<components>'
+
 class MyApp extends App {
   render() {
     const { Component, pageProps, reduxStore } = this.props
@@ -12,6 +14,7 @@ class MyApp extends App {
         <Head>
           <title>Giornie</title>
         </Head>
+        <Header {...pageProps} />
         <Provider store={reduxStore}>
           <Component {...pageProps} />
         </Provider>
