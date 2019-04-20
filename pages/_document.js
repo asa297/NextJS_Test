@@ -12,7 +12,12 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html>
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+          {this.props.styleTags}
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <link rel="icon" type="image/x-icon" href="../static/logo/shopping.ico" />
+        </Head>
         <body style={{ margin: '0px' }}>
           <Main />
           <NextScript />
