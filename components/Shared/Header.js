@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 export default ({ page, auth }) => {
   const [opened, setOpened] = useState(false)
-  // console.log(auth)
+
   return (
     <>
       <AppBar position="static">
@@ -18,8 +18,8 @@ export default ({ page, auth }) => {
           </MainContainer>
 
           <UserNameContainer>
-            <Tooltip title="Photosdasdaddaddaddads" placement="left">
-              <UserNameLabel>Photosdasdaddaddaddads</UserNameLabel>
+            <Tooltip title={auth.user.name || 'Guest'} placement="left">
+              <UserNameLabel>{auth.user.name || 'Guest'}</UserNameLabel>
             </Tooltip>
           </UserNameContainer>
         </Toolbar>

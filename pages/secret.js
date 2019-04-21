@@ -2,6 +2,10 @@ import React from 'react'
 import { withAuth } from '<components>'
 
 class Screct extends React.PureComponent {
+  static async getInitialProps(args) {
+    return {}
+  }
+
   render() {
     return (
       <>
