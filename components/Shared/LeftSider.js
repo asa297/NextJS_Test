@@ -20,7 +20,7 @@ const Menu = ({ name, icon, ...rest }) => {
   )
 }
 
-export default ({ open, setOpened, ...rest }) => {
+export default ({ open, setOpened, auth, ...rest }) => {
   const MenuFunction = page => {
     setOpened(false)
     if (page === 'login') Auth.login()
@@ -28,7 +28,7 @@ export default ({ open, setOpened, ...rest }) => {
     // Router.pushRoute('/au/form')
   }
 
-  const isAuthenticated = Auth.isAuthenticated()
+  const { isAuthenticated } = auth
   return (
     <SwipeableDrawer open={open} onClose={() => setOpened(false)} onOpen={() => setOpened(true)}>
       <Container>
