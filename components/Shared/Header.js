@@ -18,8 +18,8 @@ export default ({ page, auth }) => {
           </MainContainer>
 
           <UserNameContainer>
-            <Tooltip title={auth.user.name || 'Guest'} placement="left">
-              <UserNameLabel>{auth.user.name || 'Guest'}</UserNameLabel>
+            <Tooltip title={auth.user ? auth.user.name : 'Guest'} placement="left">
+              <UserNameLabel>{auth.user ? auth.user.name : 'Guest'}</UserNameLabel>
             </Tooltip>
           </UserNameContainer>
         </Toolbar>
