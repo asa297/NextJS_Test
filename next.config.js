@@ -23,6 +23,7 @@ module.exports = withSass({
       '<action_types>': path.resolve(__dirname, './stores/type'),
       '<styles>': path.resolve(__dirname, './styles'),
       '<services>': path.resolve(__dirname, './services'),
+      '<helpers>': path.resolve(__dirname, './helpers'),
     }
 
     new Dotenv({

@@ -1,14 +1,17 @@
-import axios from "axios";
-import { actionTypes } from "../type";
+import axios from 'axios'
+import Cookies from 'js-cookie'
+import { actionTypes } from '../type'
+
+const setAuthHeader = req => {
+  const token = req ? getCookieFromReq(req, 'jwt') : Cookies.getJSON('jwt')
+
+  if (token) {
+    return { headers: { authorization: `Bearer ${token}` } }
+  }
+
+  return undefined
+}
 
 export const GetAllItem = () => async dispatch => {
-  const res = await axios.get("/api/item/list").catch(e => null);
-  if (!res) return { status: false };
-  const { data } = res;
-  dispatch({ type: actionTypes.FETCH_USER, payload: data });
-  return { status: res.status === 200 };
-};
-
-export const AuJa = () => dispatch => {
-  console.log("au");
-};
+  const res = await axios.get('/api/item/list').catch(e => null)
+}

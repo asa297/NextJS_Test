@@ -17,9 +17,15 @@ require('dotenv').config()
 app
   .prepare()
   .then(() => {
-    // require("./routes/GeneralRoute")(app);
+    require('./api/TestApi')(server)
     server.get('*', (req, res) => {
       return handle(req, res)
+    })
+
+    server.use((err, req, res, next) => {
+      if (err.name === 'UnauthorizedError') {
+        res.status(401).send({ message: 'Unauthorized' })
+      }
     })
 
     server.use(handle).listen(3000, err => {
