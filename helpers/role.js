@@ -1,3 +1,9 @@
-export const admin = 'admin'
-export const accountant = 'accountant'
-export const cashier = 'cashier'
+const admin = 'admin'
+const accountant = 'accountant'
+const cashier = 'cashier'
+
+module.exports = {
+  admin,
+  accountant,
+  cashier,
+}
