@@ -1,5 +1,8 @@
 import React from 'react'
-export default Component => {
+
+const namespace = 'http://localhost:3000'
+
+export default role => Component => {
   return class withAuth extends React.PureComponent {
     static async getInitialProps(args) {
       const pageProps = (await Component.getInitialProps) && (await Component.getInitialProps(args))
@@ -8,16 +11,25 @@ export default Component => {
     }
 
     renderProtectedPage() {
-      const { isAuthenticated } = this.props.auth
+      const { isAuthenticated, user } = this.props.auth
+      const userRole = user && user[`${namespace}/role`]
 
-      if (isAuthenticated) {
-        return <Component {...this.props} />
+      let isAuthorized = false
+
+      if (role) {
+        if (userRole && role.find(value => value === userRole)) {
+          isAuthorized = true
+        }
       } else {
-        return (
-          <>
-            <div>This is Sccret Page</div>
-          </>
-        )
+        isAuthorized = true
+      }
+
+      if (!isAuthenticated) {
+        return <div>This Page have to isAuthenticated</div>
+      } else if (!isAuthorized) {
+        return <div>The Authorized is invalid</div>
+      } else {
+        return <Component {...this.props} />
       }
     }
 

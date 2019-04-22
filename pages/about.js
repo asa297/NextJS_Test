@@ -1,4 +1,5 @@
 import React from 'react'
+import { admin } from '<helpers>/role'
 import { withAuth } from '<components>'
 
 class About extends React.PureComponent {
@@ -11,8 +12,4 @@ class About extends React.PureComponent {
   }
 }
 
-About.getInitialProps = async ctx => {
-  return {}
-}
-
-export default withAuth(About)
+export default withAuth([admin])(About)
