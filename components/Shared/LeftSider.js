@@ -1,42 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { ReportMenu } from '<components>'
 import styled from 'styled-components'
-import { SwipeableDrawer, Divider } from '@material-ui/core'
-import { Home, Lock, LockOpen } from '@material-ui/icons'
+import { SwipeableDrawer, ListItem, ListItemIcon, ListItemText, Collapse, Divider } from '@material-ui/core'
+import { Home, Lock, LockOpen, Business, GroupWork, People, ShoppingCart, Assignment, ExpandLess, ExpandMore } from '@material-ui/icons'
 import { Router } from '<routes>'
 import { Auth } from '<services>'
 
-import sass from '<styles>/main.scss'
+const CollpaseIcon = collpase => {
+  return collpase ? <ExpandLess /> : <ExpandMore />
+}
 
-const Menu = ({ name, icon, ...rest }) => {
+const Menu = ({ name, icon, menuCollapse, openCollapse, ...rest }) => {
   return (
-    <MenuContainer {...rest}>
-      <IconContainer>
-        {icon === 'home' ? <Home /> : null}
-        {icon === 'login' ? <Lock /> : null}
-        {icon === 'logout' ? <LockOpen /> : null}
-      </IconContainer>
-      <MenuText>{name}</MenuText>
-    </MenuContainer>
+    <ListItem button {...rest}>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText inset primary={name} />
+      {menuCollapse ? CollpaseIcon(openCollapse) : null}
+    </ListItem>
   )
 }
 
 export default ({ open, setOpened, auth, ...rest }) => {
+  const [report_opened, setReportOpened] = useState(false)
+
   const MenuFunction = page => {
     setOpened(false)
     if (page === 'login') Auth.login()
     else if (page === 'logout') Auth.logout()
-    // Router.pushRoute('/au/form')
+    // else Router.pushRoute('/au/form')
   }
 
   const { isAuthenticated } = auth
   return (
     <SwipeableDrawer open={open} onClose={() => setOpened(false)} onOpen={() => setOpened(true)}>
       <Container>
-        <Menu name="Home" icon="home" onClick={() => MenuFunction('home')} />
+        <Menu name="Home" icon={<Home />} onClick={() => MenuFunction('home')} />
+
+        <Menu name="Org" icon={<Business />} onClick={() => MenuFunction('org')} />
+        <Menu name="Group" icon={<GroupWork />} onClick={() => MenuFunction('group')} />
+        <Menu name="Seller" icon={<People />} onClick={() => MenuFunction('seller')} />
+        <Menu name="Item" icon={<ShoppingCart />} onClick={() => MenuFunction('item')} />
+        <Menu menuCollapse openCollapse={report_opened} name="Report" icon={<Assignment />} onClick={() => setReportOpened(!report_opened)} />
+        <ReportMenu open={report_opened} MenuFunction={MenuFunction} />
+        <Divider />
         {!isAuthenticated ? (
-          <Menu name="Login" icon="login" onClick={() => MenuFunction('login')} />
+          <Menu name="Login" icon={<Lock />} onClick={() => MenuFunction('login')} />
         ) : (
-          <Menu name="Logout" icon="logout" onClick={() => MenuFunction('logout')} />
+          <Menu name="Logout" icon={<LockOpen />} onClick={() => MenuFunction('logout')} />
         )}
       </Container>
     </SwipeableDrawer>
@@ -45,20 +55,4 @@ export default ({ open, setOpened, auth, ...rest }) => {
 
 const Container = styled.div`
   width: 200px;
-`
-const MenuContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  cursor: pointer;
-
-  :hover {
-    background-color: ${sass.menu_hover};
-  }
-`
-const IconContainer = styled.div`
-  padding-right: 2px;
-`
-const MenuText = styled.label`
-  font-size: 14px;
 `
