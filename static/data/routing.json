@@ -2,8 +2,11 @@
   "Routing": [
     {
       "name": "Home",
-      "path": "/",
-      "role": [1]
+      "path": "/"
+    },
+    {
+      "name": "Oranization",
+      "path": "/org"
     }
   ]
 }

@@ -24,6 +24,7 @@ module.exports = withSass({
       '<styles>': path.resolve(__dirname, './styles'),
       '<services>': path.resolve(__dirname, './services'),
       '<helpers>': path.resolve(__dirname, './helpers'),
+      '<static>': path.resolve(__dirname, './static'),
     }
 
     new Dotenv({

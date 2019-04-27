@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { LeftSider } from '<components>'
-import { AppBar, Toolbar, IconButton, Tooltip } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Tooltip, Typography } from '@material-ui/core'
 import { Menu } from '@material-ui/icons'
 import styled from 'styled-components'
 
-export default ({ page, auth }) => {
+export default ({ page, auth, pageName, ...rest }) => {
   const [opened, setOpened] = useState(false)
 
   return (
@@ -15,6 +15,9 @@ export default ({ page, auth }) => {
             <IconButton color="inherit" aria-label="Menu" onClick={() => setOpened(true)}>
               <Menu />
             </IconButton>
+            <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
+              {pageName}
+            </Typography>
           </MainContainer>
 
           <UserNameContainer>
@@ -30,6 +33,8 @@ export default ({ page, auth }) => {
 }
 const MainContainer = styled.div`
   width: 90%;
+  display: flex;
+  align-items: center;
 `
 
 const UserNameContainer = styled.div`

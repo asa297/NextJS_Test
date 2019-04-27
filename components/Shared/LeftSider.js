@@ -20,23 +20,25 @@ const Menu = ({ name, icon, menuCollapse, openCollapse, ...rest }) => {
   )
 }
 
-export default ({ open, setOpened, auth, ...rest }) => {
+export default ({ open, setOpened, auth, setPageName, ...rest }) => {
   const [report_opened, setReportOpened] = useState(false)
 
-  const MenuFunction = page => {
+  const MenuFunction = (route, page) => {
     setOpened(false)
     if (page === 'login') Auth.login()
     else if (page === 'logout') Auth.logout()
-    // else Router.pushRoute('/au/form')
+    else {
+      Router.pushRoute(route)
+    }
   }
 
   const { isAuthenticated } = auth
   return (
     <SwipeableDrawer open={open} onClose={() => setOpened(false)} onOpen={() => setOpened(true)}>
       <Container>
-        <Menu name="Home" icon={<Home />} onClick={() => MenuFunction('home')} />
+        <Menu name="Home" icon={<Home />} onClick={() => MenuFunction('/')} />
 
-        <Menu name="Org" icon={<Business />} onClick={() => MenuFunction('org')} />
+        <Menu name="Org" icon={<Business />} onClick={() => MenuFunction('/org')} />
         <Menu name="Group" icon={<GroupWork />} onClick={() => MenuFunction('group')} />
         <Menu name="Seller" icon={<People />} onClick={() => MenuFunction('seller')} />
         <Menu name="Item" icon={<ShoppingCart />} onClick={() => MenuFunction('item')} />
