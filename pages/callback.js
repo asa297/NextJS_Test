@@ -1,25 +1,15 @@
 import React from 'react'
 import { Auth } from '<services>'
 import { Router } from '<routes>'
+import { ModalLoading } from '<components>'
 
-class Main extends React.PureComponent {
+export default class Main extends React.PureComponent {
   async componentDidMount() {
     await Auth.handleAuthentication()
-
     Router.pushRoute('/')
   }
 
   render() {
-    return (
-      <>
-        <div>Loading</div>
-      </>
-    )
+    return <ModalLoading loading={true} text={'Loading...'} />
   }
 }
-
-Main.getInitialProps = async ctx => {
-  return {}
-}
-
-export default Main

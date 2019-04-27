@@ -5,6 +5,30 @@ $menu-hover: #bbdefb;
   font-size: $font-size;
 }
 
+@font-face {
+  font-family: 'RobotoSlab';
+  src: url('/static/fonts/RobotoSlab-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'RobotoSlab';
+  src: url('/static/fonts/RobotoSlab-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'RobotoSlab';
+  src: url('/static/fonts/RobotoSlab-Light.ttf');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+html,
+body {
+  font-family: 'RobotoSlab';
+}
+
 :export {
   menu_hover: $menu-hover;
 }

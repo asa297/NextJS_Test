@@ -7,6 +7,8 @@ import Head from 'next/head'
 import { Header } from '<components>'
 import { Auth } from '<services>'
 
+import '../styles/main.scss'
+
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {}
