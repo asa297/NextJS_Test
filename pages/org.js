@@ -7,13 +7,14 @@ class org extends React.PureComponent {
   state = {
     isList: true,
   }
-  static async getInitialProps({ req }) {
-    const { name } = await getPageNameFromReq(req)
+  static async getInitialProps(ctx) {
+    const { name } = await getPageNameFromReq(ctx)
     return { pageName: name }
   }
 
   render() {
     const { isList } = this.state
+    const {} = this.props
     return (
       <>
         <ButtonNew hide={!isList} onClick={() => alert('test')} />

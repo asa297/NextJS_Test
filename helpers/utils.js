@@ -10,7 +10,6 @@ export const getCookieFromReq = (req, cookieKey) => {
   return cookie.split('=')[1]
 }
 
-export const getPageNameFromReq = req => {
-  const currentPath = req ? req.url : window.location.pathname
-  return Routing.find(v => v.path === currentPath)
+export const getPageNameFromReq = ctx => {
+  return Routing.find(v => v.path === ctx.pathname)
 }
