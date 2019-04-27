@@ -23,13 +23,11 @@ const Menu = ({ name, icon, menuCollapse, openCollapse, ...rest }) => {
 export default ({ open, setOpened, auth, setPageName, ...rest }) => {
   const [report_opened, setReportOpened] = useState(false)
 
-  const MenuFunction = (route, page) => {
+  const MenuFunction = page => {
     setOpened(false)
     if (page === 'login') Auth.login()
     else if (page === 'logout') Auth.logout()
-    else {
-      Router.pushRoute(route)
-    }
+    else Router.pushRoute(page)
   }
 
   const { isAuthenticated } = auth
