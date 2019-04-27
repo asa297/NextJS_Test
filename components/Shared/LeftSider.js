@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ReportMenu } from '<components>'
 import styled from 'styled-components'
 import { SwipeableDrawer, ListItem, ListItemIcon, ListItemText, Collapse, Divider } from '@material-ui/core'
-import { Home, Lock, LockOpen, Business, GroupWork, People, ShoppingCart, Assignment, ExpandLess, ExpandMore } from '@material-ui/icons'
+import { Home, Lock, LockOpen, Business, GroupWork, People, ShoppingCart, Assignment, ExpandLess, ExpandMore, Payment } from '@material-ui/icons'
 import { Router } from '<routes>'
 import { Auth } from '<services>'
 
@@ -40,6 +40,7 @@ export default ({ open, setOpened, auth, ...rest }) => {
         <Menu name="Group" icon={<GroupWork />} onClick={() => MenuFunction('group')} />
         <Menu name="Seller" icon={<People />} onClick={() => MenuFunction('seller')} />
         <Menu name="Item" icon={<ShoppingCart />} onClick={() => MenuFunction('item')} />
+        <Menu name="PO" icon={<Payment />} onClick={() => MenuFunction('po')} />
         <Menu menuCollapse openCollapse={report_opened} name="Report" icon={<Assignment />} onClick={() => setReportOpened(!report_opened)} />
         <ReportMenu open={report_opened} MenuFunction={MenuFunction} />
         <Divider />
