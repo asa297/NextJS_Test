@@ -4,10 +4,17 @@ import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
 
+import NProgress from 'nprogress'
+import { Router } from '<routes>'
+
 import { Header } from '<components>'
 import { Auth } from '<services>'
 
 import '../styles/main.scss'
+
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
