@@ -1,7 +1,7 @@
 import React from 'react'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ButtonNew } from '<components>'
+import { withAuth, ButtonNew, ListTable } from '<components>'
 
 class org extends React.PureComponent {
   state = {
@@ -17,6 +17,7 @@ class org extends React.PureComponent {
     const {} = this.props
     return (
       <>
+        <ListTable />
         <ButtonNew hide={!isList} onClick={() => alert('test')} />
       </>
     )
