@@ -11,6 +11,7 @@ import { Header } from '<components>'
 import { Auth } from '<services>'
 
 import '../styles/main.scss'
+import 'react-table/react-table.css'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())

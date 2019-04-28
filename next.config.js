@@ -2,6 +2,7 @@
 const withPlugins = require('next-compose-plugins')
 const path = require('path')
 const withSass = require('@zeit/next-sass')
+const withCSS = require('@zeit/next-css')
 
 const nextConfig = {
   /* config options here */
@@ -10,6 +11,7 @@ const nextConfig = {
     // Important: return the modified config
 
     config.resolve.alias = {
+      ...(config.resolve.alias || {}),
       '<components>': path.resolve(__dirname, './components'),
       '<actions>': path.resolve(__dirname, './stores/actions'),
       '<reducers>': path.resolve(__dirname, './stores/reducers'),
@@ -37,6 +39,7 @@ module.exports = withPlugins(
         },
       },
     ],
+    [withCSS],
   ],
   nextConfig,
 )

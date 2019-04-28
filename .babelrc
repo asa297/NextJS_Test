@@ -2,6 +2,7 @@
   "presets": ["next/babel"],
   "plugins": [
     ["styled-components", { "ssr": true, "displayName": true, "preprocess": false }],
+
     [
       "babel-plugin-import",
       {
@@ -23,18 +24,18 @@
     [
       "babel-plugin-import",
       {
-         "libraryName": "@material-ui/core/colors",
-         "libraryDirectory": "",
-         "camel2DashComponentName": false
+        "libraryName": "@material-ui/core/colors",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
       },
       "tree-shaking-mui-colors"
     ],
     [
       "babel-plugin-import",
       {
-         "libraryName": "@material-ui/icons",
-         "libraryDirectory": "",
-         "camel2DashComponentName": false
+        "libraryName": "@material-ui/icons",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
       },
       "tree-shaking-mui-icons"
     ]
