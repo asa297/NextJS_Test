@@ -17,7 +17,7 @@ class org extends React.PureComponent {
     const {} = this.props
     return (
       <>
-        {/* <ListTable /> */}
+        <ListTable />
         <ButtonNew hide={!isList} onClick={() => alert('test')} />
       </>
     )
