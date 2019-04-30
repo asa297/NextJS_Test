@@ -3,6 +3,7 @@ import React from 'react'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 import NProgress from 'nprogress'
 import { Router } from '<routes>'
@@ -35,6 +36,7 @@ class MyApp extends App {
         <Head>
           <title>Giornie</title>
         </Head>
+        <CssBaseline />
         <Header {...pageProps} auth={auth} />
         <Provider store={reduxStore}>
           <Component {...pageProps} auth={auth} />
