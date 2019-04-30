@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ButtonNew, ListVirtualized, ListRender } from '<components>'
+import { withAuth, ModalLoading, ButtonNew, ListVirtualized, ListRender } from '<components>'
+import { GetOrganization } from '<actions>'
 
-class org extends React.PureComponent {
+class index extends React.PureComponent {
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)
     return { pageName: name }
@@ -11,19 +13,31 @@ class org extends React.PureComponent {
 
   state = {
     isList: true,
-    data: [{ id: 0, username: `username0` }, { id: 1, username: `username1` }],
+  }
+
+  componentWillMount() {
+    const { GetOrganization } = this.props
+    GetOrganization()
   }
 
   render() {
-    const { isList, data } = this.state
-
+    const { isList } = this.state
+    const {
+      organizations: { isFetching, List: data },
+    } = this.props
     return (
       <>
-        <ListVirtualized rowRenderer={row => ListRender({ ...row, data, keyData: 'username' })} rowCount={data.length} rowHeight={50} />
+        <ListVirtualized rowRenderer={row => ListRender({ ...row, data })} rowCount={data.length} rowHeight={50} />
         <ButtonNew hide={!isList} onClick={() => alert('test')} />
+        <ModalLoading loading={isFetching} text={'Loading...'} />
       </>
     )
   }
 }
 
-export default withAuth([admin])(org)
+index = connect(
+  ({ organizations }) => ({ organizations }),
+  { GetOrganization },
+)(index)
+
+export default withAuth([admin])(index)

@@ -2,6 +2,7 @@
 const withPlugins = require('next-compose-plugins')
 const path = require('path')
 const withSass = require('@zeit/next-sass')
+const Dotenv = require('dotenv-webpack')
 
 const nextConfig = {
   /* config options here */
@@ -22,6 +23,13 @@ const nextConfig = {
       '<helpers>': path.resolve(__dirname, './helpers'),
       '<static>': path.resolve(__dirname, './static'),
     }
+
+    new Dotenv({
+      path: path.join(__dirname, '.env'),
+      safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+      systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+      silent: true, // hide any errors
+    })
 
     return config
   },

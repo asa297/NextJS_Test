@@ -17,7 +17,6 @@ exports.ValidateToken = jwt({
 
 exports.ValidateRole = role => (req, res, next) => {
   const user = req.user
-
   if (user && user[NAMESPACE + '/role'] && role.find(value => value === user[NAMESPACE + '/role'])) {
     next()
   } else {

@@ -3,6 +3,7 @@ const routes = require('./routes')
 const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -11,13 +12,19 @@ const handle = routes.getRequestHandler(app)
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
-//require
+//config initize
 require('dotenv').config()
+mongoose.connect(process.env.MONGO_URL)
+
+//Models
+require('./models/Organization')
+
+//API
+require('./api/Organization')(server)
 
 app
   .prepare()
   .then(() => {
-    require('./api/TestApi')(server)
     server.get('*', (req, res) => {
       return handle(req, res)
     })

@@ -16,11 +16,15 @@ class virtualized extends React.PureComponent {
 export default virtualized
 
 const Container = styled.div`
-  width: 80%;
   @media (min-width: 600px) {
     height: calc(100vh - 64px - 100px);
   }
   height: calc(100vh - 56px - 100px);
+
+  @media (min-width: 0px) and (max-width: 1200px) {
+    width: 100%;
+  }
+  width: 80%;
 
   box-shadow: 2px 5px 10px rgba(220, 220, 220, 0.5);
 `
