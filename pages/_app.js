@@ -6,7 +6,7 @@ import Head from 'next/head'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import NProgress from 'nprogress'
-import { Router } from '<routes>'
+import Router from 'next/router'
 
 import { Header } from '<components>'
 import { Auth } from '<services>'

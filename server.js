@@ -1,5 +1,4 @@
 const next = require('next')
-const routes = require('./routes')
 const express = require('express')
 const server = express()
 const bodyParser = require('body-parser')
@@ -7,7 +6,7 @@ const mongoose = require('mongoose')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const handle = routes.getRequestHandler(app)
+const handle = app.getRequestHandler()
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
@@ -35,7 +34,7 @@ app
       }
     })
 
-    server.use(handle).listen(3000, err => {
+    server.listen(3000, err => {
       if (err) throw err
       console.log('> Ready on http://localhost:3000')
     })

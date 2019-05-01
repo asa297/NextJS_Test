@@ -3,7 +3,7 @@ import { ReportMenu } from '<components>'
 import styled from 'styled-components'
 import { SwipeableDrawer, ListItem, ListItemIcon, ListItemText, Collapse, Divider } from '@material-ui/core'
 import { Home, Lock, LockOpen, Business, GroupWork, People, ShoppingCart, Assignment, ExpandLess, ExpandMore, Payment } from '@material-ui/icons'
-import { Router } from '<routes>'
+import Router from 'next/router'
 import { Auth } from '<services>'
 
 const CollpaseIcon = collpase => {
@@ -27,7 +27,7 @@ export default ({ open, setOpened, auth, setPageName, ...rest }) => {
     setOpened(false)
     if (page === 'login') Auth.login()
     else if (page === 'logout') Auth.logout()
-    else Router.pushRoute(page)
+    else Router.push({ pathname: page })
   }
 
   const { isAuthenticated } = auth

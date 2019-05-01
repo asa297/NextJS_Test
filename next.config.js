@@ -16,7 +16,6 @@ const nextConfig = {
       '<actions>': path.resolve(__dirname, './stores/actions'),
       '<reducers>': path.resolve(__dirname, './stores/reducers'),
       '<utils>': path.resolve(__dirname, './utils'),
-      '<routes>': path.resolve(__dirname, './routes'),
       '<action_types>': path.resolve(__dirname, './stores/type'),
       '<styles>': path.resolve(__dirname, './styles'),
       '<services>': path.resolve(__dirname, './services'),
@@ -41,9 +40,9 @@ module.exports = withPlugins(
       withSass,
       {
         cssModules: true,
-        cssLoaderOptions: {
-          localIdentName: '[local]___[hash:base64:5]',
-        },
+        // cssLoaderOptions: {
+        //   localIdentName: '[local]___[hash:base64:5]',
+        // },
       },
     ],
   ],

@@ -7,6 +7,10 @@
     {
       "name": "Oranization",
       "path": "/org"
+    },
+    {
+      "name": "Oranization Form",
+      "path": "/form/org"
     }
   ]
 }

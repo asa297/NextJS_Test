@@ -1,9 +1,6 @@
 $font-size: 50px;
+$color-error: red;
 $menu-hover: #bbdefb;
-
-.example {
-  font-size: $font-size;
-}
 
 @font-face {
   font-family: 'RobotoSlab';
@@ -27,6 +24,16 @@ $menu-hover: #bbdefb;
 html,
 body {
   font-family: 'RobotoSlab';
+}
+
+// ---
+
+.example {
+  font-size: $font-size;
+}
+.field_error {
+  color: $color-error;
+  height: 25px;
 }
 
 :export {
