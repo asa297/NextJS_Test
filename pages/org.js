@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, ButtonNew, ListVirtualized, ListRender } from '<components>'
-import { GetOrganization } from '<actions>'
+import { withAuth, ModalLoading, ButtonNew, ListVirtualized, OrgListRender, OrgFormRender } from '<components>'
+import { FetchOrganization } from '<actions>'
+import { Router } from '<routes>'
 
 class index extends React.PureComponent {
   static async getInitialProps(ctx) {
@@ -17,22 +18,40 @@ class index extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { GetOrganization } = this.props
-    GetOrganization()
+    const { FetchOrganization } = this.props
+    FetchOrganization()
+  }
+
+  openForom() {
+    this.setState({ isList: false })
+  }
+
+  handleClick(rowSelected) {
+    this.openForom()
+
+    // console.log(rowSelected)
   }
 
   render() {
     const { isList } = this.state
     const {
-      organizations: { isFetching, List: data },
+      organizations: { isFetching, List: data, Object },
     } = this.props
     return (
       <>
-        <Container>
-          <ListVirtualized rowRenderer={row => ListRender({ ...row, data })} rowCount={data.length} rowHeight={50} />
-        </Container>
+        {isList && (
+          <ListContainer>
+            <ListVirtualized
+              rowRenderer={rowRenderer => OrgListRender({ ...rowRenderer, data, onClick: rowSelected => this.handleClick(rowSelected) })}
+              rowCount={data.length}
+              rowHeight={50}
+            />
+          </ListContainer>
+        )}
 
-        <ButtonNew hide={!isList} onClick={() => alert('test')} />
+        {!isList && <div>test</div>}
+
+        <ButtonNew hide={!isList} onClick={() => this.openForom()} />
         <ModalLoading loading={isFetching} text={'Loading...'} />
       </>
     )
@@ -41,12 +60,12 @@ class index extends React.PureComponent {
 
 index = connect(
   ({ organizations }) => ({ organizations }),
-  { GetOrganization },
+  { FetchOrganization },
 )(index)
 
 export default withAuth([admin])(index)
 
-const Container = styled.div`
+const ListContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 5px;

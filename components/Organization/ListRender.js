@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default ({ data, index, ...rest }) => {
+export default ({ data, index, onClick, ...rest }) => {
   const src = data[index]['orgTypeId'] === 1 ? '/static/images/organization/china.png' : '/static/images/organization/russia.png'
   const text = data[index]['orgName']
   return (
-    <ListView {...rest}>
+    <ListView onClick={() => onClick(data[index])} {...rest}>
       <Icon src={src} />
       <Text>{text} </Text>
     </ListView>

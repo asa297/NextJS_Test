@@ -10,7 +10,7 @@ const setAuthHeader = req => {
   return undefined
 }
 
-export const GetOrganization = () => async dispatch => {
+export const FetchOrganization = () => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
