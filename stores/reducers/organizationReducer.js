@@ -17,6 +17,10 @@ export default function(state = initState, action) {
       return Object.assign({}, state, {
         List: [...action.payload.data],
       })
+    case actionTypes.ORGANIZATION.STORE_NEW:
+      return Object.assign({}, state, {
+        List: [...state.List, ...action.payload.data],
+      })
     case actionTypes.ORGANIZATION.FETCH_STATUS:
       return Object.assign({}, state, {
         isFetching: action.payload.isFetching,

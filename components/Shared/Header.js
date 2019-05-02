@@ -9,7 +9,7 @@ export default ({ page, auth, pageName, ...rest }) => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <MainContainer>
             <IconButton color="inherit" aria-label="Menu" onClick={() => setOpened(true)}>

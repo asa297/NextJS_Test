@@ -24,6 +24,7 @@ const ModalContainer = styled.div`
 
   position: absolute;
   top: 0;
+  left: 0;
 
   display: ${props => (props.loading ? 'block' : 'none')};
 `

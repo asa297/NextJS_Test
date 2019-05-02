@@ -1,20 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Field } from 'formik'
 import { OrganizationSchema } from '<helpers>/validate'
-import { InputItem, SubmitButton } from '<components>'
+import { InputItem, SelectItem, ActionBar, ModalLoading } from '<components>'
+import Router from 'next/router'
 
-export default ({ Item, closeForm, ...rest }) => {
+const orgTypeData = [{ id: 0, label: 'Russia' }, { id: 1, label: 'China' }]
+export default ({ Item, insert, ...rest }) => {
+  const [isSubmiting, setisSubmiting] = useState(false)
   return (
     <>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          org_type: '',
+          org_name: '',
+          org_comA: 0,
+          org_comB: 0,
+          org_code: '',
+        }}
         enableReinitialize={true}
         validationSchema={OrganizationSchema}
-        onSubmit={async (values, actions) => {}}
+        onSubmit={async (values, actions) => {
+          setisSubmiting(true)
+          console.log(values)
+        }}
         render={props => (
           <form>
             <Field
-              label="Organization Name (ชื่อบริษัท)"
+              label="ประเภทบริษัท"
+              name="org_type"
+              component={SelectItem}
+              data={orgTypeData}
+              value={props.values.org_type ? props.values.org_type.label : ''}
+              fieldread="label"
+              onChange={e => props.setFieldValue('org_type', orgTypeData.find(v => v.label === e.target.value))}
+            />
+
+            <Field
+              label="ชื่อบริษัท"
               type="text"
               name="org_name"
               component={InputItem}
@@ -22,7 +44,7 @@ export default ({ Item, closeForm, ...rest }) => {
               onChange={e => props.setFieldValue('org_name', e.target.value)}
             />
             <Field
-              label="Organization Comission A (ค่าคอมมิชชั่นสินค้า A)"
+              label="ค่าคอมมิชชั่นสินค้า A"
               type="number"
               name="org_comA"
               component={InputItem}
@@ -30,7 +52,7 @@ export default ({ Item, closeForm, ...rest }) => {
               onChange={e => props.setFieldValue('org_comA', e.target.value)}
             />
             <Field
-              label="Organization Comission B (ค่าคอมมิชชั่นสินค้า B)"
+              label="ค่าคอมมิชชั่นสินค้า B"
               type="number"
               name="org_comB"
               component={InputItem}
@@ -38,7 +60,7 @@ export default ({ Item, closeForm, ...rest }) => {
               onChange={e => props.setFieldValue('org_comB', e.target.value)}
             />
             <Field
-              label="Organization Code (รหัสบริษัท)"
+              label="รหัสบริษัท"
               type="text"
               name="org_code"
               component={InputItem}
@@ -46,10 +68,11 @@ export default ({ Item, closeForm, ...rest }) => {
               onChange={e => props.setFieldValue('org_code', e.target.value)}
             />
 
-            <SubmitButton />
+            <ActionBar onBack={() => Router.push({ pathname: '/org' })} onSubmit={props.handleSubmit} loading={isSubmiting} />
           </form>
         )}
       />
+      <ModalLoading loading={isSubmiting} text={'Loading...'} />
     </>
   )
 }

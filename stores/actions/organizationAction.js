@@ -32,3 +32,20 @@ export const GetOrganization = _id => (dispatch, getState) => {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
   }
 }
+
+export const InsertOrganization = () => async dispatch => {
+  try {
+    dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
+    await axios
+      .post('/api/org', setAuthHeader())
+      .then(({ data }) => {
+        dispatch({ type: actionTypes.ORGANIZATION.STORE, payload: { data } })
+      })
+      .catch(e => e)
+  } catch (e) {
+    console.log(e)
+    return e
+  } finally {
+    dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
+  }
+}

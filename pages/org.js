@@ -15,8 +15,8 @@ class index extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { FetchOrganization } = this.props
-    FetchOrganization()
+    const { Fetch } = this.props
+    Fetch()
   }
 
   handleClick(rowSelected) {
@@ -38,7 +38,7 @@ class index extends React.PureComponent {
           />
         </ListContainer>
 
-        <ButtonNew onClick={() => Router.push({ pathname: '/form/org', query: { id: 5 } })} />
+        <ButtonNew onClick={() => Router.push({ pathname: '/form/org' })} />
 
         <ModalLoading loading={isFetching} text={'Loading...'} />
       </>
@@ -48,7 +48,7 @@ class index extends React.PureComponent {
 
 index = connect(
   ({ organizations }) => ({ organizations }),
-  { FetchOrganization: Action.FetchOrganization },
+  { Fetch: Action.FetchOrganization },
 )(index)
 
 export default withAuth([admin])(index)
