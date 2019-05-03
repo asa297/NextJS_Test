@@ -40,9 +40,9 @@ module.exports = withPlugins(
       withSass,
       {
         cssModules: true,
-        // cssLoaderOptions: {
-        //   localIdentName: '[local]___[hash:base64:5]',
-        // },
+        cssLoaderOptions: {
+          localIdentName: '[local]___[hash:base64:5]',
+        },
       },
     ],
   ],

@@ -1,6 +1,7 @@
 import * as Yup from 'yup'
 
 export const OrganizationSchema = Yup.object().shape({
+  org_type: Yup.object().required('Required'),
   org_name: Yup.string().required('Required'),
   org_comA: Yup.number()
     .min(0, 'number must more than 0.')
