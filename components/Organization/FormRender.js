@@ -27,7 +27,6 @@ export default () => {
             <Field
               label="ประเภทบริษัท"
               name="org_type"
-              placeholder="Select a person"
               component={SelectItem}
               data={orgTypeData}
               value={props.values.org_type ? props.values.org_type.label : ''}
