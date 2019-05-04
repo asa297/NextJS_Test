@@ -19,14 +19,9 @@ export default ({ auth, ...rest }) => {
   const MenuFunction = page => {
     const { key } = page
     rest.onClose()
-
-    // console.log(page)
     if (key === '/login') Auth.login()
     else if (key === '/logout') Auth.logout()
-    // else Router.push({ pathname: page })
-    // if (page === 'login') Auth.login()
-    // else if (page === 'logout') Auth.logout()
-    // else Router.push({ pathname: page })
+    else Router.push({ pathname: key })
   }
 
   const renderMainMenu = () => mainMenu.map(menu => <MenuItem name={menu.name} key={menu.path} type={menu.type} />)
