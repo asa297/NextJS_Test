@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Field } from 'formik'
 import { OrganizationSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar } from '<components>'
+import Router from 'next/router'
 
 const orgTypeData = [{ id: 0, label: 'Russia' }, { id: 1, label: 'China' }]
 export default () => {
@@ -20,7 +21,11 @@ export default () => {
         validationSchema={OrganizationSchema}
         onSubmit={async (values, actions) => {
           setisSubmiting(true)
-          console.log(values)
+
+          // setTimeout(() => {
+          //   setisSubmiting(false)
+          // },1000)
+          // console.log(values)
         }}
         render={props => (
           <form>

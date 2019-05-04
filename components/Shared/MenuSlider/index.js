@@ -58,6 +58,7 @@ const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
     padding: 0px;
   }
+  z-index: 999999;
 `
 
 const MenuWrapper = styled(Menu)`

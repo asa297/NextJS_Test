@@ -24,6 +24,7 @@ export default ({
         showSearch
         optionFilterProp="children"
         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        error={error}
       >
         {data.map(option => (
           <Option key={option.id} value={option[fieldread]}>
@@ -44,12 +45,15 @@ const LabelWrapper = styled.label`
 `
 const SelectWrapper = styled(Select)`
   width: 100%;
-  border-color: ${props => (props.isError ? 'red' : '#d9d9d9')};
 
   .ant-select-selection__rendered {
     line-height: 42px;
   }
   .ant-select-selection--single {
     height: 42px;
+  }
+
+  .ant-select-selection {
+    border-color: ${props => (props.error ? 'red' : '#d9d9d9')};
   }
 `

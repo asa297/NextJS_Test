@@ -40,6 +40,7 @@ const HeaderContainer = styled.header`
 
   display: flex;
   align-items: center;
+  z-index: 9999;
 `
 const MenuContainer = styled.div`
   width: 50px;
