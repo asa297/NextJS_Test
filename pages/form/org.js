@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
 import { withAuth, ModalLoading, OrgFormRender } from '<components>'
+import Router from 'next/router'
 
 class index extends React.PureComponent {
   static async getInitialProps(ctx) {
@@ -22,8 +23,9 @@ class index extends React.PureComponent {
     return (
       <>
         <FormContainer>
-          <OrgFormRender Item={Item} insert={Insert} />
+          <OrgFormRender Item={Item} Insert={Insert} goBack={() => Router.push({ pathname: '/org' })} />
         </FormContainer>
+        <ModalLoading loading={isFetching} text={'Submitting to Server...'} />
       </>
     )
   }

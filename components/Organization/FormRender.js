@@ -2,77 +2,76 @@ import React, { useState } from 'react'
 import { Formik, Field } from 'formik'
 import { OrganizationSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar } from '<components>'
-import Router from 'next/router'
 
-const orgTypeData = [{ id: 0, label: 'Russia' }, { id: 1, label: 'China' }]
-export default () => {
+const orgTypeData = [{ id: 0, label: 'N/A' }, { id: 1, label: 'Russia' }, { id: 2, label: 'China' }]
+
+export default ({ Insert, onDone, goBack, ...rest }) => {
   const [isSubmiting, setisSubmiting] = useState(false)
+
   return (
     <>
       <Formik
         initialValues={{
-          org_type: '',
-          org_name: '',
-          org_comA: 0,
-          org_comB: 0,
-          org_code: '',
+          orgType: '',
+          orgName: '',
+          orgComA: 0,
+          orgComB: 0,
+          orgCode: '',
         }}
         enableReinitialize={true}
         validationSchema={OrganizationSchema}
         onSubmit={async (values, actions) => {
           setisSubmiting(true)
-
-          // setTimeout(() => {
-          //   setisSubmiting(false)
-          // },1000)
-          // console.log(values)
+          await Insert(values)
+          setisSubmiting(false)
+          goBack()
         }}
         render={props => (
           <form>
             <Field
               label="ประเภทบริษัท"
-              name="org_type"
+              name="orgType"
               component={SelectItem}
               data={orgTypeData}
-              value={props.values.org_type ? props.values.org_type.label : ''}
+              value={props.values.orgType ? props.values.orgType.label : ''}
               fieldread="label"
-              onChange={e => props.setFieldValue('org_type', orgTypeData.find(v => v.label === e))}
+              onChange={e => props.setFieldValue('orgType', orgTypeData.find(v => v.label === e))}
             />
 
             <Field
               label="ชื่อบริษัท"
               type="text"
-              name="org_name"
+              name="orgName"
               component={InputItem}
-              value={props.values.org_name}
-              onChange={e => props.setFieldValue('org_name', e.target.value)}
+              value={props.values.orgName}
+              onChange={e => props.setFieldValue('orgName', e.target.value)}
             />
             <Field
               label="ค่าคอมมิชชั่นสินค้า A"
               type="number"
-              name="org_comA"
+              name="orgComA"
               component={InputItem}
-              value={props.values.org_comA}
-              onChange={e => props.setFieldValue('org_comA', e.target.value)}
+              value={props.values.orgComA}
+              onChange={e => props.setFieldValue('orgComA', e.target.value)}
             />
             <Field
               label="ค่าคอมมิชชั่นสินค้า B"
               type="number"
-              name="org_comB"
+              name="orgComB"
               component={InputItem}
-              value={props.values.org_comB}
-              onChange={e => props.setFieldValue('org_comB', e.target.value)}
+              value={props.values.orgComB}
+              onChange={e => props.setFieldValue('orgComB', e.target.value)}
             />
             <Field
               label="รหัสบริษัท"
               type="text"
-              name="org_code"
+              name="orgCode"
               component={InputItem}
-              value={props.values.org_code}
-              onChange={e => props.setFieldValue('org_code', e.target.value)}
+              value={props.values.orgCode}
+              onChange={e => props.setFieldValue('orgCode', e.target.value)}
             />
 
-            <ActionBar onBack={() => Router.push({ pathname: '/org' })} onSubmit={props.handleSubmit} loading={isSubmiting} />
+            <ActionBar onBack={() => goBack()} onSubmit={props.handleSubmit} loading={isSubmiting} />
           </form>
         )}
       />

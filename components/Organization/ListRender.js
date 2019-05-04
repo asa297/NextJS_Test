@@ -4,8 +4,8 @@ import momemt from 'moment'
 import { List, Avatar } from 'antd'
 
 export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
-  const src = data[index]['orgTypeId'] === 1 ? '/static/images/organization/china.png' : '/static/images/organization/russia.png'
-  const text = data[index]['orgName']
+  const src = data[index]['orgTypeId'] === 2 ? '/static/images/organization/china.png' : '/static/images/organization/russia.png'
+  const text = `${data[index]['orgName']} (${data[index]['orgCode']})`
   const des = data[index]['LastModifyDate']
   return (
     <ListView onClick={() => onClick(data[index])} {...rest}>

@@ -12,7 +12,6 @@ export const FetchOrganization = () => async dispatch => {
       })
       .catch(e => e)
   } catch (e) {
-    console.log(e)
     return e
   } finally {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
@@ -26,24 +25,22 @@ export const GetOrganization = _id => (dispatch, getState) => {
     const organization = organizations.List.find(v => v._id === _id)
     dispatch({ type: actionTypes.ORGANIZATION.FETCH, payload: { data: organization ? organization : {} } })
   } catch (e) {
-    console.log(e)
     return e
   } finally {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
   }
 }
 
-export const InsertOrganization = () => async dispatch => {
+export const InsertOrganization = formValue => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .post('/api/org', setAuthHeader())
-      .then(({ data }) => {
-        dispatch({ type: actionTypes.ORGANIZATION.STORE, payload: { data } })
+      .post('/api/org', formValue, setAuthHeader())
+      .then(({}) => {
+        dispatch({ type: actionTypes.ORGANIZATION.STORE, payload: formValue })
       })
       .catch(e => e)
   } catch (e) {
-    console.log(e)
     return e
   } finally {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })

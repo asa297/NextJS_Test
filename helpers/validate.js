@@ -1,14 +1,14 @@
 import * as Yup from 'yup'
 
 export const OrganizationSchema = Yup.object().shape({
-  org_type: Yup.object().required('Required'),
-  org_name: Yup.string().required('Required'),
-  org_comA: Yup.number()
+  orgType: Yup.object().required('Required'),
+  orgName: Yup.string().required('Required'),
+  orgComA: Yup.number()
     .min(0, 'number must more than 0.')
     .max(100, 'maximum number is 100.')
     .required('Required'),
-  org_comB: Yup.number()
+  orgComB: Yup.number()
     .min(0, 'number must more than 0.')
     .max(100, 'maximum number is 100.'),
-  org_code: Yup.string().required('Required'),
+  orgCode: Yup.string().required('Required'),
 })

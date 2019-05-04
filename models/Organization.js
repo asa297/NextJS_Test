@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const OrgSchema = new Schema({
   orgTypeId: Number,
@@ -8,12 +8,12 @@ const OrgSchema = new Schema({
   orgComA: { type: Number, default: 0 },
   orgComB: { type: Number, default: 0 },
   orgCode: String,
-  RecordIdBy: { type: Schema.Types.ObjectId, ref: "users" },
+  RecordIdBy: String,
   RecordNameBy: String,
   RecordDate: Date,
-  LastModifyById: { type: Schema.Types.ObjectId, ref: "users" },
+  LastModifyById: String,
   LastModifyByName: String,
-  LastModifyDate: Date
-});
+  LastModifyDate: Date,
+})
 
-mongoose.model("organizations", OrgSchema);
+mongoose.model('organizations', OrgSchema)

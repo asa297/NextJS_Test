@@ -14,7 +14,7 @@ const SubmitButton = styled(Button)`
   width: 100%;
   height: 100%;
   background-color: #009688 !important;
-  border-color: transparent;
+  border-color: transparent !important;
   color: white !important;
 
   font-size: 16px;
