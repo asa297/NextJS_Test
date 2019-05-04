@@ -1,6 +1,4 @@
 import React from 'react'
-import { admin } from '<helpers>/role'
-import { withAuth } from '<components>'
 
 class About extends React.PureComponent {
   render() {
@@ -12,4 +10,4 @@ class About extends React.PureComponent {
   }
 }
 
-export default withAuth([admin])(About)
+export default About

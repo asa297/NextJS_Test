@@ -1,8 +1,15 @@
-// next.config.js
+/* eslint-disable */
+const withCss = require('@zeit/next-css')
+
 const withPlugins = require('next-compose-plugins')
 const path = require('path')
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
+
+// fix: prevents error when .css files are required by node
+if (typeof require !== 'undefined') {
+  require.extensions['.css'] = file => {}
+}
 
 const nextConfig = {
   /* config options here */
@@ -40,6 +47,15 @@ module.exports = withPlugins(
       withSass,
       {
         cssModules: true,
+        cssLoaderOptions: {
+          localIdentName: '[local]___[hash:base64:5]',
+        },
+      },
+    ],
+    [
+      withCss,
+      {
+        cssModules: false,
         cssLoaderOptions: {
           localIdentName: '[local]___[hash:base64:5]',
         },
