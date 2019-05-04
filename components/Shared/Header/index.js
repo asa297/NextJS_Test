@@ -17,7 +17,7 @@ export default ({ page, auth, pageName, ...rest }) => {
 
         <UserNameContainer>
           <Tooltip placement="leftTop" title={auth.user ? auth.user.name : 'Guest'}>
-            <UserNameLabel>{auth.user ? auth.user.name : 'Guest'}</UserNameLabel>
+            <UserNameLabel>{auth.user ? auth.user.nickname : 'Guest'}</UserNameLabel>
           </Tooltip>
         </UserNameContainer>
       </HeaderContainer>

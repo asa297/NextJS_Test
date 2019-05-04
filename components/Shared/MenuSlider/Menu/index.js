@@ -8,3 +8,11 @@ export const reportMenu = [
   { name: 'DailyCashBalance', sub_name: 'D-CashBalance', path: '/report/4' },
   { name: 'DailyCommission', sub_name: 'D-Commission', path: '/report/5' },
 ]
+
+export const mainMenu = [
+  { name: 'Org', path: '/org', type: 'build' },
+  { name: 'Group', path: '/group', type: 'team' },
+  { name: 'Seller', path: '/seller', type: 'user' },
+  { name: 'Item', path: '/item', type: 'shop' },
+  { name: 'PO', path: '/po', type: 'barcode' },
+]

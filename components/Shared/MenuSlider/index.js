@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { reportMenu } from './Menu'
+import { reportMenu, mainMenu } from './Menu'
 import { Icon, Drawer, Menu } from 'antd'
+import { Auth } from '<services>'
 import Router from 'next/router'
 
 const SubMenu = Menu.SubMenu
@@ -16,38 +17,43 @@ const MenuItem = ({ name, type, ...rest }) => {
 
 export default ({ auth, ...rest }) => {
   const MenuFunction = page => {
+    const { key } = page
     rest.onClose()
+
+    // console.log(page)
+    if (key === '/login') Auth.login()
+    else if (key === '/logout') Auth.logout()
+    // else Router.push({ pathname: page })
     // if (page === 'login') Auth.login()
     // else if (page === 'logout') Auth.logout()
     // else Router.push({ pathname: page })
   }
 
+  const renderMainMenu = () => mainMenu.map(menu => <MenuItem name={menu.name} key={menu.path} type={menu.type} />)
   console.log(auth)
   const { isAuthenticated } = auth
   return (
     <DrawerWrapper {...rest}>
       <MenuWrapper onClick={e => MenuFunction(e)} defaultSelectedKeys={['/home']} mode="inline">
-        {!isAuthenticated ? <MenuItem name="Login" type="lock" /> : <MenuItem name="Logout" type="home" />}
-
         <MenuItem name="Home" key="/home" type="home" />
-        <MenuItem name="Org" key="/org" type="build" />
-        <MenuItem name="Group" key="/group" type="team" />
-        <MenuItem name="Seller" key="/seller" type="user" />
-        <MenuItem name="Item" key="/item" type="shop" />
-        <MenuItem name="PO" key="/po" type="barcode" />
-        <SubMenuItemWrapper
-          key="sub1"
-          title={
-            <span>
-              <MenuIcon type="pie-chart" />
-              <span>Report</span>
-            </span>
-          }
-        >
-          {reportMenu.map(menu => (
-            <MenuItem name={menu.name} key={menu.path} />
-          ))}
-        </SubMenuItemWrapper>
+
+        {!isAuthenticated ? <MenuItem name="Login" key="/login" type="lock" /> : <MenuItem name="Logout" key="/logout" type="unlock" />}
+        {isAuthenticated && renderMainMenu()}
+        {isAuthenticated && (
+          <SubMenuItemWrapper
+            key="sub1"
+            title={
+              <span>
+                <MenuIcon type="pie-chart" />
+                <span>Report</span>
+              </span>
+            }
+          >
+            {reportMenu.map(menu => (
+              <MenuItem name={menu.name} key={menu.path} />
+            ))}
+          </SubMenuItemWrapper>
+        )}
       </MenuWrapper>
     </DrawerWrapper>
   )
