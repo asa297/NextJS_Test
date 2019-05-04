@@ -10,7 +10,6 @@ import Router from 'next/router'
 class index extends React.PureComponent {
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)
-
     return { pageName: name }
   }
 
@@ -21,6 +20,7 @@ class index extends React.PureComponent {
 
   handleClick(rowSelected) {
     const { _id } = rowSelected
+    Router.push({ pathname: '/form/org', query: { _id } })
   }
 
   render() {

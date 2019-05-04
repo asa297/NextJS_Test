@@ -18,12 +18,31 @@ export const FetchOrganization = () => async dispatch => {
   }
 }
 
-export const GetOrganization = _id => (dispatch, getState) => {
+//Check Data in store frist then Check Data in DB if don't have in store
+export const GetOrganization = _id => async (dispatch, getState) => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     const { organizations } = getState()
+
     const organization = organizations.List.find(v => v._id === _id)
-    dispatch({ type: actionTypes.ORGANIZATION.FETCH, payload: { data: organization ? organization : {} } })
+    if (!organization) await GetOrganizationById(_id)(dispatch)
+    else dispatch({ type: actionTypes.ORGANIZATION.FETCH, payload: { data: organization } })
+  } catch (e) {
+    return e
+  } finally {
+    dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
+  }
+}
+
+export const GetOrganizationById = _id => async dispatch => {
+  try {
+    dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
+    await axios
+      .get(`/api/org/${_id}`, setAuthHeader())
+      .then(({ data }) => {
+        dispatch({ type: actionTypes.ORGANIZATION.FETCH, payload: { data } })
+      })
+      .catch(e => e)
   } catch (e) {
     return e
   } finally {

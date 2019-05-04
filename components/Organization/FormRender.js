@@ -4,20 +4,27 @@ import { OrganizationSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar } from '<components>'
 
 const orgTypeData = [{ id: 0, label: 'N/A' }, { id: 1, label: 'Russia' }, { id: 2, label: 'China' }]
+const initialValues = {
+  orgType: '',
+  orgName: '',
+  orgComA: 0,
+  orgComB: 0,
+  orgCode: '',
+}
+const generateFormData = Item => {
+  const { orgTypeId, orgTypeName } = Item
+  return {
+    orgType: { id: orgTypeId, label: orgTypeName },
+    ...Item,
+  }
+}
 
-export default ({ Insert, onDone, goBack, ...rest }) => {
+export default ({ Item, isEditingForm, Insert, onDone, goBack, ...rest }) => {
   const [isSubmiting, setisSubmiting] = useState(false)
-
   return (
     <>
       <Formik
-        initialValues={{
-          orgType: '',
-          orgName: '',
-          orgComA: 0,
-          orgComB: 0,
-          orgCode: '',
-        }}
+        initialValues={isEditingForm ? generateFormData(Item) : initialValues}
         enableReinitialize={true}
         validationSchema={OrganizationSchema}
         onSubmit={async (values, actions) => {

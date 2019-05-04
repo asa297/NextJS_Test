@@ -9,7 +9,7 @@ export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
   const des = data[index]['LastModifyDate']
   return (
     <ListView onClick={() => onClick(data[index])} {...rest}>
-      <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={momemt(des).format('DD-MM-YYYY')} />
+      <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={momemt(des).format('DD-MM-YYYY (HH:MM)')} />
     </ListView>
   )
 }

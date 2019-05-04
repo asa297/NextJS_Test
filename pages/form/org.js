@@ -10,12 +10,19 @@ import Router from 'next/router'
 class index extends React.PureComponent {
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)
+    const { _id: formId } = ctx.query
+    const isEditingForm = formId ? true : false
 
-    return { pageName: name }
+    return { pageName: name, formId, isEditingForm }
   }
 
+  componentWillMount() {
+    const { formId, Get } = this.props
+    if (formId) Get(formId)
+  }
   render() {
     const {
+      isEditingForm,
       organizations: { isFetching, Item },
       Insert,
     } = this.props
@@ -23,7 +30,7 @@ class index extends React.PureComponent {
     return (
       <>
         <FormContainer>
-          <OrgFormRender Item={Item} Insert={Insert} goBack={() => Router.push({ pathname: '/org' })} />
+          <OrgFormRender Item={Item} isEditingForm={isEditingForm} Insert={Insert} goBack={() => Router.push({ pathname: '/org' })} />
         </FormContainer>
         <ModalLoading loading={isFetching} text={'Submitting to Server...'} />
       </>
