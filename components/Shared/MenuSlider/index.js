@@ -30,14 +30,12 @@ export default ({ auth, ...rest }) => {
   }
 
   const renderMainMenu = () => mainMenu.map(menu => <MenuItem name={menu.name} key={menu.path} type={menu.type} />)
-  console.log(auth)
   const { isAuthenticated } = auth
   return (
     <DrawerWrapper {...rest}>
       <MenuWrapper onClick={e => MenuFunction(e)} defaultSelectedKeys={['/home']} mode="inline">
         <MenuItem name="Home" key="/home" type="home" />
 
-        {!isAuthenticated ? <MenuItem name="Login" key="/login" type="lock" /> : <MenuItem name="Logout" key="/logout" type="unlock" />}
         {isAuthenticated && renderMainMenu()}
         {isAuthenticated && (
           <SubMenuItemWrapper
@@ -54,6 +52,8 @@ export default ({ auth, ...rest }) => {
             ))}
           </SubMenuItemWrapper>
         )}
+
+        {!isAuthenticated ? <MenuItem name="Login" key="/login" type="lock" /> : <MenuItem name="Logout" key="/logout" type="unlock" />}
       </MenuWrapper>
     </DrawerWrapper>
   )
