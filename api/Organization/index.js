@@ -45,6 +45,35 @@ module.exports = server => {
     const { id } = req.params
     if (!id) res.status(403).send({ message: 'Need Parameter' })
     await organizationModel.findByIdAndDelete(id)
-    res.send()
+    res.send({ message: 'Organization is already deleted.' })
+  })
+
+  server.put('/api/org/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+    const { id } = req.params
+    const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
+    const user = req.user
+
+    if (!id) res.status(403).send({ message: 'Need Parameter' })
+
+    await organizationModel
+      .updateOne(
+        { _id: id },
+        {
+          $set: {
+            orgTypeId: orgType.id,
+            orgTypeName: orgType.label,
+            orgName,
+            orgComA,
+            orgComB,
+            orgCode,
+            LastModifyById: user.name,
+            LastModifyByName: user.nickname,
+            LastModifyDate: Date.now(),
+          },
+        },
+      )
+      .exec()
+
+    res.send({ message: 'Organization is already updated.' })
   })
 }

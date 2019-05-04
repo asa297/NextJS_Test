@@ -19,7 +19,7 @@ const generateFormData = Item => {
   }
 }
 
-export default ({ Item, isEditingForm, Insert, Delete, goBack, ...rest }) => {
+export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }) => {
   const [isSubmiting, setisSubmiting] = useState(false)
   return (
     <>
@@ -29,7 +29,10 @@ export default ({ Item, isEditingForm, Insert, Delete, goBack, ...rest }) => {
         validationSchema={OrganizationSchema}
         onSubmit={async (values, actions) => {
           setisSubmiting(true)
-          await Insert(values)
+
+          if (isEditingForm) await Update(values)
+          else await Insert(values)
+
           setisSubmiting(false)
           goBack()
         }}

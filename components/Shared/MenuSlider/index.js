@@ -28,7 +28,7 @@ export default ({ auth, ...rest }) => {
   const { isAuthenticated } = auth
   return (
     <DrawerWrapper {...rest}>
-      <MenuWrapper onClick={e => MenuFunction(e)} defaultSelectedKeys={['/home']} mode="inline">
+      <MenuWrapper onClick={e => MenuFunction(e)} mode="inline">
         <MenuItem name="Home" key="/" type="home" />
 
         {isAuthenticated && renderMainMenu()}

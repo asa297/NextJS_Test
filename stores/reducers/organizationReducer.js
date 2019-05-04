@@ -19,12 +19,17 @@ export default function(state = initState, action) {
       })
     case actionTypes.ORGANIZATION.STORE_NEW:
       return Object.assign({}, state, {
-        List: [...state.List, ...action.payload.data],
+        List: [...state.List, ...action.payload],
       })
     case actionTypes.ORGANIZATION.STORE_DELETE:
       return Object.assign({}, state, {
         List: [...state.List.filter(v => v._id !== action.payload._id)],
       })
+    case actionTypes.ORGANIZATION.STORE_UPDATE:
+      const indexUpdated = state.List.findIndex(v => v._id === action.payload._id)
+      if (!indexUpdated) state.List[indexUpdated] = { ...action.payload }
+      debugger
+      return state
     case actionTypes.ORGANIZATION.FETCH_STATUS:
       return Object.assign({}, state, {
         isFetching: action.payload.isFetching,

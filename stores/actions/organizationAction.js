@@ -81,3 +81,19 @@ export const DeleteOrganization = _id => async dispatch => {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
   }
 }
+
+export const UpdateOrganization = formValue => async dispatch => {
+  try {
+    dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
+    await axios
+      .put(`/api/org/${formValue._id}`, formValue, setAuthHeader())
+      .then(({}) => {
+        dispatch({ type: actionTypes.ORGANIZATION.STORE_UPDATE, payload: formValue })
+      })
+      .catch(e => e)
+  } catch (e) {
+    return e
+  } finally {
+    dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: false } })
+  }
+}
