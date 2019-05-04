@@ -6,7 +6,7 @@ import { MenuSlider } from '<components>'
 export default ({ page, auth, pageName, ...rest }) => {
   const [visible, setVisible] = useState(false)
   const titleDrawer = `Hi, ${auth.user ? auth.user.nickname : 'Guest'}`
-
+  console.log(auth)
   return (
     <>
       <HeaderContainer>
@@ -19,7 +19,7 @@ export default ({ page, auth, pageName, ...rest }) => {
         </MainContainer>
 
         <UserNameContainer>
-          <Tooltip placement="leftTop" title={auth.user ? auth.user.name : 'Guest'}>
+          <Tooltip placement="leftTop" title={auth.user ? auth.user.nickname : 'Guest'}>
             <UserNameLabel>{auth.user ? auth.user.nickname : 'Guest'}</UserNameLabel>
           </Tooltip>
         </UserNameContainer>

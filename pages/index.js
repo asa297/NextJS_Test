@@ -1,6 +1,13 @@
 import React from 'react'
+import { getPageNameFromReq } from '<helpers>/utils'
 
 class index extends React.PureComponent {
+  static async getInitialProps(ctx) {
+    const { name } = await getPageNameFromReq(ctx)
+
+    return { pageName: name }
+  }
+
   render() {
     return (
       <>
@@ -8,10 +15,6 @@ class index extends React.PureComponent {
       </>
     )
   }
-}
-
-index.getInitialProps = async ctx => {
-  return {}
 }
 
 export default index
