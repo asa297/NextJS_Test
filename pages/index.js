@@ -1,6 +1,6 @@
 import React from 'react'
 
-class Main extends React.PureComponent {
+class index extends React.PureComponent {
   render() {
     return (
       <>
@@ -10,8 +10,8 @@ class Main extends React.PureComponent {
   }
 }
 
-Main.getInitialProps = async ctx => {
+index.getInitialProps = async ctx => {
   return {}
 }
 
-export default Main
+export default index

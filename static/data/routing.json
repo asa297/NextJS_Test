@@ -5,11 +5,11 @@
       "path": "/"
     },
     {
-      "name": "Oranization",
+      "name": "Organization",
       "path": "/org"
     },
     {
-      "name": "Oranization Form",
+      "name": "Organization Form",
       "path": "/form/org"
     }
   ]

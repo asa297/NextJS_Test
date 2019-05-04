@@ -6,6 +6,7 @@ import { MenuSlider } from '<components>'
 export default ({ page, auth, pageName, ...rest }) => {
   const [visible, setVisible] = useState(false)
   const titleDrawer = `Hi, ${auth.user ? auth.user.nickname : 'Guest'}`
+
   return (
     <>
       <HeaderContainer>
@@ -13,6 +14,8 @@ export default ({ page, auth, pageName, ...rest }) => {
           <MenuContainer onClick={() => setVisible(true)}>
             <IconWhite type="bars" />
           </MenuContainer>
+
+          <LabelPage>{pageName}</LabelPage>
         </MainContainer>
 
         <UserNameContainer>
@@ -86,4 +89,10 @@ const UserNameLabel = styled.label`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`
+
+const LabelPage = styled.label`
+  font-size: 20px;
+  color: white;
+  font-weight: 100;
 `
