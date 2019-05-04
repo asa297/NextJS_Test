@@ -10,7 +10,7 @@ export const reportMenu = [
 ]
 
 export const mainMenu = [
-  { name: 'Org', path: '/org', type: 'build' },
+  { name: 'Organization', path: '/org', type: 'build' },
   { name: 'Group', path: '/group', type: 'team' },
   { name: 'Seller', path: '/seller', type: 'user' },
   { name: 'Item', path: '/item', type: 'shop' },

@@ -33,7 +33,7 @@ export default ({ auth, ...rest }) => {
 
         {isAuthenticated && renderMainMenu()}
         {isAuthenticated && (
-          <SubMenuItemWrapper
+          <SubMenu
             key="sub1"
             title={
               <span>
@@ -45,7 +45,7 @@ export default ({ auth, ...rest }) => {
             {reportMenu.map(menu => (
               <MenuItem name={menu.name} key={menu.path} />
             ))}
-          </SubMenuItemWrapper>
+          </SubMenu>
         )}
 
         {!isAuthenticated ? <MenuItem name="Login" key="/login" type="lock" /> : <MenuItem name="Logout" key="/logout" type="unlock" />}
@@ -58,6 +58,7 @@ const DrawerWrapper = styled(Drawer)`
   .ant-drawer-body {
     padding: 0px;
   }
+
   z-index: 20;
 `
 
@@ -68,14 +69,6 @@ const MenuWrapper = styled(Menu)`
 const MenuItemWrapper = styled(Menu.Item)`
   display: flex;
   align-items: center;
-  margin: 0px !important;
-`
-
-const SubMenuItemWrapper = styled(SubMenu)`
-  max-height: 40px;
-  .ant-menu-submenu-title {
-    margin: 0px;
-  }
 `
 
 const MenuIcon = styled(Icon)`
