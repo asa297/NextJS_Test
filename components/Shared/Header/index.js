@@ -6,7 +6,6 @@ import { MenuSlider } from '<components>'
 export default ({ page, auth, pageName, ...rest }) => {
   const [visible, setVisible] = useState(false)
   const titleDrawer = `Hi, ${auth.user ? auth.user.nickname : 'Guest'}`
-  console.log(auth)
   return (
     <>
       <HeaderContainer>

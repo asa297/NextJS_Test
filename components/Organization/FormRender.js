@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, Field } from 'formik'
 import { OrganizationSchema } from '<helpers>/validate'
-import { InputItem } from '<components>'
+import { InputItem, SelectItem } from '<components>'
 
 const orgTypeData = [{ id: 0, label: 'Russia' }, { id: 1, label: 'China' }]
 export default () => {
@@ -24,15 +24,16 @@ export default () => {
         }}
         render={props => (
           <form>
-            {/* <Field
+            <Field
               label="ประเภทบริษัท"
               name="org_type"
+              placeholder="Select a person"
               component={SelectItem}
               data={orgTypeData}
               value={props.values.org_type ? props.values.org_type.label : ''}
               fieldread="label"
-              onChange={e => props.setFieldValue('org_type', orgTypeData.find(v => v.label === e.target.value))}
-            /> */}
+              onChange={e => props.setFieldValue('org_type', orgTypeData.find(v => v.label === e))}
+            />
 
             <Field
               label="ชื่อบริษัท"

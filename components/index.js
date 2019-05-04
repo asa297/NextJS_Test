@@ -12,6 +12,7 @@ export { default as ButtonNew } from './Shared/ListComponents/ButtonNew'
 
 //Shared:FieldItems
 export { default as InputItem } from './Shared/FieldItems/InputItem'
+export { default as SelectItem } from './Shared/FieldItems/SelectItem'
 
 //Shared:Organation
 export { default as OrgListRender } from './Organization/ListRender'

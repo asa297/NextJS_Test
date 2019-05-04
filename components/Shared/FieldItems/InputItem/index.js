@@ -9,11 +9,11 @@ export default ({
   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc
   ...rest
 }) => {
-  const isError = (touched[field.name] && errors[field.name]) || errors[field.name] ? true : false
+  const error = (touched[field.name] && errors[field.name]) || errors[field.name] ? 1 : 0
   return (
     <FieldContainer>
-      <LabelWrapper>{label}</LabelWrapper>
-      <InputWrapper {...field} {...rest} isError={isError} />
+      <TextWrapper>{label}</TextWrapper>
+      <InputWrapper {...field} {...rest} error={error} />
       <div className={scss.field_error}>{(touched[field.name] && errors[field.name]) || errors[field.name]}</div>
     </FieldContainer>
   )
@@ -22,11 +22,12 @@ export default ({
 const FieldContainer = styled.div`
   padding-bottom: 10px;
 `
-const LabelWrapper = styled.label`
+const TextWrapper = styled.div`
   font-size: 16px;
+  margin-bottom: 5px;
 `
 const InputWrapper = styled(Input)`
   width: 100%;
-  border-color: ${props => (props.isError ? 'red' : '#d9d9d9')};
+  border-color: ${props => (props.error ? 'red' : '#d9d9d9')};
   padding: 20px 15px;
 `
