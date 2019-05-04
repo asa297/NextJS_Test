@@ -40,4 +40,11 @@ module.exports = server => {
 
     res.send({ message: 'Organization is already inserted.' })
   })
+
+  server.delete('/api/org/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+    const { id } = req.params
+    if (!id) res.status(403).send({ message: 'Need Parameter' })
+    await organizationModel.findByIdAndDelete(id)
+    res.send()
+  })
 }

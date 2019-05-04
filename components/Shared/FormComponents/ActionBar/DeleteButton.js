@@ -1,17 +1,16 @@
-import React from 'react'
 import styled from 'styled-components'
 
-import { Button } from 'antd'
+import { Button, Popconfirm } from 'antd'
 
-export default ({ classes, loading, ...rest }) => {
+export default ({ ...rest }) => {
   return (
-    <SubmitButton icon="left" {...rest}>
-      Back
-    </SubmitButton>
+    <Popconfirm {...rest}>
+      <DeleteButton icon="delete">Delete</DeleteButton>
+    </Popconfirm>
   )
 }
 
-const SubmitButton = styled(Button)`
+const DeleteButton = styled(Button)`
   width: 100%;
   height: 100%;
   background-color: red !important;

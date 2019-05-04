@@ -25,14 +25,15 @@ class index extends React.PureComponent {
       isEditingForm,
       organizations: { isFetching, Item },
       Insert,
+      Delete,
     } = this.props
 
     return (
       <>
         <FormContainer>
-          <OrgFormRender Item={Item} isEditingForm={isEditingForm} Insert={Insert} goBack={() => Router.push({ pathname: '/org' })} />
+          <OrgFormRender Item={Item} isEditingForm={isEditingForm} Insert={Insert} Delete={Delete} goBack={() => Router.push({ pathname: '/org' })} />
         </FormContainer>
-        <ModalLoading loading={isFetching} text={'Submitting to Server...'} />
+        <ModalLoading loading={isFetching} text={'Loading...'} />
       </>
     )
   }
@@ -40,7 +41,7 @@ class index extends React.PureComponent {
 
 index = connect(
   ({ organizations }) => ({ organizations }),
-  { Get: Action.GetOrganization, Insert: Action.InsertOrganization },
+  { Get: Action.GetOrganization, Insert: Action.InsertOrganization, Delete: Action.DeleteOrganization },
 )(index)
 
 export default withAuth([admin])(index)

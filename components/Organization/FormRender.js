@@ -19,7 +19,7 @@ const generateFormData = Item => {
   }
 }
 
-export default ({ Item, isEditingForm, Insert, onDone, goBack, ...rest }) => {
+export default ({ Item, isEditingForm, Insert, Delete, goBack, ...rest }) => {
   const [isSubmiting, setisSubmiting] = useState(false)
   return (
     <>
@@ -78,7 +78,14 @@ export default ({ Item, isEditingForm, Insert, onDone, goBack, ...rest }) => {
               onChange={e => props.setFieldValue('orgCode', e.target.value)}
             />
 
-            <ActionBar onBack={() => goBack()} onSubmit={props.handleSubmit} loading={isSubmiting} />
+            <ActionBar
+              isEditingForm={isEditingForm}
+              onDelete={() => Delete(Item._id)}
+              goBack={goBack}
+              popupTitle={`Are you sure to delete this Oranization?`}
+              onSubmit={props.handleSubmit}
+              loading={isSubmiting}
+            />
           </form>
         )}
       />

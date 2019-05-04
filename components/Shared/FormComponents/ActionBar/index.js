@@ -1,12 +1,15 @@
-import React from 'react'
 import styled from 'styled-components'
 import SubmitButton from './SubmitButton'
-import BackButton from './BackButton'
+import DeleteButton from './DeleteButton'
 
-export default ({ onBack, onSubmit, ...rest }) => {
+export default ({ isEditingForm, onDelete, onSubmit, goBack, popupTitle, ...rest }) => {
+  const handleDelete = async () => {
+    await onDelete()
+    goBack()
+  }
   return (
     <ActionBarContainer>
-      <BackButton onClick={() => onBack()} />
+      {isEditingForm && <DeleteButton title={popupTitle} onConfirm={handleDelete} />}
       <SubmitButton onClick={() => onSubmit()} {...rest} />
     </ActionBarContainer>
   )
