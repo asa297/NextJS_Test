@@ -10,6 +10,9 @@ export { default as ModalLoading } from './Shared/ModalLoading'
 export { default as ListVirtualized } from './Shared/ListComponents/ListVirtualized'
 export { default as ButtonNew } from './Shared/ListComponents/ButtonNew'
 
+//Shared:FormComponents
+export { default as ActionBar } from './Shared/FormComponents/ActionBar'
+
 //Shared:FieldItems
 export { default as InputItem } from './Shared/FieldItems/InputItem'
 export { default as SelectItem } from './Shared/FieldItems/SelectItem'

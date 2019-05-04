@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, Field } from 'formik'
 import { OrganizationSchema } from '<helpers>/validate'
-import { InputItem, SelectItem } from '<components>'
+import { InputItem, SelectItem, ActionBar } from '<components>'
 
 const orgTypeData = [{ id: 0, label: 'Russia' }, { id: 1, label: 'China' }]
 export default () => {
@@ -66,6 +66,8 @@ export default () => {
               value={props.values.org_code}
               onChange={e => props.setFieldValue('org_code', e.target.value)}
             />
+
+            <ActionBar onBack={() => Router.push({ pathname: '/org' })} onSubmit={props.handleSubmit} loading={isSubmiting} />
           </form>
         )}
       />
