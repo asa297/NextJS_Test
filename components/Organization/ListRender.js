@@ -6,10 +6,10 @@ import { List, Avatar } from 'antd'
 export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
   const src = data[index]['orgTypeId'] === 2 ? '/static/images/organization/china.png' : '/static/images/organization/russia.png'
   const text = `${data[index]['orgName']} (${data[index]['orgCode']})`
-  const des = data[index]['LastModifyDate']
+  const des = `Last Modify : ${momemt(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:MM)')}`
   return (
     <ListView onClick={() => onClick(data[index])} {...rest}>
-      <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={momemt(des).format('DD-MM-YYYY (HH:MM)')} />
+      <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={des} />
     </ListView>
   )
 }
