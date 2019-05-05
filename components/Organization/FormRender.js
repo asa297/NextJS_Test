@@ -30,8 +30,9 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
         onSubmit={async (values, actions) => {
           setisSubmiting(true)
 
-          if (isEditingForm) await Update(values)
-          else await Insert(values)
+          if (isEditingForm && values._id) await Update(values)
+          else if (!isEditingForm) await Insert(values)
+          else alert(`Server refuse your request.`)
 
           setisSubmiting(false)
           goBack()
@@ -85,7 +86,7 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
               isEditingForm={isEditingForm}
               onDelete={() => Delete(Item._id)}
               goBack={goBack}
-              popupTitle={`Are you sure to delete this Oranization?`}
+              popupTitle={`ยืนยันการลบรายการบริษัทนี้?`}
               onSubmit={props.handleSubmit}
               loading={isSubmiting}
             />

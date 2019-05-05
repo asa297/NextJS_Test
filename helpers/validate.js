@@ -12,3 +12,10 @@ export const OrganizationSchema = Yup.object().shape({
     .max(100, 'maximum number is 100.'),
   orgCode: Yup.string().required('Required'),
 })
+
+export const GroupSchema = Yup.object().shape({
+  org: Yup.object().required('Required'),
+  groupCode: Yup.string().required('Required'),
+  groupStickerNumber: Yup.number().typeError('Number Only'),
+  guideName: Yup.string().required('Required'),
+})

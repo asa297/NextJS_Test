@@ -21,3 +21,7 @@ export { default as SelectItem } from './Shared/FieldItems/SelectItem'
 //Shared:Organation
 export { default as OrgListRender } from './Organization/ListRender'
 export { default as OrgFormRender } from './Organization/FormRender'
+
+//Shared:Group
+export { default as GroupListRender } from './Group/ListRender'
+export { default as GroupFormRender } from './Group/FormRender'

@@ -54,6 +54,8 @@ module.exports = server => {
     const user = req.user
 
     if (!id) res.status(403).send({ message: 'Need Parameter' })
+    const found = await organizationModel.findById(id)
+    if (!found) res.status(403).send({ message: 'Organization is not found.' })
 
     await organizationModel
       .updateOne(

@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, ButtonNew, ListVirtualized, OrgListRender, SearchBar } from '<components>'
+import { withAuth, ModalLoading, ButtonNew, ListVirtualized, GroupListRender, SearchBar } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
@@ -33,7 +33,7 @@ class index extends React.PureComponent {
 
   handleClick(rowSelected) {
     const { _id } = rowSelected
-    Router.push({ pathname: '/group/org', query: { _id } })
+    Router.push({ pathname: '/form/group', query: { _id } })
   }
 
   handleSearch({ target: { value } }) {
@@ -41,7 +41,7 @@ class index extends React.PureComponent {
       groups: { List },
     } = this.props
 
-    const result = List.filter(v => v.orgName.includes(value) || v.orgCode.includes(value))
+    const result = List.filter(v => v.groupCode.includes(value) || v.orgName.includes(value))
     this.setState({ data: result })
   }
 
@@ -55,12 +55,12 @@ class index extends React.PureComponent {
       <>
         <SearchContainer>
           <SearchWrapper>
-            <SearchBar placeholder="ค้นหารายการบริษัท" onChange={e => this.handleSearch(e)} />
+            <SearchBar placeholder="ค้นหารายการกรุ๊ป" onChange={e => this.handleSearch(e)} />
           </SearchWrapper>
         </SearchContainer>
         <ListContainer>
           <ListVirtualized
-            rowRenderer={rowRenderer => OrgListRender({ ...rowRenderer, data, onClick: rowSelected => this.handleClick(rowSelected) })}
+            rowRenderer={rowRenderer => GroupListRender({ ...rowRenderer, data, onClick: rowSelected => this.handleClick(rowSelected) })}
             rowCount={data.length}
             rowHeight={70}
           />

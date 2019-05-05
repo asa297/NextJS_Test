@@ -3,15 +3,19 @@ import { actionTypes } from '../type'
 import { setAuthHeader } from '<helpers>/utils'
 const Module = `org`
 
-export const FetchOrganization = () => async dispatch => {
+export const FetchOrganization = (force = true) => async (dispatch, getState) => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
-    await axios
-      .get(`/api/${Module}`, setAuthHeader())
-      .then(({ data }) => {
-        dispatch({ type: actionTypes.ORGANIZATION.FETCH_LIST, payload: { data } })
-      })
-      .catch(e => e)
+
+    const { organizations } = getState()
+    if (organizations.List.length === 0 || force) {
+      await axios
+        .get(`/api/${Module}`, setAuthHeader())
+        .then(({ data }) => {
+          dispatch({ type: actionTypes.ORGANIZATION.FETCH_LIST, payload: { data } })
+        })
+        .catch(e => e)
+    }
   } catch (e) {
     return e
   } finally {
