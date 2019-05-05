@@ -9,27 +9,27 @@ const initState = {
 
 export default function(state = initState, action) {
   switch (action.type) {
-    case actionTypes.ORGANIZATION.FETCH:
+    case actionTypes.GROUP.FETCH:
       return Object.assign({}, state, {
         Item: { ...action.payload.data },
       })
-    case actionTypes.ORGANIZATION.FETCH_LIST:
+    case actionTypes.GROUP.FETCH_LIST:
       return Object.assign({}, state, {
         List: [...action.payload.data],
       })
-    case actionTypes.ORGANIZATION.STORE_NEW:
+    case actionTypes.GROUP.STORE_NEW:
       return Object.assign({}, state, {
         List: [...state.List, ...action.payload],
       })
-    case actionTypes.ORGANIZATION.STORE_DELETE:
+    case actionTypes.GROUP.STORE_DELETE:
       return Object.assign({}, state, {
         List: [...state.List.filter(v => v._id !== action.payload._id)],
       })
-    case actionTypes.ORGANIZATION.STORE_UPDATE:
+    case actionTypes.GROUP.STORE_UPDATE:
       const indexUpdated = state.List.findIndex(v => v._id === action.payload._id)
       if (!indexUpdated) state.List[indexUpdated] = { ...action.payload }
       return state
-    case actionTypes.ORGANIZATION.FETCH_STATUS:
+    case actionTypes.GROUP.FETCH_STATUS:
       return Object.assign({}, state, {
         isFetching: action.payload.isFetching,
       })

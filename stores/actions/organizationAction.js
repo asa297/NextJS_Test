@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { actionTypes } from '../type'
 import { setAuthHeader } from '<helpers>/utils'
+const Module = `org`
 
 export const FetchOrganization = () => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .get('/api/org', setAuthHeader())
+      .get(`/api/${Module}`, setAuthHeader())
       .then(({ data }) => {
         dispatch({ type: actionTypes.ORGANIZATION.FETCH_LIST, payload: { data } })
       })
@@ -38,7 +39,7 @@ export const GetOrganizationById = _id => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .get(`/api/org/${_id}`, setAuthHeader())
+      .get(`/api/${Module}/${_id}`, setAuthHeader())
       .then(({ data }) => {
         dispatch({ type: actionTypes.ORGANIZATION.FETCH, payload: { data } })
       })
@@ -54,7 +55,7 @@ export const InsertOrganization = formValue => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .post('/api/org', formValue, setAuthHeader())
+      .post(`/api/${Module}`, formValue, setAuthHeader())
       .then(({}) => {
         dispatch({ type: actionTypes.ORGANIZATION.STORE_NEW, payload: formValue })
       })
@@ -70,7 +71,7 @@ export const DeleteOrganization = _id => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .delete(`/api/org/${_id}`, setAuthHeader())
+      .delete(`/api/${Module}/${_id}`, setAuthHeader())
       .then(({}) => {
         dispatch({ type: actionTypes.ORGANIZATION.STORE_DELETE, payload: { _id } })
       })
@@ -86,7 +87,7 @@ export const UpdateOrganization = formValue => async dispatch => {
   try {
     dispatch({ type: actionTypes.ORGANIZATION.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .put(`/api/org/${formValue._id}`, formValue, setAuthHeader())
+      .put(`/api/${Module}/${formValue._id}`, formValue, setAuthHeader())
       .then(({}) => {
         dispatch({ type: actionTypes.ORGANIZATION.STORE_UPDATE, payload: formValue })
       })

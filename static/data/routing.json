@@ -11,6 +11,14 @@
     {
       "name": "Organization Form",
       "path": "/form/org"
+    },
+    {
+      "name": "Group",
+      "path": "/group"
+    },
+    {
+      "name": "Group Form",
+      "path": "/form/group"
     }
   ]
 }
