@@ -54,7 +54,9 @@ class index extends React.PureComponent {
     return (
       <>
         <SearchContainer>
-          <SearchBar placeholder="ค้นหารายการบริษัท" onChange={e => this.handleSearch(e)} />
+          <SearchWrapper>
+            <SearchBar placeholder="ค้นหารายการบริษัท" onChange={e => this.handleSearch(e)} />
+          </SearchWrapper>
         </SearchContainer>
         <ListContainer>
           <ListVirtualized
@@ -88,4 +90,11 @@ const SearchContainer = styled.div`
   padding-top: 10px;
 
   width: 100%;
+`
+
+const SearchWrapper = styled.div`
+  @media (min-width: 0px) and (max-width: 1200px) {
+    width: 100%;
+  }
+  width: 80%;
 `
