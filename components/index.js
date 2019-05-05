@@ -1,5 +1,5 @@
 //HOC
-export { default as withAuth } from './hoc/withAuth'
+export { default as withAuth } from './HOC/withAuth'
 
 //Shared
 export { default as Header } from './Shared/Header'
