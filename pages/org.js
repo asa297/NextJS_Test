@@ -4,10 +4,14 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, ButtonNew, ListVirtualized, OrgListRender } from '<components>'
+import { withAuth, ModalLoading, ButtonNew, ListVirtualized, OrgListRender, SearchBar } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
+  state = {
+    data: [],
+    searchKeyword: undefined,
+  }
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)
     return { pageName: name }
@@ -18,18 +22,40 @@ class index extends React.PureComponent {
     Fetch()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      organizations: { isFetching, List: data },
+    } = prevProps
+    if (data && isFetching) {
+      this.setState({ data })
+    }
+  }
+
   handleClick(rowSelected) {
     const { _id } = rowSelected
     Router.push({ pathname: '/form/org', query: { _id } })
   }
 
+  handleSearch({ target: { value } }) {
+    const {
+      organizations: { List },
+    } = this.props
+
+    const result = List.filter(v => v.orgName.includes(value) || v.orgCode.includes(value))
+    this.setState({ data: result })
+  }
+
   render() {
     const {
-      organizations: { isFetching, List: data },
+      organizations: { isFetching },
     } = this.props
+    const { data } = this.state
 
     return (
       <>
+        <SearchContainer>
+          <SearchBar placeholder="ค้นหารายการบริษัท" onChange={e => this.handleSearch(e)} />
+        </SearchContainer>
         <ListContainer>
           <ListVirtualized
             rowRenderer={rowRenderer => OrgListRender({ ...rowRenderer, data, onClick: rowSelected => this.handleClick(rowSelected) })}
@@ -54,5 +80,12 @@ export default withAuth([admin])(index)
 const ListContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 5px;
+`
+
+const SearchContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+
+  width: 100%;
 `

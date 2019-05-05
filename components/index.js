@@ -9,6 +9,7 @@ export { default as ModalLoading } from './Shared/ModalLoading'
 //Shared:ListComponents
 export { default as ListVirtualized } from './Shared/ListComponents/ListVirtualized'
 export { default as ButtonNew } from './Shared/ListComponents/ButtonNew'
+export { default as SearchBar } from './Shared/ListComponents/SearchBar'
 
 //Shared:FormComponents
 export { default as ActionBar } from './Shared/FormComponents/ActionBar'
