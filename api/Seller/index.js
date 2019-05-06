@@ -4,12 +4,12 @@ const mongoose = require('mongoose')
 const sellerModel = mongoose.model('sellers')
 
 module.exports = server => {
-  server.get('/api/org', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+  server.get('/api/seller', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const result = await sellerModel.find({})
     res.send(result)
   })
 
-  server.get('/api/org/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+  server.get('/api/seller/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     if (!id) res.status(403).send({ message: 'Need Parameter' })
 
@@ -17,7 +17,7 @@ module.exports = server => {
     res.send(result)
   })
 
-  server.post('/api/org', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+  server.post('/api/seller', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
     const user = req.user
     const found = await sellerModel.findOne({ orgCode })
@@ -41,14 +41,14 @@ module.exports = server => {
     res.send({ message: 'Seller is already inserted.' })
   })
 
-  server.delete('/api/org/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+  server.delete('/api/seller/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     if (!id) res.status(403).send({ message: 'Need Parameter' })
     await sellerModel.findByIdAndDelete(id)
     res.send({ message: 'Seller is already deleted.' })
   })
 
-  server.put('/api/org/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
+  server.put('/api/seller/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
     const user = req.user
