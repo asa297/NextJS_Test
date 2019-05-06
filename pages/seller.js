@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, ButtonNew, ListVirtualized, OrgListRender, SearchBar } from '<components>'
+import { withAuth, ModalLoading, ButtonNew, ListVirtualized, SellerListRender, SearchBar } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
@@ -23,7 +23,7 @@ class index extends React.PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      organizations: { isFetching, List: data },
+      sellers: { isFetching, List: data },
     } = prevProps
     if (data && isFetching) {
       this.setState({ data })
@@ -32,21 +32,21 @@ class index extends React.PureComponent {
 
   handleClick(rowSelected) {
     const { _id } = rowSelected
-    Router.push({ pathname: '/form/org', query: { _id } })
+    Router.push({ pathname: '/form/seller', query: { _id } })
   }
 
   handleSearch({ target: { value } }) {
     const {
-      organizations: { List },
+      sellers: { List },
     } = this.props
 
-    const result = List.filter(v => v.orgName.includes(value) || v.orgCode.includes(value))
+    const result = List.filter(v => v.sellerName.includes(value) || v.sellerCode.includes(value))
     this.setState({ data: result })
   }
 
   render() {
     const {
-      organizations: { isFetching },
+      sellers: { isFetching },
     } = this.props
     const { data } = this.state
 
@@ -54,17 +54,17 @@ class index extends React.PureComponent {
       <>
         <SearchContainer>
           <SearchWrapper>
-            <SearchBar placeholder="ค้นหารายการบริษัท" onChange={e => this.handleSearch(e)} />
+            <SearchBar placeholder="ค้นหารายการพนักงานขาย" onChange={e => this.handleSearch(e)} />
           </SearchWrapper>
         </SearchContainer>
         <ListContainer>
           <ListVirtualized
-            rowRenderer={rowRenderer => OrgListRender({ ...rowRenderer, data, onClick: rowSelected => this.handleClick(rowSelected) })}
+            rowRenderer={rowRenderer => SellerListRender({ ...rowRenderer, data, onClick: rowSelected => this.handleClick(rowSelected) })}
             rowCount={data.length}
             rowHeight={70}
           />
         </ListContainer>
-        <ButtonNew onClick={() => Router.push({ pathname: '/form/org' })} />
+        <ButtonNew onClick={() => Router.push({ pathname: '/form/seller' })} />
         <ModalLoading loading={isFetching} text={'Loading...'} />
       </>
     )
@@ -72,8 +72,8 @@ class index extends React.PureComponent {
 }
 
 index = connect(
-  ({ organizations }) => ({ organizations }),
-  { Fetch: Action.FetchOrganization },
+  ({ sellers }) => ({ sellers }),
+  { Fetch: Action.FetchSeller },
 )(index)
 
 export default withAuth([admin])(index)

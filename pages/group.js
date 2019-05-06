@@ -10,7 +10,6 @@ import Router from 'next/router'
 class index extends React.PureComponent {
   state = {
     data: [],
-    searchKeyword: undefined,
   }
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)

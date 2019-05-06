@@ -19,6 +19,14 @@
     {
       "name": "Group Form",
       "path": "/form/group"
+    },
+    {
+      "name": "Seller",
+      "path": "/seller"
+    },
+    {
+      "name": "Seller Form",
+      "path": "/form/seller"
     }
   ]
 }

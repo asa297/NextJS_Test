@@ -25,3 +25,7 @@ export { default as OrgFormRender } from './Organization/FormRender'
 //Shared:Group
 export { default as GroupListRender } from './Group/ListRender'
 export { default as GroupFormRender } from './Group/FormRender'
+
+//Shared:Seller
+export { default as SellerListRender } from './Seller/ListRender'
+export { default as SellerFormRender } from './Seller/FormRender'
