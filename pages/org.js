@@ -49,7 +49,7 @@ class index extends React.PureComponent {
       organizations: { isFetching },
     } = this.props
     const { data } = this.state
-
+    console.log(data)
     return (
       <>
         <SearchContainer>

@@ -1,22 +1,13 @@
 import React, { useState } from 'react'
 import { Formik, Field } from 'formik'
-import { OrganizationSchema } from '<helpers>/validate'
-import { InputItem, SelectItem, ActionBar } from '<components>'
+import { SellerSchema } from '<helpers>/validate'
+import { InputItem, ActionBar } from '<components>'
 
-const orgTypeData = [{ id: 0, label: 'N/A' }, { id: 1, label: 'Russia' }, { id: 2, label: 'China' }]
 const initialValues = {
-  orgType: '',
-  orgName: '',
-  orgComA: 0,
-  orgComB: 0,
-  orgCode: '',
-}
-const generateFormData = Item => {
-  const { orgTypeId, orgTypeName } = Item
-  return {
-    orgType: { id: orgTypeId, label: orgTypeName },
-    ...Item,
-  }
+  sellerName: '',
+  sellerCode: '',
+  sellerCom: 0,
+  sellerRemarks: '',
 }
 
 export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }) => {
@@ -24,9 +15,9 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
   return (
     <>
       <Formik
-        initialValues={isEditingForm ? generateFormData(Item) : initialValues}
+        initialValues={isEditingForm ? Item : initialValues}
         enableReinitialize={true}
-        validationSchema={OrganizationSchema}
+        validationSchema={SellerSchema}
         onSubmit={async (values, actions) => {
           setisSubmiting(true)
 
@@ -40,53 +31,45 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
         render={props => (
           <form>
             <Field
-              label="ประเภทบริษัท"
-              name="orgType"
-              component={SelectItem}
-              data={orgTypeData}
-              value={props.values.orgType ? props.values.orgType.label : ''}
+              label="ชื่อพนักงานขาย"
+              type="text"
+              name="sellerName"
+              component={InputItem}
+              value={props.values.sellerName}
               fieldread="label"
-              onChange={e => props.setFieldValue('orgType', orgTypeData.find(v => v.label === e))}
+              onChange={props.handleChange}
             />
 
             <Field
-              label="ชื่อบริษัท"
+              label="รหัสพนักงานขาย"
               type="text"
-              name="orgName"
+              name="sellerCode"
               component={InputItem}
-              value={props.values.orgName}
-              onChange={e => props.setFieldValue('orgName', e.target.value)}
+              value={props.values.sellerCode}
+              onChange={props.handleChange}
             />
             <Field
-              label="ค่าคอมมิชชั่นสินค้า A"
+              label="ค่านํ้าพนักงานขาย"
               type="number"
-              name="orgComA"
+              name="sellerCom"
               component={InputItem}
-              value={props.values.orgComA}
-              onChange={e => props.setFieldValue('orgComA', e.target.value)}
+              value={props.values.sellerCom}
+              onChange={props.handleChange}
             />
             <Field
-              label="ค่าคอมมิชชั่นสินค้า B"
+              label="หมายเหตุ"
               type="number"
-              name="orgComB"
+              name="sellerRemarks"
               component={InputItem}
-              value={props.values.orgComB}
-              onChange={e => props.setFieldValue('orgComB', e.target.value)}
-            />
-            <Field
-              label="รหัสบริษัท"
-              type="text"
-              name="orgCode"
-              component={InputItem}
-              value={props.values.orgCode}
-              onChange={e => props.setFieldValue('orgCode', e.target.value)}
+              value={props.values.sellerRemarks}
+              onChange={props.handleChange}
             />
 
             <ActionBar
               isEditingForm={isEditingForm}
               onDelete={() => Delete(Item._id)}
               goBack={goBack}
-              popupTitle={`ยืนยันการลบรายการบริษัทนี้?`}
+              popupTitle={`ยืนยันการลบรายการพนักงานขายนี้?`}
               onSubmit={props.handleSubmit}
               loading={isSubmiting}
             />

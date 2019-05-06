@@ -18,18 +18,16 @@ module.exports = server => {
   })
 
   server.post('/api/seller', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
-    const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
+    const { sellerName, sellerCode, sellerCom, sellerRemarks } = req.body
     const user = req.user
-    const found = await sellerModel.findOne({ orgCode })
+    const found = await sellerModel.findOne({ sellerCode })
     if (found) return res.status(403).send({ message: 'Seller Code is Duplicate.' })
 
     await sellerModel({
-      orgTypeId: orgType.id,
-      orgTypeName: orgType.label,
-      orgName,
-      orgComA,
-      orgComB,
-      orgCode,
+      sellerName,
+      sellerCode,
+      sellerCom,
+      sellerRemarks,
       RecordIdBy: user.name,
       RecordNameBy: user.nickname,
       RecordDate: Date.now(),
@@ -50,7 +48,7 @@ module.exports = server => {
 
   server.put('/api/seller/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
-    const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
+    const { sellerName, sellerCode, sellerCom, sellerRemarks } = req.body
     const user = req.user
 
     if (!id) res.status(403).send({ message: 'Need Parameter' })
@@ -62,12 +60,10 @@ module.exports = server => {
         { _id: id },
         {
           $set: {
-            orgTypeId: orgType.id,
-            orgTypeName: orgType.label,
-            orgName,
-            orgComA,
-            orgComB,
-            orgCode,
+            sellerName,
+            sellerCode,
+            sellerCom,
+            sellerRemarks,
             LastModifyById: user.name,
             LastModifyByName: user.nickname,
             LastModifyDate: Date.now(),
