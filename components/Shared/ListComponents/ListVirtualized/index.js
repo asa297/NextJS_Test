@@ -16,8 +16,8 @@ class virtualized extends React.PureComponent {
 export default virtualized
 
 const Container = styled.div`
-  @media (min-width: 600px) {
-    height: calc(100vh - 64px - 100px);
+  @media (max-width: 1200px) {
+    height: calc(100vh - 64px - 52px);
   }
   height: calc(100vh - 56px - 100px);
   @media (min-width: 0px) and (max-width: 1200px) {
