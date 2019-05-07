@@ -19,11 +19,13 @@ mongoose.connect(process.env.MONGO_URL)
 require('./models/Organization')
 require('./models/Group')
 require('./models/Seller')
+require('./models/Item')
 
 //API
 require('./api/Organization')(server)
 require('./api/Group')(server)
 require('./api/Seller')(server)
+require('./api/Item')(server)
 
 app
   .prepare()
