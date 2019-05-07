@@ -27,6 +27,14 @@
     {
       "name": "Seller Form",
       "path": "/form/seller"
+    },
+    {
+      "name": "Item",
+      "path": "/item"
+    },
+    {
+      "name": "Item Form",
+      "path": "/form/item"
     }
   ]
 }

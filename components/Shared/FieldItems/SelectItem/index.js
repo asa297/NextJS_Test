@@ -7,16 +7,19 @@ const Option = Select.Option
 
 export default ({
   label,
+  required,
   data,
   fieldread,
   field, // { name, value, onChange, onBlur }
   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc
   ...rest
 }) => {
-  const error = (touched[field.name] && errors[field.name]) || errors[field.name] ? true : false
+  const error = touched[field.name] && errors[field.name] ? true : false
   return (
     <FieldContainer>
-      <LabelWrapper>{label}</LabelWrapper>
+      <LabelWrapper>
+        {label} {required && <LabelRed>*</LabelRed>}
+      </LabelWrapper>
 
       <SelectWrapper
         {...field}
@@ -32,7 +35,7 @@ export default ({
           </Option>
         ))}
       </SelectWrapper>
-      <div className={scss.field_error}>{(touched[field.name] && errors[field.name]) || errors[field.name]}</div>
+      <div className={scss.field_error}>{touched[field.name] && errors[field.name]}</div>
     </FieldContainer>
   )
 }
@@ -56,4 +59,7 @@ const SelectWrapper = styled(Select)`
   .ant-select-selection {
     border-color: ${props => (props.error ? 'red' : '#d9d9d9')};
   }
+`
+const LabelRed = styled.label`
+  color: red;
 `

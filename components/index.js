@@ -17,15 +17,20 @@ export { default as ActionBar } from './Shared/FormComponents/ActionBar'
 //Shared:FieldItems
 export { default as InputItem } from './Shared/FieldItems/InputItem'
 export { default as SelectItem } from './Shared/FieldItems/SelectItem'
+export { default as InputUploadFile } from './Shared/FieldItems/InputUploadFile'
 
-//Shared:Organation
-export { default as OrgListRender } from './Organization/ListRender'
-export { default as OrgFormRender } from './Organization/FormRender'
+//Shared:OrganationPageComponents
+export { default as OrgListRender } from './OrganizationPageComponents/ListRender'
+export { default as OrgFormRender } from './OrganizationPageComponents/FormRender'
 
-//Shared:Group
-export { default as GroupListRender } from './Group/ListRender'
-export { default as GroupFormRender } from './Group/FormRender'
+//Shared:GroupPageComponents
+export { default as GroupListRender } from './GroupPageComponents/ListRender'
+export { default as GroupFormRender } from './GroupPageComponents/FormRender'
 
-//Shared:Seller
-export { default as SellerListRender } from './Seller/ListRender'
-export { default as SellerFormRender } from './Seller/FormRender'
+//Shared:SellerPageComponents
+export { default as SellerListRender } from './SellerPageComponents/ListRender'
+export { default as SellerFormRender } from './SellerPageComponents/FormRender'
+
+//Shared:ItemPageComponents
+export { default as ItemListRender } from './ItemPageComponents/ListRender'
+export { default as ItemFormRender } from './ItemPageComponents/FormRender'

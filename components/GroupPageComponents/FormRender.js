@@ -50,6 +50,7 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, orgList, 
               label="บริษัท"
               name="org"
               component={SelectItem}
+              required
               data={orgData}
               value={props.values.org ? props.values.org.label : ''}
               fieldread="label"
@@ -61,8 +62,9 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, orgList, 
               type="text"
               name="groupCode"
               component={InputItem}
+              required
               value={props.values.groupCode}
-              onChange={e => props.setFieldValue('groupCode', e.target.value)}
+              onChange={props.handleChange}
             />
             <Field
               label="หมายเลขสติกเกอร์"
@@ -70,23 +72,16 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, orgList, 
               name="groupStickerNumber"
               component={InputItem}
               value={props.values.groupStickerNumber}
-              onChange={e => props.setFieldValue('groupStickerNumber', e.target.value)}
+              onChange={props.handleChange}
             />
-            <Field
-              label="ชื่อไกด์"
-              type="text"
-              name="guideName"
-              component={InputItem}
-              value={props.values.guideName}
-              onChange={e => props.setFieldValue('guideName', e.target.value)}
-            />
+            <Field label="ชื่อไกด์" type="text" name="guideName" component={InputItem} required value={props.values.guideName} onChange={props.handleChange} />
             <Field
               label="หมายเหตุ"
               type="text"
               name="groupRemarks"
               component={InputItem}
               value={props.values.groupRemarks}
-              onChange={e => props.setFieldValue('groupRemarks', e.target.value)}
+              onChange={props.handleChange}
             />
 
             <ActionBar

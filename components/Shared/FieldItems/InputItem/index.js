@@ -5,16 +5,20 @@ import scss from '<styles>/main.scss'
 
 export default ({
   label,
+  required,
   field, // { name, value, onChange, onBlur }
   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc
   ...rest
 }) => {
-  const error = (touched[field.name] && errors[field.name]) || errors[field.name] ? 1 : 0
+  const error = touched[field.name] && errors[field.name] ? 1 : 0
   return (
     <FieldContainer>
-      <TextWrapper>{label}</TextWrapper>
+      <TextWrapper>
+        {label}
+        {required && <LabelRed>*</LabelRed>}
+      </TextWrapper>
       <InputWrapper {...field} {...rest} error={error} />
-      <div className={scss.field_error}>{(touched[field.name] && errors[field.name]) || errors[field.name]}</div>
+      <div className={scss.field_error}>{touched[field.name] && errors[field.name]}</div>
     </FieldContainer>
   )
 }
@@ -30,4 +34,7 @@ const InputWrapper = styled(Input)`
   width: 100%;
   border-color: ${props => (props.error ? 'red' : '#d9d9d9')};
   padding: 20px 15px;
+`
+const LabelRed = styled.label`
+  color: red;
 `

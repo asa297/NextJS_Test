@@ -43,44 +43,33 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
               label="ประเภทบริษัท"
               name="orgType"
               component={SelectItem}
+              required
               data={orgTypeData}
               value={props.values.orgType ? props.values.orgType.label : ''}
               fieldread="label"
               onChange={e => props.setFieldValue('orgType', orgTypeData.find(v => v.label === e))}
             />
 
-            <Field
-              label="ชื่อบริษัท"
-              type="text"
-              name="orgName"
-              component={InputItem}
-              value={props.values.orgName}
-              onChange={e => props.setFieldValue('orgName', e.target.value)}
-            />
+            <Field label="ชื่อบริษัท" type="text" name="orgName" component={InputItem} required value={props.values.orgName} onChange={props.handleChange} />
             <Field
               label="ค่าคอมมิชชั่นสินค้า A"
               type="number"
               name="orgComA"
               component={InputItem}
+              required
               value={props.values.orgComA}
-              onChange={e => props.setFieldValue('orgComA', e.target.value)}
+              onChange={props.handleChange}
             />
             <Field
               label="ค่าคอมมิชชั่นสินค้า B"
               type="number"
               name="orgComB"
               component={InputItem}
+              required
               value={props.values.orgComB}
-              onChange={e => props.setFieldValue('orgComB', e.target.value)}
+              onChange={props.handleChange}
             />
-            <Field
-              label="รหัสบริษัท"
-              type="text"
-              name="orgCode"
-              component={InputItem}
-              value={props.values.orgCode}
-              onChange={e => props.setFieldValue('orgCode', e.target.value)}
-            />
+            <Field label="รหัสบริษัท" type="text" name="orgCode" component={InputItem} required value={props.values.orgCode} onChange={props.handleChange} />
 
             <ActionBar
               isEditingForm={isEditingForm}

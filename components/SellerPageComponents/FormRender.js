@@ -35,16 +35,17 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
               type="text"
               name="sellerName"
               component={InputItem}
+              required
               value={props.values.sellerName}
               fieldread="label"
               onChange={props.handleChange}
             />
-
             <Field
               label="รหัสพนักงานขาย"
               type="text"
               name="sellerCode"
               component={InputItem}
+              required
               value={props.values.sellerCode}
               onChange={props.handleChange}
             />
@@ -53,6 +54,7 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
               type="number"
               name="sellerCom"
               component={InputItem}
+              required
               value={props.values.sellerCom}
               onChange={props.handleChange}
             />
