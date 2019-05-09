@@ -27,9 +27,24 @@ require('./api/Group')(server)
 require('./api/Seller')(server)
 require('./api/Item')(server)
 
+
+
+const upload = require('./services-backend/image-upload');
+const singleUpload = upload.single('image')
+
 app
   .prepare()
   .then(() => {
+
+    server.post('/image-upload', function(req, res) {
+      singleUpload(req, res, function(err, some) {
+        if (err) {
+          return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
+        }
+        return res.json({'imageUrl': req.file.location});
+      });
+    })
+
     server.get('*', (req, res) => {
       return handle(req, res)
     })
@@ -46,6 +61,6 @@ app
     })
   })
   .catch(ex => {
-    console.error(ex.stack)
+    console.error(ex.stack) 
     process.exit(1)
   })
