@@ -14,6 +14,7 @@ const ItemSchema = new Schema({
   itemTypeId: Number,
   itemTypeName: String,
   imageUrl: String,
+  imageKey: String,
   RecordIdBy: String,
   RecordNameBy: String,
   RecordDate: Date,

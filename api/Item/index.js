@@ -21,32 +21,35 @@ module.exports = server => {
   })
 
   server.post('/api/item', ValidateToken, ValidateRole([admin, accountant]), singleUpload, async (req, res) => {
-    // const au = JSON.parse(req.body.bodyForm)
-    // console.log(au)
-    console.log(req.file)
-    res.send('test')
+    const { bodyForm } = req.body
+    const { itemType, itemCode, itemName, itemFactory, itemColor, itemSkin, itemPrice, itemRemarks } = JSON.parse(bodyForm)
+    const user = req.user
 
-    // const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
-    // const user = req.user
-    // const found = await itemModel.findOne({ orgCode })
-    // if (found) return res.status(403).send({ message: 'Item Code is Duplicate.' })
+    const found = await itemModel.findOne({ itemCode })
+    if (found) return res.status(403).send({ message: 'Item Code is Duplicate.' })
+    const { location = '', key = '' } = req.file
 
-    // await itemModel({
-    //   orgTypeId: orgType.id,
-    //   orgTypeName: orgType.label,
-    //   orgName,
-    //   orgComA,
-    //   orgComB,
-    //   orgCode,
-    //   RecordIdBy: user.name,
-    //   RecordNameBy: user.nickname,
-    //   RecordDate: Date.now(),
-    //   LastModifyById: user.name,
-    //   LastModifyByName: user.nickname,
-    //   LastModifyDate: Date.now(),
-    // }).save()
+    await itemModel({
+      itemCode,
+      itemName,
+      itemFactory,
+      itemColor,
+      itemSkin,
+      itemPrice,
+      itemRemarks,
+      itemTypeId: itemType.id,
+      itemTypeName: itemType.label,
+      imageUrl: location,
+      imageKey: key,
+      RecordIdBy: user.name,
+      RecordNameBy: user.nickname,
+      RecordDate: Date.now(),
+      LastModifyById: user.name,
+      LastModifyByName: user.nickname,
+      LastModifyDate: Date.now(),
+    }).save()
 
-    // res.send({ message: 'Item is already inserted.' })
+    res.send({ message: 'Item is already inserted.' })
   })
 
   server.delete('/api/item/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
