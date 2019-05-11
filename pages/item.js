@@ -40,7 +40,7 @@ class index extends React.PureComponent {
       items: { List },
     } = this.props
 
-    const result = List.filter(v => v.orgName.includes(value) || v.orgCode.includes(value))
+    const result = List.filter(v => v.itemCode.includes(value) || v.itemName.includes(value))
     this.setState({ data: result })
   }
 
