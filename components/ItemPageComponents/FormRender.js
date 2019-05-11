@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Formik, Field } from 'formik'
 import { ItemSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar, InputUploadFile } from '<components>'
-import { getBase64Image, convertObjectFormToFormData } from '<helpers>/utils'
+import { getBase64Image } from '<helpers>/utils'
 import { message } from 'antd'
 
 const itemTypeData = [{ id: 1, label: 'Type A' }, { id: 2, label: 'Type B' }]
@@ -59,7 +59,7 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, onConvert
           data.append('file', values.file)
           data.append('bodyForm', JSON.stringify(valueWrapper))
 
-          if (isEditingForm && valueWrapper._id) await Update(data)
+          if (isEditingForm && valueWrapper._id) await Update(data, valueWrapper._id)
           else if (!isEditingForm) await Insert(data)
           else alert(`Server refuse your request.`)
           setisSubmiting(false)

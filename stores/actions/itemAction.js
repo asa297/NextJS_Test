@@ -87,11 +87,11 @@ export const DeleteItem = _id => async dispatch => {
   }
 }
 
-export const UpdateItem = formValue => async dispatch => {
+export const UpdateItem = (formValue, id) => async dispatch => {
   try {
     dispatch({ type: actionTypes.ITEM.FETCH_STATUS, payload: { isFetching: true } })
     await axios
-      .put(`/api/${Module}/${formValue._id}`, formValue, setAuthHeader())
+      .put(`/api/${Module}/${id}`, formValue, setAuthHeader())
       .then(({}) => {
         dispatch({ type: actionTypes.ITEM.STORE_UPDATE, payload: formValue })
       })
