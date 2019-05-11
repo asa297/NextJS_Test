@@ -89,6 +89,7 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, onConvert
               required
               value={props.values.itemCode}
               onChange={props.handleChange}
+              disabled={isEditingForm}
             />
             <Field
               label="ชื่อสินค้า"

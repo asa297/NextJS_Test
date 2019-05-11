@@ -27,7 +27,6 @@ module.exports = server => {
 
     const found = await itemModel.findOne({ itemCode })
     if (found) return res.status(403).send({ message: 'Item Code is Duplicate.' })
-    const { location = '', key = '' } = req.file
 
     await itemModel({
       itemCode,
@@ -39,8 +38,8 @@ module.exports = server => {
       itemRemarks,
       itemTypeId: itemType.id,
       itemTypeName: itemType.label,
-      imageUrl: location,
-      imageKey: key,
+      imageUrl: req.file ? req.file.location : '',
+      imageKey: req.file ? req.file.key : '',
       RecordIdBy: user.name,
       RecordNameBy: user.nickname,
       RecordDate: Date.now(),
