@@ -92,8 +92,8 @@ const SearchContainer = styled.div`
 `
 
 const SearchWrapper = styled.div`
-  @media (min-width: 0px) and (max-width: 1200px) {
+  @media (min-width: 0px) and (max-width: 1366px) {
     width: 100%;
   }
-  width: 80%;
+  width: 60%;
 `
