@@ -10,7 +10,15 @@ const uploadButton = (
 
 export default ({ value, ...rest }) => {
   return (
-    <UploadWrapper listType="picture-card" className="avatar-uploader" showUploadList={false} {...rest}>
+    <UploadWrapper
+      listType="picture-card"
+      className="avatar-uploader"
+      showUploadList={false}
+      customRequest={({ file, onSuccess }) => {
+        onSuccess('ok')
+      }}
+      {...rest}
+    >
       {value ? <ImageWrapper image={value} /> : uploadButton}
     </UploadWrapper>
   )
