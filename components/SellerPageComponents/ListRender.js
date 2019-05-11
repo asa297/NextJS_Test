@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import momemt from 'moment'
 import { List, Avatar } from 'antd'
 
-export default ({ data, index, onClick, ...rest }) => {
+export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
   const src = '/static/images/seller/user.png'
   const text = `${data[index]['sellerName']} (${data[index]['sellerCode']})`
   const des = `Last Modify : ${momemt(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:MM)')}`
