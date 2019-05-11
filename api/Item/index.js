@@ -3,6 +3,9 @@ const { admin, accountant } = require('../../helpers/role')
 const mongoose = require('mongoose')
 const itemModel = mongoose.model('items')
 
+const upload = require('../../services-backend/image-upload')
+const singleUpload = upload.single('file')
+
 module.exports = server => {
   server.get('/api/item', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const result = await itemModel.find({})
@@ -17,28 +20,33 @@ module.exports = server => {
     res.send(result)
   })
 
-  server.post('/api/item', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
-    const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
-    const user = req.user
-    const found = await itemModel.findOne({ orgCode })
-    if (found) return res.status(403).send({ message: 'Item Code is Duplicate.' })
+  server.post('/api/item', ValidateToken, ValidateRole([admin, accountant]), singleUpload, async (req, res) => {
+    // const au = JSON.parse(req.body.bodyForm)
+    // console.log(au)
+    console.log(req.file)
+    res.send('test')
 
-    await itemModel({
-      orgTypeId: orgType.id,
-      orgTypeName: orgType.label,
-      orgName,
-      orgComA,
-      orgComB,
-      orgCode,
-      RecordIdBy: user.name,
-      RecordNameBy: user.nickname,
-      RecordDate: Date.now(),
-      LastModifyById: user.name,
-      LastModifyByName: user.nickname,
-      LastModifyDate: Date.now(),
-    }).save()
+    // const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
+    // const user = req.user
+    // const found = await itemModel.findOne({ orgCode })
+    // if (found) return res.status(403).send({ message: 'Item Code is Duplicate.' })
 
-    res.send({ message: 'Item is already inserted.' })
+    // await itemModel({
+    //   orgTypeId: orgType.id,
+    //   orgTypeName: orgType.label,
+    //   orgName,
+    //   orgComA,
+    //   orgComB,
+    //   orgCode,
+    //   RecordIdBy: user.name,
+    //   RecordNameBy: user.nickname,
+    //   RecordDate: Date.now(),
+    //   LastModifyById: user.name,
+    //   LastModifyByName: user.nickname,
+    //   LastModifyDate: Date.now(),
+    // }).save()
+
+    // res.send({ message: 'Item is already inserted.' })
   })
 
   server.delete('/api/item/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {

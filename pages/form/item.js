@@ -8,6 +8,9 @@ import { withAuth, ModalLoading, ItemFormRender } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
+  state = {
+    imageConverting: false,
+  }
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)
     const { _id: formId } = ctx.query
@@ -28,6 +31,7 @@ class index extends React.PureComponent {
       Delete,
       Update,
     } = this.props
+    const { imageConverting } = this.state
 
     return (
       <>
@@ -39,9 +43,10 @@ class index extends React.PureComponent {
             Delete={Delete}
             Update={Update}
             goBack={() => Router.push({ pathname: '/item' })}
+            onConvertImage={imageConverting => this.setState({ imageConverting })}
           />
         </FormContainer>
-        <ModalLoading loading={isFetching} text={'Loading...'} />
+        <ModalLoading loading={isFetching || imageConverting} text={'Loading...'} />
       </>
     )
   }

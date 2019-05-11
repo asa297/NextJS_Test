@@ -8,12 +8,21 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const aws = require('aws-sdk')
+
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
 //config initize
 require('dotenv').config()
 mongoose.connect(process.env.MONGO_URL)
+
+//AWS
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  region: process.env.AWS_RESGION,
+})
 
 //Models
 require('./models/Organization')
@@ -27,24 +36,9 @@ require('./api/Group')(server)
 require('./api/Seller')(server)
 require('./api/Item')(server)
 
-
-
-const upload = require('./services-backend/image-upload');
-const singleUpload = upload.single('image')
-
 app
   .prepare()
   .then(() => {
-
-    server.post('/image-upload', function(req, res) {
-      singleUpload(req, res, function(err, some) {
-        if (err) {
-          return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
-        }
-        return res.json({'imageUrl': req.file.location});
-      });
-    })
-
     server.get('*', (req, res) => {
       return handle(req, res)
     })
@@ -61,6 +55,6 @@ app
     })
   })
   .catch(ex => {
-    console.error(ex.stack) 
+    console.error(ex.stack)
     process.exit(1)
   })

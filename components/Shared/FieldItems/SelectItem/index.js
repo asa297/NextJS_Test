@@ -14,7 +14,8 @@ export default ({
   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc
   ...rest
 }) => {
-  const error = touched[field.name] && errors[field.name] ? true : false
+  const error = (touched[field.name] && errors[field.name]) || errors[field.name] ? true : false
+
   return (
     <FieldContainer>
       <LabelWrapper>
@@ -35,7 +36,7 @@ export default ({
           </Option>
         ))}
       </SelectWrapper>
-      <div className={scss.field_error}>{touched[field.name] && errors[field.name]}</div>
+      <div className={scss.field_error}>{(touched[field.name] && errors[field.name]) || errors[field.name]}</div>
     </FieldContainer>
   )
 }

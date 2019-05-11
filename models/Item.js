@@ -13,7 +13,7 @@ const ItemSchema = new Schema({
   itemRemarks: String,
   itemTypeId: Number,
   itemTypeName: String,
-  imageBase64: String,
+  imageUrl: String,
   RecordIdBy: String,
   RecordNameBy: String,
   RecordDate: Date,

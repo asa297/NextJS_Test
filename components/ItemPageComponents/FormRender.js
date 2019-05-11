@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { Formik, Field } from 'formik'
 import { ItemSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar, InputUploadFile } from '<components>'
+import { getBase64Image, convertObjectFormToFormData } from '<helpers>/utils'
+import { message } from 'antd'
 
 const itemTypeData = [{ id: 1, label: 'Type A' }, { id: 2, label: 'Type B' }]
 const initialValues = {
-  itemType: '',
-  orgName: '',
-  orgComA: 0,
-  orgComB: 0,
-  orgCode: '',
+  imageUrl: '',
+  itemPrice: 0,
 }
 const generateFormData = Item => {
   const { itemTypeId, itemTypeName } = Item
@@ -18,12 +18,31 @@ const generateFormData = Item => {
     ...Item,
   }
 }
-const handleUploadImage = props => {
-  console.log(props)
-}
 
-export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }) => {
+export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, onConvertImage, ...rest }) => {
   const [isSubmiting, setisSubmiting] = useState(false)
+
+  const handleUploadImage = (file, props) => {
+    const isJPG = file.type === 'image/jpeg'
+    const isLt1M = file.size / 1024 / 1024 < 1
+
+    if (!isJPG) {
+      message.error('JPG file Only!')
+      return
+    }
+    if (!isLt1M) {
+      message.error('Image must smaller than 1MB!')
+      return
+    }
+
+    onConvertImage(true)
+    getBase64Image(file, base64Img => {
+      props.setFieldValue('imageUrl', base64Img)
+      props.setFieldValue('file', file)
+      onConvertImage(false)
+    })
+  }
+
   return (
     <>
       <Formik
@@ -32,18 +51,25 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
         validationSchema={ItemSchema}
         onSubmit={async (values, actions) => {
           setisSubmiting(true)
+          let valueWrapper = { ...values }
+          valueWrapper.imageUrl = ''
+          valueWrapper.file = null
 
-          if (isEditingForm && values._id) await Update(values)
-          else if (!isEditingForm) await Insert(values)
+          let data = new FormData()
+          data.append('file', values.file)
+          data.append('bodyForm', JSON.stringify(valueWrapper))
+
+          if (isEditingForm && valueWrapper._id) await Update(data)
+          else if (!isEditingForm) await Insert(data)
           else alert(`Server refuse your request.`)
-
           setisSubmiting(false)
           goBack()
         }}
         render={props => (
           <form>
-            <Field name="imageBase64" component={InputUploadFile} value={props.values.imageBase64} onChange={e => console.log(e)} />
-
+            <UploadWrapper>
+              <Field name="imageUrl" component={InputUploadFile} value={props.values.imageUrl} beforeUpload={e => handleUploadImage(e, props)} />
+            </UploadWrapper>
             <Field
               label="ประเภทสินค้า"
               name="itemType"
@@ -115,3 +141,16 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
     </>
   )
 }
+
+const UploadWrapper = styled.div`
+  @media (max-width: 992px) {
+    height: 250px;
+    width: 100%;
+  }
+  @media (min-width: 992px) and (max-width: 1200px) {
+    height: 350px;
+  }
+  margin: auto;
+  width: 50%;
+  height: 400px;
+`

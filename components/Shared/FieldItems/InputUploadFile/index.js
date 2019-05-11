@@ -1,17 +1,5 @@
-import { Upload, Icon, message } from 'antd'
+import { Upload, Icon } from 'antd'
 import styled from 'styled-components'
-
-const beforeUpload = file => {
-  const isJPG = file.type === 'image/jpeg'
-  if (!isJPG) {
-    message.error('You can only upload JPG file!')
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!')
-  }
-  return isJPG && isLt2M
-}
 
 const uploadButton = (
   <div>
@@ -22,15 +10,8 @@ const uploadButton = (
 
 export default ({ value, ...rest }) => {
   return (
-    <UploadWrapper
-      listType="picture-card"
-      className="avatar-uploader"
-      showUploadList={false}
-      //   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-      beforeUpload={beforeUpload}
-      {...rest}
-    >
-      {value ? <img src={value} alt="avatar" /> : uploadButton}
+    <UploadWrapper listType="picture-card" className="avatar-uploader" showUploadList={false} {...rest}>
+      {value ? <ImageWrapper image={value} /> : uploadButton}
     </UploadWrapper>
   )
 }
@@ -40,4 +21,11 @@ const UploadWrapper = styled(Upload)`
     width: 100%;
     height: 100%;
   }
+`
+
+const ImageWrapper = styled.img`
+  width: 100%;
+  height: 100%;
+  background: url(${props => props.image}) no-repeat center;
+  background-size: contain;
 `

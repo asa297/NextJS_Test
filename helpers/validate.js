@@ -32,7 +32,7 @@ export const SellerSchema = Yup.object().shape({
 export const ItemSchema = Yup.object().shape({
   itemType: Yup.object().required('Required'),
   itemCode: Yup.string().required('Required'),
-  itemName: Yup.object().required('Required'),
+  itemName: Yup.string().required('Required'),
   itemPrice: Yup.number()
     .typeError('Number Only')
     .min(0, 'number must more than 0.')

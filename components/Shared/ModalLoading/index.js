@@ -22,7 +22,7 @@ const ModalContainer = styled.div`
   background-color: rgba(96, 96, 96, 0.5);
   z-index: 999;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
