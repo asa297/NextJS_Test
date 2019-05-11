@@ -3,15 +3,18 @@ import React from 'react'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
 import Head from 'next/head'
-
-import NProgress from 'nprogress'
 import Router from 'next/router'
 
-import { Header } from '<components>'
+import NProgress from 'nprogress'
 
+import { Header, MenuSlider } from '<components>'
 import { Auth } from '<services>'
 
 import '../styles/main.scss'
+
+import MediaQuery from 'react-responsive'
+
+import styled from 'styled-components'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -38,12 +41,33 @@ class MyApp extends App {
         </Head>
 
         <Header {...pageProps} auth={auth} />
-        <Provider store={reduxStore}>
-          <Component {...pageProps} auth={auth} />
-        </Provider>
+        <MasterLayout>
+          <MediaQuery query="(min-device-width: 1366px)">
+            <MenuSlider {...pageProps} auth={auth} />
+          </MediaQuery>
+          <ContentLayout>
+            <Provider store={reduxStore}>
+              <Component {...pageProps} auth={auth} />
+            </Provider>
+          </ContentLayout>
+        </MasterLayout>
       </Container>
     )
   }
 }
 
 export default withReduxStore(MyApp)
+
+const MasterLayout = styled.div`
+  display: flex;
+  background-color: #f0f2f5;
+  @media (max-width: 600px) {
+    height: calc(100vh - 56px);
+  }
+
+  height: calc(100vh - 64px);
+`
+
+const ContentLayout = styled.div`
+  width: calc(100% - 200px);
+`

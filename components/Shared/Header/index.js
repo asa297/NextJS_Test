@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Icon, Tooltip } from 'antd'
 import styled from 'styled-components'
-import { MenuSlider } from '<components>'
+import { DrawerSlider } from '<components>'
+import MediaQuery from 'react-responsive'
 
 export default ({ page, auth, pageName, ...rest }) => {
   const [visible, setVisible] = useState(false)
@@ -10,9 +11,11 @@ export default ({ page, auth, pageName, ...rest }) => {
     <>
       <HeaderContainer>
         <MainContainer>
-          <MenuContainer onClick={() => setVisible(true)}>
-            <IconWhite type="bars" />
-          </MenuContainer>
+          <MediaQuery query="(max-device-width: 1366px)">
+            <MenuContainer onClick={() => setVisible(true)}>
+              <IconWhite type="bars" />
+            </MenuContainer>
+          </MediaQuery>
 
           <LabelPage>{pageName}</LabelPage>
         </MainContainer>
@@ -23,7 +26,9 @@ export default ({ page, auth, pageName, ...rest }) => {
           </Tooltip>
         </UserNameContainer>
       </HeaderContainer>
-      <MenuSlider visible={visible} onClose={() => setVisible(!visible)} closable={false} placement={'left'} title={titleDrawer} auth={auth} />
+      <MediaQuery query="(max-device-width: 1366px)">
+        <DrawerSlider visible={visible} onClose={() => setVisible(!visible)} closable={false} placement={'left'} title={titleDrawer} auth={auth} />
+      </MediaQuery>
     </>
   )
 }
@@ -36,7 +41,8 @@ const HeaderContainer = styled.header`
     height: 64px;
   }
   height: 56px;
-  background-color: #2196f3;
+  background-color: #001529;
+  color: rgba(255, 255, 255, 0.65);
 
   display: flex;
   align-items: center;
@@ -55,7 +61,6 @@ const MenuContainer = styled.div`
   margin-left: 10px;
 `
 const IconWhite = styled(Icon)`
-  color: white;
   cursor: pointer;
   :hover,
   :focus {
@@ -84,7 +89,6 @@ const UserNameContainer = styled.div`
 
 const UserNameLabel = styled.label`
   font-size: 14px;
-  color: white;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -93,6 +97,9 @@ const UserNameLabel = styled.label`
 
 const LabelPage = styled.label`
   font-size: 20px;
-  color: white;
   font-weight: 100;
+
+  @media (min-width: 1366px) {
+    padding-left: 30px;
+  }
 `

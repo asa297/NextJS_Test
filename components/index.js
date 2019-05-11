@@ -3,7 +3,9 @@ export { default as withAuth } from './HOC/withAuth'
 
 //Shared
 export { default as Header } from './Shared/Header'
-export { default as MenuSlider } from './Shared/MenuSlider'
+export { default as DrawerSlider } from './Shared/Menu/Drawer'
+export { default as MenuSlider } from './Shared/Menu/Silder'
+
 export { default as ModalLoading } from './Shared/ModalLoading'
 
 //Shared:ListComponents
