@@ -57,6 +57,19 @@ module.exports = server => {
   server.delete('/api/item/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     if (!id) res.status(403).send({ message: 'Need Parameter' })
+    const oldData = await itemModel.findById(id)
+    if (oldData.imageKey !== '') {
+      s3.deleteObject(
+        {
+          Bucket: process.env.S3_BUCKET,
+          Key: oldData.imageKey,
+        },
+        (err, data) => {
+          console.log(err, data)
+        },
+      )
+    }
+
     await itemModel.findByIdAndDelete(id)
     res.send({ message: 'Item is already deleted.' })
   })
