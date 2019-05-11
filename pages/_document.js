@@ -38,7 +38,7 @@ export default class MyDocument extends Document {
           <link rel="icon" type="image/x-icon" href="/static/logo/shopping.ico" />
           <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
         </Head>
-        <body style={{ margin: '0px' }}>
+        <body style={{ margin: '0px', backgroundColor: '#f0f2f5' }}>
           <Main />
           <NextScript />
         </body>

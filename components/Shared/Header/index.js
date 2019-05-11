@@ -36,7 +36,8 @@ const HeaderContainer = styled.header`
     height: 64px;
   }
   height: 56px;
-  background-color: #2196f3;
+  background-color: #001529;
+  color: rgba(255, 255, 255, 0.65);
 
   display: flex;
   align-items: center;
@@ -55,7 +56,6 @@ const MenuContainer = styled.div`
   margin-left: 10px;
 `
 const IconWhite = styled(Icon)`
-  color: white;
   cursor: pointer;
   :hover,
   :focus {
@@ -84,7 +84,6 @@ const UserNameContainer = styled.div`
 
 const UserNameLabel = styled.label`
   font-size: 14px;
-  color: white;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -93,6 +92,5 @@ const UserNameLabel = styled.label`
 
 const LabelPage = styled.label`
   font-size: 20px;
-  color: white;
   font-weight: 100;
 `
