@@ -172,6 +172,29 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                   onChange={props.handleChange}
                 />
               </Panel>
+
+              <Panel header="ส่วนที่ 4 : สรุปราชการขาย" key="4">
+                <Field label="ยอดรวม" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+
+                <Field label="ส่วนลด" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+
+                <Field label="จำนวนชำระเครดิต" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+
+                <Field label="จำนวนชาร์จเครดิต" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+
+                <Field label="ยอดที่ต้องชำระ" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+
+                <Field
+                  label="ยอดรับเงิน"
+                  type="text"
+                  name="itemRemarks"
+                  component={InputItem}
+                  value={props.values.itemRemarks}
+                  onChange={props.handleChange}
+                />
+
+                <Field label="ยอดเงินทอน" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+              </Panel>
             </Collapse>
 
             <ActionBar onSubmit={props.handleSubmit} loading={isSubmiting} />
