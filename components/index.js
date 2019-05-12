@@ -34,3 +34,6 @@ export { default as SellerFormRender } from './SellerPageComponents/FormRender'
 //Shared:ItemPageComponents
 export { default as ItemListRender } from './ItemPageComponents/ListRender'
 export { default as ItemFormRender } from './ItemPageComponents/FormRender'
+
+//Shared:PurchaseOrderComponents
+export { default as PurchaseOrderForm } from './PurchaseOrderComponents/PurchaseOrderForm'

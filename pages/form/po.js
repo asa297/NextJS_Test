@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading } from '<components>'
+import { withAuth, ModalLoading, PurchaseOrderForm } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
@@ -16,8 +16,11 @@ class index extends React.PureComponent {
   render() {
     return (
       <>
-        <FormContainer />
-        <ModalLoading loading={true} text={'Loading...'} />
+        <FormContainer>
+          <PurchaseOrderForm />
+        </FormContainer>
+
+        <ModalLoading loading={false} text={'Loading...'} />
       </>
     )
   }
