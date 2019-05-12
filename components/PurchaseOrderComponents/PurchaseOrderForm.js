@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Formik, Field } from 'formik'
-import { GroupSchema } from '<helpers>/validate'
+import { PurchaseOrderSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar, SearchBar, PurchaseOrderItemLists } from '<components>'
 import { Collapse } from 'antd'
 
@@ -14,17 +14,14 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
   const handleSearch = async e => {
     let item = await FindItem(e)
     const foundItem = listItems.findIndex(v => v.itemCode === e)
-
     if (!item) {
       alert('ไม่มีเว้ย')
       return
     }
-
     if (item.itemQty_Shop1 === 0) {
       alert('ไม่มีของเว้ย')
       return
     }
-
     if (foundItem > -1) {
       if (listItems[foundItem]._qty === item.itemQty_Shop1) {
         alert('จำนวนสินค้าของรายการขายนี้เท่ากับจำนวนสินค้าที่มีในคลังสินค้าแล้ว')
@@ -34,7 +31,6 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
       item._qty = 1
       setlistItems([...listItems, item])
     }
-
     setsearchKey('')
   }
 
@@ -68,31 +64,30 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
     setlistItems([..._listItems])
   }
 
-  const groupsData = () => {
-    return groups.map(v => {
+  const groupsData = () =>
+    groups.map(v => {
       return {
         id: v._id,
         label: `${v.groupCode} (${v.guideName})`,
         ...v,
       }
     })
-  }
 
-  const sellersData = () => {
-    return sellers.map(v => {
+  const sellersData = () =>
+    sellers.map(v => {
       return {
         id: v._id,
         label: `${v.sellerName} (${v.sellerCode})`,
         ...v,
       }
     })
-  }
+
   return (
     <>
       <Formik
         initialValues={{}}
         enableReinitialize={true}
-        validationSchema={GroupSchema}
+        validationSchema={PurchaseOrderSchema}
         onSubmit={async (values, actions) => {
           // setisSubmiting(true)
           // if (isEditingForm && values._id) await Update(values)
@@ -107,7 +102,7 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
               <Panel header="ส่วนที่ 1 : รายละเอียดเบื้องต้น" key="1">
                 <Field
                   label="กรุ๊ป"
-                  name="org"
+                  name="group"
                   component={SelectItem}
                   required
                   data={groupsData()}
@@ -118,7 +113,7 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
 
                 <Field
                   label="พนักงานขาย"
-                  name="org"
+                  name="seller"
                   component={SelectItem}
                   required
                   data={sellersData()}
@@ -146,54 +141,55 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
               </Panel>
 
               <Panel header="ส่วนที่ 3 : รายละเอียดการชำระเงิน" key="3">
-                <Field
-                  label="ส่วนลด"
-                  type="text"
-                  name="itemRemarks"
-                  component={InputItem}
-                  value={props.values.itemRemarks}
-                  onChange={props.handleChange}
-                />
+                <Field label="ส่วนลด" type="text" name="discount" component={InputItem} value={props.values.discount} onChange={props.handleChange} />
                 <Field
                   label="ชำระเป็นเครดิต"
                   type="text"
-                  name="itemRemarks"
+                  name="credit"
                   component={InputItem}
-                  value={props.values.itemRemarks}
+                  value={props.values.credit}
                   onChange={props.handleChange}
                 />
 
                 <Field
                   label="ชาร์์จเครดิต"
                   type="text"
-                  name="itemRemarks"
+                  name="creditCharge"
                   component={InputItem}
-                  value={props.values.itemRemarks}
+                  value={props.values.creditCharge}
                   onChange={props.handleChange}
                 />
               </Panel>
 
               <Panel header="ส่วนที่ 4 : สรุปราชการขาย" key="4">
-                <Field label="ยอดรวม" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Field label="ยอดรวม" type="text" name="subTotal" component={InputItem} value={props.values.itemRemarks} disabled />
 
-                <Field label="ส่วนลด" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Field label="ส่วนลด" type="text" name="grandTotalDiscount" component={InputItem} value={props.values.itemRemarks} disabled />
 
-                <Field label="จำนวนชำระเครดิต" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Field label="จำนวนชำระเครดิต" type="text" name="grandTotalCredit" component={InputItem} value={props.values.itemRemarks} disabled />
 
-                <Field label="จำนวนชาร์จเครดิต" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Field
+                  label="จำนวนชาร์จเครดิต"
+                  type="text"
+                  name="grandTotalCreditCharge"
+                  component={InputItem}
+                  value={props.values.itemRemarks}
+                  disabled
+                />
 
-                <Field label="ยอดที่ต้องชำระ" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Field label="ยอดที่ต้องชำระ" type="text" name="grandTotal" component={InputItem} value={props.values.grandTotal} disabled />
 
                 <Field
                   label="ยอดรับเงิน"
                   type="text"
-                  name="itemRemarks"
+                  name="receiveCash"
                   component={InputItem}
-                  value={props.values.itemRemarks}
+                  required
+                  value={props.values.receiveCash}
                   onChange={props.handleChange}
                 />
 
-                <Field label="ยอดเงินทอน" type="text" name="itemRemarks" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Field label="ยอดเงินทอน" type="text" name="changeCash" component={InputItem} value={props.values.changeCash} disabled />
               </Panel>
             </Collapse>
 

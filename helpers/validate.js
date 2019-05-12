@@ -38,3 +38,18 @@ export const ItemSchema = Yup.object().shape({
     .min(0, 'number must more than 0.')
     .required('Required'),
 })
+
+export const PurchaseOrderSchema = Yup.object().shape({
+  group: Yup.object().required('Required'),
+  seller: Yup.object().required('Required'),
+  discount: Yup.number()
+    .min(0, 'number must more than 0.')
+    .max(100, 'maximum number is 100.'),
+
+  credit: Yup.number().min(0, 'number must more than 0.'),
+  creditCharge: Yup.number()
+    .min(0, 'number must more than 0.')
+    .max(100, 'maximum number is 100.'),
+
+  receiveCash: Yup.number().min(0, 'number must more than 0.'),
+})
