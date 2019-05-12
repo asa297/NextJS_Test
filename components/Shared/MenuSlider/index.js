@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { reportMenu, mainMenu } from './Menu'
+import { reportMenu, mainMenu } from './menuContent'
 import { Icon, Drawer, Menu } from 'antd'
 import { Auth } from '<services>'
 import Router from 'next/router'

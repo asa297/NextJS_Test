@@ -35,6 +35,10 @@
     {
       "name": "Item Form",
       "path": "/form/item"
+    },
+    {
+      "name": "Purchase Order Form",
+      "path": "/form/po"
     }
   ]
 }

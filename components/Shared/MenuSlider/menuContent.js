@@ -14,5 +14,5 @@ export const mainMenu = [
   { name: 'Group', path: '/group', type: 'team' },
   { name: 'Seller', path: '/seller', type: 'user' },
   { name: 'Item', path: '/item', type: 'shop' },
-  { name: 'PO', path: '/po', type: 'barcode' },
+  { name: 'PO', path: '/form/po', type: 'barcode' },
 ]

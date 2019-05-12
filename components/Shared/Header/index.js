@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Icon, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import styled from 'styled-components'
 import { MenuSlider } from '<components>'
 
@@ -11,8 +11,7 @@ export default ({ page, auth, pageName, ...rest }) => {
       <HeaderContainer>
         <MainContainer>
           <MenuContainer onClick={() => setVisible(true)}>
-            {/* <IconWhite type="bars" /> */}
-            <MenuIcon src="/static/images/menu.svg" />
+            <MenuIcon src="/static/images/menu.png" />
           </MenuContainer>
 
           <LabelPage>{pageName}</LabelPage>
@@ -47,8 +46,7 @@ const HeaderContainer = styled.header`
 const MenuContainer = styled.div`
   width: 50px;
   height: 100%;
-  padding: 10px;
-  font-size: 26px;
+  padding: 15px;
 
   display: flex;
   align-items: center;
