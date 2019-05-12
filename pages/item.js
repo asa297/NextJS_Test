@@ -95,5 +95,5 @@ const SearchWrapper = styled.div`
   @media (min-width: 0px) and (max-width: 1366px) {
     width: 100%;
   }
-  width: 60%;
+  width: 65%;
 `
