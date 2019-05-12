@@ -3,7 +3,6 @@ import { Formik, Field } from 'formik'
 import { GroupSchema } from '<helpers>/validate'
 import { InputItem, SelectItem, ActionBar, SearchBar, PurchaseOrderItemLists } from '<components>'
 import { Collapse } from 'antd'
-import styled from 'styled-components'
 
 const Panel = Collapse.Panel
 
@@ -37,6 +36,36 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
     }
 
     setsearchKey('')
+  }
+
+  const handleListClick = (id, type) => {
+    let _listItems = [...listItems]
+    const foundItem = listItems.findIndex(v => v._id === id)
+    if (type === 'PLUS' && listItems[foundItem]._qty + 1 > listItems[foundItem].itemQty_Shop1) {
+      alert('Full')
+      return
+    }
+    if (type === 'MINUS' && listItems[foundItem]._qty - 1 === 0) {
+      _listItems.splice(foundItem, 1)
+      setlistItems([..._listItems])
+      return
+    }
+
+    if (type === 'PLUS') _listItems[foundItem]._qty++
+    else _listItems[foundItem]._qty--
+
+    setlistItems([..._listItems])
+  }
+
+  const handleQtyChange = (id, e) => {
+    let _listItems = [...listItems]
+    const foundItem = listItems.findIndex(v => v._id === id)
+
+    if (e.target.value > listItems[foundItem].itemQty_Shop1) _listItems[foundItem]._qty = listItems[foundItem].itemQty_Shop1
+    else if (e.target.value < 0) _listItems[foundItem]._qty = 0
+    else _listItems[foundItem]._qty = e.target.value
+
+    setlistItems([..._listItems])
   }
 
   const groupsData = () => {
@@ -98,9 +127,26 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                   onChange={e => props.setFieldValue('org', orgData.find(v => v.label === e))}
                 />
               </Panel>
+
+              <Panel header="ส่วนที่ 2 : รายการสินค้า" key="2">
+                <SearchBar
+                  placeholder="ค้นหาสินค้า"
+                  value={searchKey}
+                  onChange={e => setsearchKey(e.target.value)}
+                  onSearch={e => handleSearch(e, props)}
+                  enterButton={true}
+                  size="large"
+                />
+
+                <PurchaseOrderItemLists
+                  listItems={listItems}
+                  onClick={(id, type) => handleListClick(id, type)}
+                  onChange={(id, e) => handleQtyChange(id, e)}
+                />
+              </Panel>
             </Collapse>
 
-            <ItemListContainer>
+            {/* <ItemListContainer>
               <SearchBar
                 placeholder="ค้นหาสินค้า"
                 value={searchKey}
@@ -110,8 +156,12 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                 size="large"
               />
 
-              <PurchaseOrderItemLists listItems={listItems} />
-            </ItemListContainer>
+              <PurchaseOrderItemLists
+                listItems={listItems}
+                onClick={(id, type) => handleListClick(id, type)}
+                onChange={(id, e) => handleQtyChange(id, e)}
+              />
+            </ItemListContainer> */}
 
             <Field
               label="รหัสกรุ๊ป"
@@ -156,9 +206,3 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
     </>
   )
 }
-
-const ItemListContainer = styled.div`
-  background: white;
-
-  margin: 10px 0;
-`

@@ -18,9 +18,12 @@ export default ({ isEditingForm, onDelete, onSubmit, goBack, popupTitle, ...rest
 const ActionBarContainer = styled.div`
   width: 100%;
   display: flex;
-  position: fixed;
-  left: 0;
-  bottom: 0;
   height: 50px;
-  z-index: 10;
+  @media (max-width: 1366px) {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
+    z-index: 10;
+  }
 `
