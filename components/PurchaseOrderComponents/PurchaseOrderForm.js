@@ -11,7 +11,7 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
   const [listItems, setlistItems] = useState([])
   const [searchKey, setsearchKey] = useState('')
 
-  const handleSearch = async e => {
+  const handleSearch = async (e, props) => {
     let item = await FindItem(e)
     const foundItem = listItems.findIndex(v => v.itemCode === e)
     if (!item) {
@@ -32,9 +32,11 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
       setlistItems([...listItems, item])
     }
     setsearchKey('')
+
+    calculatePO(props)
   }
 
-  const handleListClick = (id, type) => {
+  const handleListClick = (id, type, props) => {
     let _listItems = [...listItems]
     const foundItem = listItems.findIndex(v => v._id === id)
     if (type === 'PLUS' && listItems[foundItem]._qty + 1 > listItems[foundItem].itemQty_Shop1) {
@@ -51,9 +53,10 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
     else _listItems[foundItem]._qty--
 
     setlistItems([..._listItems])
+    calculatePO(props)
   }
 
-  const handleQtyChange = (id, e) => {
+  const handleQtyChange = (id, e, props) => {
     let _listItems = [...listItems]
     const foundItem = listItems.findIndex(v => v._id === id)
 
@@ -62,8 +65,12 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
     else _listItems[foundItem]._qty = e.target.value
 
     setlistItems([..._listItems])
+    calculatePO(props)
   }
 
+  const calculatePO = props => {
+    console.log(props)
+  }
   const groupsData = () =>
     groups.map(v => {
       return {
@@ -96,106 +103,122 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
           // setisSubmiting(false)
           // goBack()
         }}
-        render={props => (
-          <form>
-            <Collapse defaultActiveKey={['1']}>
-              <Panel header="ส่วนที่ 1 : รายละเอียดเบื้องต้น" key="1">
-                <Field
-                  label="กรุ๊ป"
-                  name="group"
-                  component={SelectItem}
-                  required
-                  data={groupsData()}
-                  value={props.values.org ? props.values.org.label : ''}
-                  fieldread="label"
-                  onChange={e => props.setFieldValue('org', orgData.find(v => v.label === e))}
-                />
+        render={props => {
+          return (
+            <form>
+              <Collapse defaultActiveKey={['1']}>
+                <Panel header="ส่วนที่ 1 : รายละเอียดเบื้องต้น" key="1">
+                  <Field
+                    label="กรุ๊ป"
+                    name="group"
+                    component={SelectItem}
+                    required
+                    data={groupsData()}
+                    value={props.values.org ? props.values.org.label : ''}
+                    fieldread="label"
+                    onChange={e => props.setFieldValue('org', groupsData().find(v => v.label === e))}
+                  />
 
-                <Field
-                  label="พนักงานขาย"
-                  name="seller"
-                  component={SelectItem}
-                  required
-                  data={sellersData()}
-                  value={props.values.org ? props.values.org.label : ''}
-                  fieldread="label"
-                  onChange={e => props.setFieldValue('org', orgData.find(v => v.label === e))}
-                />
-              </Panel>
+                  <Field
+                    label="พนักงานขาย"
+                    name="seller"
+                    component={SelectItem}
+                    required
+                    data={sellersData()}
+                    value={props.values.org ? props.values.org.label : ''}
+                    fieldread="label"
+                    onChange={e => props.setFieldValue('org', sellersData().find(v => v.label === e))}
+                  />
+                </Panel>
 
-              <Panel header="ส่วนที่ 2 : รายการสินค้า" key="2">
-                <SearchBar
-                  placeholder="ค้นหาสินค้า"
-                  value={searchKey}
-                  onChange={e => setsearchKey(e.target.value)}
-                  onSearch={e => handleSearch(e, props)}
-                  enterButton={true}
-                  size="large"
-                />
+                <Panel header="ส่วนที่ 2 : รายการสินค้า" key="2">
+                  <SearchBar
+                    placeholder="ค้นหาสินค้า"
+                    value={searchKey}
+                    onChange={e => setsearchKey(e.target.value)}
+                    onSearch={e => handleSearch(e, props)}
+                    enterButton={true}
+                    size="large"
+                  />
 
-                <PurchaseOrderItemLists
-                  listItems={listItems}
-                  onClick={(id, type) => handleListClick(id, type)}
-                  onChange={(id, e) => handleQtyChange(id, e)}
-                />
-              </Panel>
+                  <PurchaseOrderItemLists
+                    listItems={listItems}
+                    onClick={(id, type) => handleListClick(id, type, props)}
+                    onChange={(id, e) => handleQtyChange(id, e, props)}
+                  />
+                </Panel>
 
-              <Panel header="ส่วนที่ 3 : รายละเอียดการชำระเงิน" key="3">
-                <Field label="ส่วนลด" type="text" name="discount" component={InputItem} value={props.values.discount} onChange={props.handleChange} />
-                <Field
-                  label="ชำระเป็นเครดิต"
-                  type="text"
-                  name="credit"
-                  component={InputItem}
-                  value={props.values.credit}
-                  onChange={props.handleChange}
-                />
+                <Panel header="ส่วนที่ 3 : รายละเอียดการชำระเงิน" key="3">
+                  <Field
+                    label="ส่วนลด"
+                    type="text"
+                    name="discount"
+                    component={InputItem}
+                    value={props.values.discount}
+                    onChange={props.handleChange}
+                  />
+                  <Field
+                    label="ชำระเป็นเครดิต"
+                    type="text"
+                    name="credit"
+                    component={InputItem}
+                    value={props.values.credit}
+                    onChange={props.handleChange}
+                  />
 
-                <Field
-                  label="ชาร์์จเครดิต"
-                  type="text"
-                  name="creditCharge"
-                  component={InputItem}
-                  value={props.values.creditCharge}
-                  onChange={props.handleChange}
-                />
-              </Panel>
+                  <Field
+                    label="ชาร์์จเครดิต"
+                    type="text"
+                    name="creditCharge"
+                    component={InputItem}
+                    value={props.values.creditCharge}
+                    onChange={props.handleChange}
+                  />
+                </Panel>
 
-              <Panel header="ส่วนที่ 4 : สรุปราชการขาย" key="4">
-                <Field label="ยอดรวม" type="text" name="subTotal" component={InputItem} value={props.values.itemRemarks} disabled />
+                <Panel header="ส่วนที่ 4 : สรุปราชการขาย" key="4">
+                  <Field label="ยอดรวม" type="text" name="subTotal" component={InputItem} value={props.values.itemRemarks} disabled />
 
-                <Field label="ส่วนลด" type="text" name="grandTotalDiscount" component={InputItem} value={props.values.itemRemarks} disabled />
+                  <Field label="ส่วนลด" type="text" name="grandTotalDiscount" component={InputItem} value={props.values.itemRemarks} disabled />
 
-                <Field label="จำนวนชำระเครดิต" type="text" name="grandTotalCredit" component={InputItem} value={props.values.itemRemarks} disabled />
+                  <Field
+                    label="จำนวนชำระเครดิต"
+                    type="text"
+                    name="grandTotalCredit"
+                    component={InputItem}
+                    value={props.values.itemRemarks}
+                    disabled
+                  />
 
-                <Field
-                  label="จำนวนชาร์จเครดิต"
-                  type="text"
-                  name="grandTotalCreditCharge"
-                  component={InputItem}
-                  value={props.values.itemRemarks}
-                  disabled
-                />
+                  <Field
+                    label="จำนวนชาร์จเครดิต"
+                    type="text"
+                    name="grandTotalCreditCharge"
+                    component={InputItem}
+                    value={props.values.itemRemarks}
+                    disabled
+                  />
 
-                <Field label="ยอดที่ต้องชำระ" type="text" name="grandTotal" component={InputItem} value={props.values.grandTotal} disabled />
+                  <Field label="ยอดที่ต้องชำระ" type="text" name="grandTotal" component={InputItem} value={props.values.grandTotal} disabled />
 
-                <Field
-                  label="ยอดรับเงิน"
-                  type="text"
-                  name="receiveCash"
-                  component={InputItem}
-                  required
-                  value={props.values.receiveCash}
-                  onChange={props.handleChange}
-                />
+                  <Field
+                    label="ยอดรับเงิน"
+                    type="text"
+                    name="receiveCash"
+                    component={InputItem}
+                    required
+                    value={props.values.receiveCash}
+                    onChange={props.handleChange}
+                  />
 
-                <Field label="ยอดเงินทอน" type="text" name="changeCash" component={InputItem} value={props.values.changeCash} disabled />
-              </Panel>
-            </Collapse>
+                  <Field label="ยอดเงินทอน" type="text" name="changeCash" component={InputItem} value={props.values.changeCash} disabled />
+                </Panel>
+              </Collapse>
 
-            <ActionBar onSubmit={props.handleSubmit} loading={isSubmiting} />
-          </form>
-        )}
+              <ActionBar onSubmit={props.handleSubmit} loading={isSubmiting} />
+            </form>
+          )
+        }}
       />
     </>
   )
