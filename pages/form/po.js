@@ -13,22 +13,33 @@ class index extends React.PureComponent {
     return { pageName: name }
   }
 
+  componentWillMount() {
+    const { FetchGroups, FetchSellers } = this.props
+    FetchGroups()
+    FetchSellers()
+  }
+
   render() {
+    const {
+      poes: { isGroupsFetching, isSellersFetching, isItemFetching, sellers, groups },
+      FindItem,
+    } = this.props
+
     return (
       <>
         <FormContainer>
-          <PurchaseOrderForm />
+          <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} />
         </FormContainer>
 
-        <ModalLoading loading={false} text={'Loading...'} />
+        <ModalLoading loading={isGroupsFetching || isSellersFetching || isItemFetching} text={'Loading...'} />
       </>
     )
   }
 }
 
 index = connect(
-  ({}) => ({}),
-  {},
+  ({ poes }) => ({ poes }),
+  { FindItem: Action.FetchItemForPO, FetchGroups: Action.FetchGroupsForPO, FetchSellers: Action.FetchSellersForPO },
 )(index)
 
 export default withAuth([admin])(index)

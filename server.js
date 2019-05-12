@@ -35,6 +35,7 @@ require('./api/Organization')(server)
 require('./api/Group')(server)
 require('./api/Seller')(server)
 require('./api/Item')(server)
+require('./api/PurchaseOrder')(server)
 
 app
   .prepare()

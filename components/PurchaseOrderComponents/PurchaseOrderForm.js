@@ -1,15 +1,63 @@
 import { useState } from 'react'
 import { Formik, Field } from 'formik'
 import { GroupSchema } from '<helpers>/validate'
-import { InputItem, SelectItem, ActionBar, SearchBar } from '<components>'
+import { InputItem, SelectItem, ActionBar, SearchBar, PurchaseOrderItemLists } from '<components>'
 import { Collapse } from 'antd'
+import styled from 'styled-components'
 
 const Panel = Collapse.Panel
 
-export default ({ Insert, ...rest }) => {
+export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
   const [isSubmiting, setisSubmiting] = useState(false)
   const [listItems, setlistItems] = useState([])
+  const [searchKey, setsearchKey] = useState('')
 
+  const handleSearch = async e => {
+    let item = await FindItem(e)
+    const foundItem = listItems.findIndex(v => v.itemCode === e)
+
+    if (!item) {
+      alert('ไม่มีเว้ย')
+      return
+    }
+
+    if (item.itemQty_Shop1 === 0) {
+      alert('ไม่มีของเว้ย')
+      return
+    }
+
+    if (foundItem > -1) {
+      if (listItems[foundItem]._qty === item.itemQty_Shop1) {
+        alert('จำนวนสินค้าของรายการขายนี้เท่ากับจำนวนสินค้าที่มีในคลังสินค้าแล้ว')
+        return
+      } else listItems[foundItem]._qty++
+    } else {
+      item._qty = 1
+      setlistItems([...listItems, item])
+    }
+
+    setsearchKey('')
+  }
+
+  const groupsData = () => {
+    return groups.map(v => {
+      return {
+        id: v._id,
+        label: `${v.groupCode} (${v.guideName})`,
+        ...v,
+      }
+    })
+  }
+
+  const sellersData = () => {
+    return sellers.map(v => {
+      return {
+        id: v._id,
+        label: `${v.sellerName} (${v.sellerCode})`,
+        ...v,
+      }
+    })
+  }
   return (
     <>
       <Formik
@@ -33,7 +81,7 @@ export default ({ Insert, ...rest }) => {
                   name="org"
                   component={SelectItem}
                   required
-                  data={[]}
+                  data={groupsData()}
                   value={props.values.org ? props.values.org.label : ''}
                   fieldread="label"
                   onChange={e => props.setFieldValue('org', orgData.find(v => v.label === e))}
@@ -44,7 +92,7 @@ export default ({ Insert, ...rest }) => {
                   name="org"
                   component={SelectItem}
                   required
-                  data={[]}
+                  data={sellersData()}
                   value={props.values.org ? props.values.org.label : ''}
                   fieldread="label"
                   onChange={e => props.setFieldValue('org', orgData.find(v => v.label === e))}
@@ -52,7 +100,19 @@ export default ({ Insert, ...rest }) => {
               </Panel>
             </Collapse>
 
-            <SearchBar placeholder="ค้นหาสินค้า" onSearch={e => console.log(e)} enterButton={true} size="large" />
+            <ItemListContainer>
+              <SearchBar
+                placeholder="ค้นหาสินค้า"
+                value={searchKey}
+                onChange={e => setsearchKey(e.target.value)}
+                onSearch={e => handleSearch(e, props)}
+                enterButton={true}
+                size="large"
+              />
+
+              <PurchaseOrderItemLists listItems={listItems} />
+            </ItemListContainer>
+
             <Field
               label="รหัสกรุ๊ป"
               type="text"
@@ -96,3 +156,9 @@ export default ({ Insert, ...rest }) => {
     </>
   )
 }
+
+const ItemListContainer = styled.div`
+  background: white;
+
+  margin: 10px 0;
+`
