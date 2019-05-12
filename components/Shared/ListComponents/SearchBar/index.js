@@ -7,7 +7,5 @@ export default ({ ...rest }) => {
 }
 
 const InputWrapper = styled(Search)`
-  > :first-child {
-    padding: 20px 15px;
-  }
+  height: 40px;
 `

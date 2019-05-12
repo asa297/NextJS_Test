@@ -51,10 +51,10 @@ const SelectWrapper = styled(Select)`
   width: 100%;
 
   .ant-select-selection__rendered {
-    line-height: 42px;
+    line-height: 40px;
   }
   .ant-select-selection--single {
-    height: 42px;
+    height: 40px;
   }
 
   .ant-select-selection {

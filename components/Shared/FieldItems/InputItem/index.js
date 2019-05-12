@@ -34,7 +34,8 @@ const TextWrapper = styled.div`
 const InputWrapper = styled(Input)`
   width: 100%;
   border-color: ${props => (props.error ? 'red' : '#d9d9d9')};
-  padding: 20px 15px;
+  height: 40px;
+  padding: 0 15px;
 `
 const LabelRed = styled.label`
   color: red;
