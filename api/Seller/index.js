@@ -19,7 +19,7 @@ module.exports = server => {
 
   server.post('/api/seller', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { sellerName, sellerCode, sellerCom, sellerRemarks } = req.body
-    const user = req.user
+    const { user } = req
     const found = await sellerModel.findOne({ sellerCode })
     if (found) return res.status(403).send({ message: 'Seller Code is Duplicate.' })
 
@@ -49,7 +49,7 @@ module.exports = server => {
   server.put('/api/seller/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     const { sellerName, sellerCode, sellerCom, sellerRemarks } = req.body
-    const user = req.user
+    const { user } = req
 
     if (!id) res.status(403).send({ message: 'Need Parameter' })
     const found = await sellerModel.findById(id)

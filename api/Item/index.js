@@ -26,7 +26,7 @@ module.exports = server => {
   server.post('/api/item', ValidateToken, ValidateRole([admin, accountant]), singleUpload, async (req, res) => {
     const { bodyForm } = req.body
     const { itemType, itemCode, itemName, itemFactory, itemColor, itemSkin, itemPrice, itemRemarks } = JSON.parse(bodyForm)
-    const user = req.user
+    const { user } = req
 
     const found = await itemModel.findOne({ itemCode })
     if (found) return res.status(403).send({ message: 'Item Code is Duplicate.' })
@@ -78,7 +78,7 @@ module.exports = server => {
     const { id } = req.params
     const { bodyForm } = req.body
     const { itemType, itemCode, itemName, itemFactory, itemColor, itemSkin, itemPrice, itemRemarks } = JSON.parse(bodyForm)
-    const user = req.user
+    const { user } = req
 
     if (!id) res.status(403).send({ message: 'Need Parameter' })
     const found = await itemModel.findById(id)

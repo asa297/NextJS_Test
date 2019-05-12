@@ -19,7 +19,7 @@ module.exports = server => {
 
   server.post('/api/org', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
-    const user = req.user
+    const { user } = req
     const found = await organizationModel.findOne({ orgCode })
     if (found) return res.status(403).send({ message: 'Organization Code is Duplicate.' })
 
@@ -51,7 +51,7 @@ module.exports = server => {
   server.put('/api/org/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     const { orgType, orgName, orgComA, orgComB, orgCode } = req.body
-    const user = req.user
+    const { user } = req
 
     if (!id) res.status(403).send({ message: 'Need Parameter' })
     const found = await organizationModel.findById(id)

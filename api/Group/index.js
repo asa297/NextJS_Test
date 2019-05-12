@@ -20,7 +20,7 @@ module.exports = server => {
 
   server.post('/api/group', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { org, groupCode, groupStickerNumber, guideName, groupRemarks } = req.body
-    const user = req.user
+    const { user } = req
     const found = await groupModel.findOne({ groupCode })
 
     if (found) return res.status(403).send({ message: 'Group Code is Duplicate.' })
@@ -60,7 +60,7 @@ module.exports = server => {
   server.put('/api/group/:id', ValidateToken, ValidateRole([admin, accountant]), async (req, res) => {
     const { id } = req.params
     const { org, groupCode, groupStickerNumber, guideName, groupRemarks } = req.body
-    const user = req.user
+    const { user } = req
 
     if (!id) res.status(403).send({ message: 'Need Parameter' })
     const found = await groupModel.findById(id)
