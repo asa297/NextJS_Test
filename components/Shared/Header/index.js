@@ -11,7 +11,8 @@ export default ({ page, auth, pageName, ...rest }) => {
       <HeaderContainer>
         <MainContainer>
           <MenuContainer onClick={() => setVisible(true)}>
-            <IconWhite type="bars" />
+            {/* <IconWhite type="bars" /> */}
+            <MenuIcon src="/static/images/menu.svg" />
           </MenuContainer>
 
           <LabelPage>{pageName}</LabelPage>
@@ -54,15 +55,13 @@ const MenuContainer = styled.div`
   justify-content: center;
 
   margin-left: 10px;
-`
-const IconWhite = styled(Icon)`
+
   cursor: pointer;
-  :hover,
-  :focus {
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  }
+`
+
+const MenuIcon = styled.img`
+  width: 100%;
+  cursor: pointer;
 `
 
 const MainContainer = styled.div`
