@@ -11,11 +11,10 @@ const initialValues = {
   imageUrl: '',
   itemPrice: 0,
 }
-const generateFormData = Item => {
-  const { itemTypeId, itemTypeName } = Item
+const generateFormData = ({ itemTypeId, itemTypeName, ...rest }) => {
   return {
     itemType: { id: itemTypeId, label: itemTypeName },
-    ...Item,
+    ...rest,
   }
 }
 

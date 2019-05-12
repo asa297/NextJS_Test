@@ -10,11 +10,10 @@ const initialValues = {
   guideName: '',
   groupRemarks: '',
 }
-const generateFormData = Item => {
-  const { orgId, orgName, orgCode } = Item
+const generateFormData = ({ orgId, orgName, orgCode, ...rest }) => {
   return {
     org: { _id: orgId, label: `${orgName} (${orgCode})` },
-    ...Item,
+    ...rest,
   }
 }
 const generateOrgSelectData = data => {
@@ -74,7 +73,15 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, orgList, 
               value={props.values.groupStickerNumber}
               onChange={props.handleChange}
             />
-            <Field label="ชื่อไกด์" type="text" name="guideName" component={InputItem} required value={props.values.guideName} onChange={props.handleChange} />
+            <Field
+              label="ชื่อไกด์"
+              type="text"
+              name="guideName"
+              component={InputItem}
+              required
+              value={props.values.guideName}
+              onChange={props.handleChange}
+            />
             <Field
               label="หมายเหตุ"
               type="text"

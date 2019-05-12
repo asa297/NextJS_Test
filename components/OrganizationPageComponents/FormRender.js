@@ -11,11 +11,10 @@ const initialValues = {
   orgComB: 0,
   orgCode: '',
 }
-const generateFormData = Item => {
-  const { orgTypeId, orgTypeName } = Item
+const generateFormData = ({ orgTypeId, orgTypeName, ...rest }) => {
   return {
     orgType: { id: orgTypeId, label: orgTypeName },
-    ...Item,
+    ...rest,
   }
 }
 
@@ -50,7 +49,15 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
               onChange={e => props.setFieldValue('orgType', orgTypeData.find(v => v.label === e))}
             />
 
-            <Field label="ชื่อบริษัท" type="text" name="orgName" component={InputItem} required value={props.values.orgName} onChange={props.handleChange} />
+            <Field
+              label="ชื่อบริษัท"
+              type="text"
+              name="orgName"
+              component={InputItem}
+              required
+              value={props.values.orgName}
+              onChange={props.handleChange}
+            />
             <Field
               label="ค่าคอมมิชชั่นสินค้า A"
               type="number"
@@ -69,7 +76,15 @@ export default ({ Item, isEditingForm, Insert, Delete, Update, goBack, ...rest }
               value={props.values.orgComB}
               onChange={props.handleChange}
             />
-            <Field label="รหัสบริษัท" type="text" name="orgCode" component={InputItem} required value={props.values.orgCode} onChange={props.handleChange} />
+            <Field
+              label="รหัสบริษัท"
+              type="text"
+              name="orgCode"
+              component={InputItem}
+              required
+              value={props.values.orgCode}
+              onChange={props.handleChange}
+            />
 
             <ActionBar
               isEditingForm={isEditingForm}
