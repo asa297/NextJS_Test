@@ -144,60 +144,35 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                   onChange={(id, e) => handleQtyChange(id, e)}
                 />
               </Panel>
+
+              <Panel header="ส่วนที่ 3 : รายละเอียดการชำระเงิน" key="3">
+                <Field
+                  label="ส่วนลด"
+                  type="text"
+                  name="itemRemarks"
+                  component={InputItem}
+                  value={props.values.itemRemarks}
+                  onChange={props.handleChange}
+                />
+                <Field
+                  label="ชำระเป็นเครดิต"
+                  type="text"
+                  name="itemRemarks"
+                  component={InputItem}
+                  value={props.values.itemRemarks}
+                  onChange={props.handleChange}
+                />
+
+                <Field
+                  label="ชาร์์จเครดิต"
+                  type="text"
+                  name="itemRemarks"
+                  component={InputItem}
+                  value={props.values.itemRemarks}
+                  onChange={props.handleChange}
+                />
+              </Panel>
             </Collapse>
-
-            {/* <ItemListContainer>
-              <SearchBar
-                placeholder="ค้นหาสินค้า"
-                value={searchKey}
-                onChange={e => setsearchKey(e.target.value)}
-                onSearch={e => handleSearch(e, props)}
-                enterButton={true}
-                size="large"
-              />
-
-              <PurchaseOrderItemLists
-                listItems={listItems}
-                onClick={(id, type) => handleListClick(id, type)}
-                onChange={(id, e) => handleQtyChange(id, e)}
-              />
-            </ItemListContainer> */}
-
-            <Field
-              label="รหัสกรุ๊ป"
-              type="text"
-              name="groupCode"
-              component={InputItem}
-              required
-              value={props.values.groupCode}
-              onChange={props.handleChange}
-            />
-
-            <Field
-              label="หมายเลขสติกเกอร์"
-              type="text"
-              name="groupStickerNumber"
-              component={InputItem}
-              value={props.values.groupStickerNumber}
-              onChange={props.handleChange}
-            />
-            <Field
-              label="ชื่อไกด์"
-              type="text"
-              name="guideName"
-              component={InputItem}
-              required
-              value={props.values.guideName}
-              onChange={props.handleChange}
-            />
-            <Field
-              label="หมายเหตุ"
-              type="text"
-              name="groupRemarks"
-              component={InputItem}
-              value={props.values.groupRemarks}
-              onChange={props.handleChange}
-            />
 
             <ActionBar onSubmit={props.handleSubmit} loading={isSubmiting} />
           </form>

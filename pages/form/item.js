@@ -61,7 +61,7 @@ export default withAuth([admin])(index)
 
 const FormContainer = styled.div`
   @media (max-width: 576px) {
-    padding: 5% 5% 50px 5%;
+    padding: 5% 5% 60px 5%;
   }
-  padding: 3% 5% 50px 5%;
+  padding: 3% 5% 60px 5%;
 `
