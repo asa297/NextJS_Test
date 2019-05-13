@@ -71,6 +71,21 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
   const calculatePO = props => {
     console.log(props)
   }
+
+  const calculateDiscount = (value, props) => {
+    props.setFieldValue('discount', value)
+
+    console.log(value)
+  }
+  const calculateCredit = (value, props) => {
+    props.setFieldValue('credit', value)
+    console.log(value)
+  }
+  const calculateCreditCharge = (value, props) => {
+    props.setFieldValue('creditCharge', value)
+    console.log(value)
+  }
+
   const groupsData = () =>
     groups.map(v => {
       return {
@@ -114,9 +129,9 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                     component={SelectItem}
                     required
                     data={groupsData()}
-                    value={props.values.org ? props.values.org.label : ''}
+                    value={props.values.group ? props.values.group.label : ''}
                     fieldread="label"
-                    onChange={e => props.setFieldValue('org', groupsData().find(v => v.label === e))}
+                    onChange={e => props.setFieldValue('group', groupsData().find(v => v.label === e))}
                   />
 
                   <Field
@@ -125,9 +140,9 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                     component={SelectItem}
                     required
                     data={sellersData()}
-                    value={props.values.org ? props.values.org.label : ''}
+                    value={props.values.seller ? props.values.seller.label : ''}
                     fieldread="label"
-                    onChange={e => props.setFieldValue('org', sellersData().find(v => v.label === e))}
+                    onChange={e => props.setFieldValue('seller', sellersData().find(v => v.label === e))}
                   />
                 </Panel>
 
@@ -155,7 +170,7 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                     name="discount"
                     component={InputItem}
                     value={props.values.discount}
-                    onChange={props.handleChange}
+                    onChange={e => calculateDiscount(e.target.value, props)}
                   />
                   <Field
                     label="ชำระเป็นเครดิต"
@@ -163,17 +178,19 @@ export default ({ Insert, FindItem, groups, sellers, ...rest }) => {
                     name="credit"
                     component={InputItem}
                     value={props.values.credit}
-                    onChange={props.handleChange}
+                    onChange={e => calculateCredit(e.target.value, props)}
                   />
 
-                  <Field
-                    label="ชาร์์จเครดิต"
-                    type="text"
-                    name="creditCharge"
-                    component={InputItem}
-                    value={props.values.creditCharge}
-                    onChange={props.handleChange}
-                  />
+                  {props.values.credit && (
+                    <Field
+                      label="ชาร์์จเครดิต"
+                      type="text"
+                      name="creditCharge"
+                      component={InputItem}
+                      value={props.values.creditCharge}
+                      onChange={e => calculateCreditCharge(e.target.value, props)}
+                    />
+                  )}
                 </Panel>
 
                 <Panel header="ส่วนที่ 4 : สรุปราชการขาย" key="4">

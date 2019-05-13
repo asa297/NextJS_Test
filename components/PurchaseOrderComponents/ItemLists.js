@@ -1,13 +1,15 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Button, Input } from 'antd'
 
 export default ({ listItems, onClick, onChange, ...rest }) => {
   return (
     <ItemContainer>
       <ColumnContainer>
-        <ActionColumn />
-        <ItemColumn>Item Code : (Item Name)</ItemColumn>
-        <QtyColumn>Quality</QtyColumn>
+        <ActionColumnStyle />
+        <ItemColumnStyle header>สินค้า</ItemColumnStyle>
+        <UnitPriceColumnStyle header>ราคาต่อหน่วย</UnitPriceColumnStyle>
+        <QtyColumnStyle header>จำนวน</QtyColumnStyle>
+        <TotalColumnStyle header>ยอดรวม</TotalColumnStyle>
       </ColumnContainer>
       <ListContainer>
         {listItems.map(v => {
@@ -17,16 +19,19 @@ export default ({ listItems, onClick, onChange, ...rest }) => {
                 <IconContainer>
                   <ButtonWrapper type="primary" icon="plus" color="green" onClick={() => onClick(v._id, 'PLUS')} />
                 </IconContainer>
-
                 <IconContainer>
                   <ButtonWrapper type="primary" icon="minus" color="red" onClick={() => onClick(v._id, 'MINUS')} />
                 </IconContainer>
               </ActionDataContainer>
-              <ItemDataContainer>{v.itemCode}</ItemDataContainer>
-
-              <QtyDataContainer>
+              <ItemColumnStyle>
+                {v.itemCode} ({v.itemName})
+              </ItemColumnStyle>
+              <UnitPriceColumnStyle>{500}</UnitPriceColumnStyle>
+              <QtyColumnStyle>
                 <Input value={v._qty} onChange={e => onChange(v._id, e)} />
-              </QtyDataContainer>
+              </QtyColumnStyle>
+
+              <TotalColumnStyle>50000</TotalColumnStyle>
             </ListCard>
           )
         })}
@@ -39,89 +44,91 @@ const ItemContainer = styled.div``
 
 const ColumnContainer = styled.div`
   display: flex;
-  justify-content: space-around;
   padding: 10px 0;
-`
-
-const ListContainer = styled.div`
-  max-height: 200px;
-  overflow-y: scroll;
-`
-
-const ActionColumn = styled.div`
-  @media (max-width: 600px) {
-    width: 25%;
-  }
-  @media (min-width: 1366px) {
-    width: 5%;
-  }
-
-  width: 10%;
-  color: black;
-  font-weight: bold;
-`
-
-const ActionDataContainer = styled.div`
-  @media (max-width: 600px) {
-    width: 25%;
-  }
-  @media (min-width: 1366px) {
-    width: 5%;
-  }
-
-  width: 10%;
-  display: flex;
-`
-
-const ItemColumn = styled.div`
-  @media (max-width: 600px) {
-    width: 55%;
-  }
-
-  width: 60%;
-  color: black;
-  font-weight: bold;
-`
-
-const ItemDataContainer = styled.div`
-  @media (max-width: 600px) {
-    width: 55%;
-  }
-
-  width: 60%;
-`
-
-const QtyColumn = styled.div`
-  @media (max-width: 600px) {
-    width: 15%;
-  }
-  @media (min-width: 1366px) {
-    width: 30%;
-  }
-
-  width: 25%;
-  color: black;
-  font-weight: bold;
-`
-
-const QtyDataContainer = styled.div`
-  @media (max-width: 600px) {
-    width: 15%;
-  }
-  @media (min-width: 1366px) {
-    width: 30%;
-  }
-  width: 25%;
 `
 
 const ListCard = styled.div`
   background: rgba(220, 250, 250, 0.65);
   display: flex;
-  justify-content: space-around;
   border-bottom: 1px solid #dcdcdc;
   align-items: center;
-
   padding: 10px 0;
+`
+
+const ListContainer = styled.div``
+
+const ActionColumnStyle = styled.div`
+  @media (max-width: 600px) {
+    width: 25%;
+  }
+  @media (min-width: 1366px) {
+    width: 5%;
+  }
+  width: 10%;
+  padding: 0 5px;
+`
+
+const ActionDataContainer = styled(ActionColumnStyle)`
+  display: flex;
+`
+
+const ItemColumnStyle = styled.div`
+  @media (max-width: 600px) {
+    width: 30%;
+  }
+
+  width: 50%;
+
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  ${props => props.header && 'font-weight : bold;'}
+`
+
+const UnitPriceColumnStyle = styled.div`
+  @media (max-width: 600px) {
+    width: 15%;
+  }
+
+  width: 10%;
+
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  ${props => props.header && 'font-weight : bold;'}
+`
+
+const QtyColumnStyle = styled.div`
+  @media (max-width: 600px) {
+    width: 20%;
+  }
+
+  width: 15%;
+
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  ${props => props.header && 'font-weight : bold;'}
+`
+
+const TotalColumnStyle = styled.div`
+  @media (max-width: 600px) {
+    width: 15%;
+  }
+  width: 10%;
+
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  ${props => props.header && 'font-weight : bold;'}
 `
 
 const IconContainer = styled.div`
