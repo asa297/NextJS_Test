@@ -57,18 +57,48 @@ export const PurchaseOrderSchema = Yup.object().shape({
 export const PurchaseOrderValidation = value => {
   let errors = {}
 
-  errors.group = FieldIsEmpty(value.group)
-  errors.seller = FieldIsEmpty(value.seller)
+  if (FieldIsEmpty(value.group)) {
+    errors.group = FieldIsEmpty(value.group)
+  }
 
-  errors.discount = FieldIsPercentRange(value.discount)
-  errors.credit = FieldIsMoreThan(value.credit, value.subTotal, 'Credit must less than Subtotal')
-  errors.creditCharge = FieldIsPercentRange(value.creditCharge)
+  if (FieldIsEmpty(value.seller)) {
+    errors.seller = FieldIsEmpty(value.seller)
+  }
 
-  errors.grandTotalDiscount = FieldIsMoreThan(value.grandTotalDiscount, value.subTotal, 'Discount total must less than Subtotal')
-  errors.grandTotalCredit = FieldIsMoreThan(value.grandTotalCredit, value.subTotal, 'Credit total must less than Subtotal')
-  errors.grandTotal = FieldIsPositiveNumber(value.grandTotal)
-  errors.receiveCash = FieldIsLessThan(value.receiveCash, value.grandTotal, 'ReceiveCash total must more than Grandtotal')
-  errors.changeCash = FieldIsPositiveNumber(value.changeCash)
+  if (FieldIsPercentRange(value.discount)) {
+    errors.discount = FieldIsPercentRange(value.discount)
+  }
 
+  if (FieldIsMoreThan(value.credit, value.subTotal, 'Credit must less than Subtotal')) {
+    errors.credit = FieldIsMoreThan(value.credit, value.subTotal, 'Credit must less than Subtotal')
+  }
+
+  if (FieldIsPercentRange(value.creditCharge)) {
+    errors.creditCharge = FieldIsPercentRange(value.creditCharge)
+  }
+
+  if (FieldIsMoreThan(value.grandTotalDiscount, value.subTotal, 'Discount total must less than Subtotal')) {
+    errors.grandTotalDiscount = FieldIsMoreThan(value.grandTotalDiscount, value.subTotal, 'Discount total must less than Subtotal')
+  }
+
+  if (FieldIsMoreThan(value.grandTotalCredit, value.subTotal, 'Credit total must less than Subtotal')) {
+    errors.grandTotalCredit = FieldIsMoreThan(value.grandTotalCredit, value.subTotal, 'Credit total must less than Subtotal')
+  }
+
+  if (FieldIsPositiveNumber(value.grandTotal)) {
+    errors.grandTotal = FieldIsPositiveNumber(value.grandTotal)
+  }
+
+  if (FieldIsEmpty(value.receiveCash)) {
+    errors.receiveCash = FieldIsEmpty(value.receiveCash)
+  } else if (FieldIsLessThan(value.receiveCash, value.grandTotal, 'ReceiveCash total must more than Grandtotal')) {
+    errors.receiveCash = FieldIsLessThan(value.receiveCash, value.grandTotal, 'ReceiveCash total must more than Grandtotal')
+  }
+
+  if (FieldIsPositiveNumber(value.changeCash)) {
+    errors.changeCash = FieldIsPositiveNumber(value.changeCash)
+  }
+
+  console.log(errors)
   return errors
 }
