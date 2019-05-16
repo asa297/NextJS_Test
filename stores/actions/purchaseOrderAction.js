@@ -35,13 +35,29 @@ export const FetchSellersForPO = () => async dispatch => {
   }
 }
 
-export const FetchItemForPO = itemCode => async dispatch => {
+export const FindItemForPO = itemCode => async dispatch => {
   try {
     dispatch({ type: actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS, payload: { isFetching: true } })
     return await axios
       .get(`/api/${Module}/item/${itemCode}`, setAuthHeader())
       .then(({ data }) => {
         return data
+      })
+      .catch(e => e)
+  } catch (e) {
+    return e
+  } finally {
+    dispatch({ type: actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS, payload: { isFetching: false } })
+  }
+}
+
+export const InsertPurchaseOrder = formValue => async dispatch => {
+  try {
+    dispatch({ type: actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS, payload: { isFetching: true } })
+    await axios
+      .post(`/api/${Module}`, formValue, setAuthHeader())
+      .then(({}) => {
+        dispatch({ type: actionTypes.PURCHASE_ORDER.STORE_NEW, payload: formValue })
       })
       .catch(e => e)
   } catch (e) {

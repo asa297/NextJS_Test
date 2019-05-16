@@ -122,8 +122,24 @@ class index extends React.PureComponent {
     this.setState({ listItems: [..._listItems] })
   }
 
+  customHandleSubmit() {
+    const { validateForm, isValid, Insert } = this.props
+
+    validateForm().then(async () => {
+      if (!isValid) return
+
+      this.setState({ isSubmiting: true })
+      let { values } = this.props
+      const { listItems } = this.state
+      values.listItems = [...listItems]
+
+      await Insert(values)
+      this.setState({ isSubmiting: false })
+    })
+  }
+
   render() {
-    const { values, handleSubmit, setFieldValue, handleChange } = this.props
+    const { values, setFieldValue, handleChange } = this.props
     const { isSubmiting, searchKey, listItems } = this.state
     return (
       <form>
@@ -221,21 +237,14 @@ class index extends React.PureComponent {
           </Panel>
         </Collapse>
 
-        <ActionBar onSubmit={handleSubmit} loading={isSubmiting} />
+        <ActionBar onSubmit={() => this.customHandleSubmit()} loading={isSubmiting} />
       </form>
     )
   }
 }
 
 export default withFormik({
-  mapPropsToValues: () => ({}),
+  mapPropsToValues: () => ({ creditCharge: 0, grandTotalCreditCharge: 0 }),
   validate: PurchaseOrderValidation,
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2))
-      setSubmitting(false)
-    }, 1000)
-  },
-
-  displayName: 'BasicForm',
+  displayName: 'PurchaseOrder_Form',
 })(index)

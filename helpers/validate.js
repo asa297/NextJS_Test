@@ -99,6 +99,6 @@ export const PurchaseOrderValidation = value => {
     errors.changeCash = FieldIsPositiveNumber(value.changeCash)
   }
 
-  console.log(errors)
+  // console.log(errors)
   return errors
 }

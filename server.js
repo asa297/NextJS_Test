@@ -29,6 +29,7 @@ require('./models/Organization')
 require('./models/Group')
 require('./models/Seller')
 require('./models/Item')
+require('./models/PO')
 
 //API
 require('./api/Organization')(server)

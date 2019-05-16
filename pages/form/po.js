@@ -23,12 +23,13 @@ class index extends React.PureComponent {
     const {
       poes: { isGroupsFetching, isSellersFetching, isItemFetching, sellers, groups },
       FindItem,
+      Insert,
     } = this.props
 
     return (
       <>
         <FormContainer>
-          <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} />
+          <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} Insert={Insert} />
         </FormContainer>
 
         <ModalLoading loading={isGroupsFetching || isSellersFetching || isItemFetching} text={'Loading...'} />
@@ -39,7 +40,12 @@ class index extends React.PureComponent {
 
 index = connect(
   ({ poes }) => ({ poes }),
-  { FindItem: Action.FetchItemForPO, FetchGroups: Action.FetchGroupsForPO, FetchSellers: Action.FetchSellersForPO },
+  {
+    FindItem: Action.FindItemForPO,
+    FetchGroups: Action.FetchGroupsForPO,
+    FetchSellers: Action.FetchSellersForPO,
+    Insert: Action.InsertPurchaseOrder,
+  },
 )(index)
 
 export default withAuth([admin])(index)

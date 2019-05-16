@@ -1,6 +1,7 @@
 import { actionTypes } from '../type'
 
 const initState = {
+  item: {},
   sellers: [],
   groups: [],
   isGroupsFetching: false,
@@ -18,6 +19,12 @@ export default function(state = initState, action) {
       return Object.assign({}, state, {
         groups: [...action.payload.data],
       })
+
+    case actionTypes.PURCHASE_ORDER.STORE_NEW:
+      return Object.assign({}, state, {
+        item: { ...action.payload.data },
+      })
+
     case actionTypes.PURCHASE_ORDER.FETCH_SELLER_STATUS:
       return Object.assign({}, state, {
         isSellersFetching: action.payload.isFetching,
@@ -26,7 +33,6 @@ export default function(state = initState, action) {
       return Object.assign({}, state, {
         isGroupsFetching: action.payload.isFetching,
       })
-
     case actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS:
       return Object.assign({}, state, {
         isItemFetching: action.payload.isFetching,
