@@ -1,9 +1,10 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Button, Input } from 'antd'
+import numeral from 'numeral'
 
 export default ({ listItems, onClick, onChange, ...rest }) => {
   return (
-    <ItemContainer>
+    <div>
       <ColumnContainer>
         <ActionColumnStyle />
         <ItemColumnStyle header>สินค้า</ItemColumnStyle>
@@ -11,7 +12,7 @@ export default ({ listItems, onClick, onChange, ...rest }) => {
         <QtyColumnStyle header>จำนวน</QtyColumnStyle>
         <TotalColumnStyle header>ยอดรวม</TotalColumnStyle>
       </ColumnContainer>
-      <ListContainer>
+      <div>
         {listItems.map(v => {
           return (
             <ListCard key={v._id}>
@@ -26,21 +27,19 @@ export default ({ listItems, onClick, onChange, ...rest }) => {
               <ItemColumnStyle>
                 {v.itemCode} ({v.itemName})
               </ItemColumnStyle>
-              <UnitPriceColumnStyle>{500}</UnitPriceColumnStyle>
+              <UnitPriceColumnStyle>{numeral(v.itemPrice).format('0,0.00')}</UnitPriceColumnStyle>
               <QtyColumnStyle>
                 <Input value={v._qty} onChange={e => onChange(v._id, e)} />
               </QtyColumnStyle>
 
-              <TotalColumnStyle>50000</TotalColumnStyle>
+              <TotalColumnStyle>{numeral(v.itemPrice * v._qty).format('0,0.00')}</TotalColumnStyle>
             </ListCard>
           )
         })}
-      </ListContainer>
-    </ItemContainer>
+      </div>
+    </div>
   )
 }
-
-const ItemContainer = styled.div``
 
 const ColumnContainer = styled.div`
   display: flex;
@@ -54,8 +53,6 @@ const ListCard = styled.div`
   align-items: center;
   padding: 10px 0;
 `
-
-const ListContainer = styled.div``
 
 const ActionColumnStyle = styled.div`
   @media (max-width: 600px) {

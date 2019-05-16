@@ -11,7 +11,6 @@ export default ({
   ...rest
 }) => {
   const error = (touched[field.name] && errors[field.name]) || errors[field.name] ? 1 : 0
-
   return (
     <FieldContainer>
       <TextWrapper>
@@ -36,6 +35,8 @@ const InputWrapper = styled(Input)`
   border-color: ${props => (props.error ? 'red' : '#d9d9d9')};
   height: 40px;
   padding: 0 15px;
+
+  color: ${props => (props.disabled ? 'rgba(0, 0, 0, 0.6) !important' : 'rgba(0, 0, 0, 0.65)')};
 `
 const LabelRed = styled.label`
   color: red;
