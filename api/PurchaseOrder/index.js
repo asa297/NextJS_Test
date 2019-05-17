@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const orgModel = mongoose.model('organizations')
 const gruopModel = mongoose.model('groups')
 const sellerModel = mongoose.model('sellers')
-
 const itemModel = mongoose.model('items')
 const purchaseOrderModel = mongoose.model('poes')
 
@@ -46,7 +45,7 @@ module.exports = server => {
     const groupQuery = await gruopModel.findById(group._id)
     const sellerQuery = await sellerModel.findById(seller._id)
 
-    await purchaseOrderModel({
+    const po = await purchaseOrderModel({
       orderId: Date.now(),
       org: orgQuery,
       group: groupQuery,
@@ -68,6 +67,22 @@ module.exports = server => {
       LastModifyByName: user.nickname,
       LastModifyDate: Date.now(),
     }).save()
+
+    if (!po) res.send({ message: 'Purchase Order is not inserted.' })
+    itemModel.bulkWrite(
+      listItems.map(item => {
+        const { _id, _qty } = item
+        return {
+          updateOne: {
+            filter: { _id },
+            update: {
+              $inc: { itemQty_Shop1: _qty * -1 },
+            },
+            upsert: true,
+          },
+        }
+      }),
+    )
 
     res.send({ message: 'Purchase Order is already inserted.' })
   })
