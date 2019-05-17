@@ -7,8 +7,6 @@ const GroupSchema = new Schema({
   orgTypeId: Number,
   orgTypeName: String,
   orgCode: String,
-  orgComA: { type: Number, default: 0 },
-  orgComB: { type: Number, default: 0 },
   groupCode: String,
   groupStickerNumber: String,
   groupRemarks: String,
