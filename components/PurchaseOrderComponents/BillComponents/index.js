@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Header from './BillComponents/Header'
-import Content from './BillComponents/Content'
-import Footer from './BillComponents/Footer'
-import Thanks from './BillComponents/Thanks'
+import Header from './Header'
+import Content from './Content'
+import Footer from './Footer'
+import Thanks from './Thanks'
 
 export default class ComponentToPrint extends React.PureComponent {
   render() {

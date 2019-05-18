@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { Button } from 'antd'
 import styled from 'styled-components'
 import ReactToPrint from 'react-to-print'
-import BillTemplate from './BillTemplate'
+import BillComponents from './BillComponents'
 
 export default ({ item, Reset, ...rest }) => {
   const componentRef = useRef()
@@ -24,7 +24,7 @@ export default ({ item, Reset, ...rest }) => {
       </ButtonContainer>
 
       <div style={{ display: 'none' }}>
-        <BillTemplate ref={componentRef} item={item} />
+        <BillComponents ref={componentRef} item={item} />
       </div>
     </BillTemplateWrapper>
   )
