@@ -69,20 +69,23 @@ export const PurchaseOrderValidation = value => {
     errors.discount = FieldIsPercentRange(value.discount)
   }
 
-  if (FieldIsMoreThan(value.credit, value.subTotal, 'Credit must less than Subtotal')) {
-    errors.credit = FieldIsMoreThan(value.credit, value.subTotal, 'Credit must less than Subtotal')
+  const creditValidators = FieldIsMoreThan(value.credit, value.subTotal - value.grandTotalDiscount, 'Credit must less than Subtotal include discount')
+  if (creditValidators) {
+    errors.credit = creditValidators
   }
 
   if (FieldIsPercentRange(value.creditCharge)) {
     errors.creditCharge = FieldIsPercentRange(value.creditCharge)
   }
 
-  if (FieldIsMoreThan(value.grandTotalDiscount, value.subTotal, 'Discount total must less than Subtotal')) {
-    errors.grandTotalDiscount = FieldIsMoreThan(value.grandTotalDiscount, value.subTotal, 'Discount total must less than Subtotal')
+  const grandTotalDiscountValidators = FieldIsMoreThan(value.grandTotalDiscount, value.subTotal, 'Discount total must less than Subtotal')
+  if (grandTotalDiscountValidators) {
+    errors.grandTotalDiscount = grandTotalDiscountValidators
   }
 
-  if (FieldIsMoreThan(value.grandTotalCredit, value.subTotal, 'Credit total must less than Subtotal')) {
-    errors.grandTotalCredit = FieldIsMoreThan(value.grandTotalCredit, value.subTotal, 'Credit total must less than Subtotal')
+  const grandTotalCreditValidators = FieldIsMoreThan(value.grandTotalCredit, value.subTotal, 'Credit total must less than Subtotal')
+  if (grandTotalCreditValidators) {
+    errors.grandTotalCredit = grandTotalCreditValidators
   }
 
   if (FieldIsPositiveNumber(value.grandTotal)) {
@@ -99,6 +102,5 @@ export const PurchaseOrderValidation = value => {
     errors.changeCash = FieldIsPositiveNumber(value.changeCash)
   }
 
-  // console.log(errors)
   return errors
 }

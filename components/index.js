@@ -37,4 +37,5 @@ export { default as ItemFormRender } from './ItemPageComponents/FormRender'
 
 //Shared:PurchaseOrderComponents
 export { default as PurchaseOrderForm } from './PurchaseOrderComponents/PurchaseOrderForm'
+export { default as PurchaseOrderBill } from './PurchaseOrderComponents/PurchaseOrderBill'
 export { default as PurchaseOrderItemLists } from './PurchaseOrderComponents/ItemLists'

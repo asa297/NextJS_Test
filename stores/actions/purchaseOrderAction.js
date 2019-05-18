@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { actionTypes } from '../type'
+import { actionTypes } from '<action_types>'
 import { setAuthHeader } from '<helpers>/utils'
 const Module = `po`
 
@@ -56,13 +56,21 @@ export const InsertPurchaseOrder = formValue => async dispatch => {
     dispatch({ type: actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS, payload: { isFetching: true } })
     await axios
       .post(`/api/${Module}`, formValue, setAuthHeader())
-      .then(({}) => {
-        dispatch({ type: actionTypes.PURCHASE_ORDER.STORE_NEW, payload: formValue })
+      .then(({ data }) => {
+        dispatch({ type: actionTypes.PURCHASE_ORDER.STORE_NEW, payload: data })
       })
       .catch(e => e)
   } catch (e) {
     return e
   } finally {
     dispatch({ type: actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS, payload: { isFetching: false } })
+  }
+}
+
+export const ResetPurchaseOrderStore = () => dispatch => {
+  try {
+    dispatch({ type: actionTypes.PURCHASE_ORDER.STORE_RESET_PO })
+  } catch (e) {
+    return e
   }
 }

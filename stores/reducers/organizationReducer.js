@@ -1,4 +1,4 @@
-import { actionTypes } from '../type'
+import { actionTypes } from '<action_types>'
 
 const initState = {
   List: [],

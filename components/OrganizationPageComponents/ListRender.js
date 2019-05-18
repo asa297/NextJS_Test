@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import momemt from 'moment'
+import moment from 'moment'
 import { List, Avatar } from 'antd'
 
 const IconOrganzation = orgTypeId => {
@@ -17,7 +17,7 @@ const IconOrganzation = orgTypeId => {
 export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
   const src = IconOrganzation(data[index]['orgTypeId'])
   const text = `${data[index]['orgName']} (${data[index]['orgCode']})`
-  const des = `Last Modify : ${momemt(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:MM)')}`
+  const des = `Last Modify : ${moment(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:MM)')}`
   return (
     <ListView onClick={() => onClick(data[index])} {...rest}>
       <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={des} />

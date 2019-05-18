@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { actionTypes } from '../type'
+import { actionTypes } from '<action_types>'
 import { setAuthHeader } from '<helpers>/utils'
 const Module = `item`
 

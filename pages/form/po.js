@@ -4,8 +4,9 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, PurchaseOrderForm } from '<components>'
+import { withAuth, ModalLoading, PurchaseOrderForm, PurchaseOrderBill } from '<components>'
 import Router from 'next/router'
+import isEmpty from 'lodash/isEmpty'
 
 class index extends React.PureComponent {
   static async getInitialProps(ctx) {
@@ -14,24 +15,29 @@ class index extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { FetchGroups, FetchSellers } = this.props
+    const { FetchGroups, FetchSellers, Reset } = this.props
+    Reset()
     FetchGroups()
     FetchSellers()
   }
 
   render() {
     const {
-      poes: { isGroupsFetching, isSellersFetching, isItemFetching, sellers, groups },
+      poes: { isGroupsFetching, isSellersFetching, isItemFetching, sellers, groups, item },
       FindItem,
       Insert,
+      Reset,
     } = this.props
 
     return (
       <>
-        <FormContainer>
-          <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} Insert={Insert} />
-        </FormContainer>
+        {isEmpty(item) && (
+          <FormContainer>
+            <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} Insert={Insert} />
+          </FormContainer>
+        )}
 
+        {!isEmpty(item) && <PurchaseOrderBill item={item} Reset={Reset} />}
         <ModalLoading loading={isGroupsFetching || isSellersFetching || isItemFetching} text={'Loading...'} />
       </>
     )
@@ -45,6 +51,7 @@ index = connect(
     FetchGroups: Action.FetchGroupsForPO,
     FetchSellers: Action.FetchSellersForPO,
     Insert: Action.InsertPurchaseOrder,
+    Reset: Action.ResetPurchaseOrderStore,
   },
 )(index)
 

@@ -1,4 +1,4 @@
-import { actionTypes } from '../type'
+import { actionTypes } from '<action_types>'
 
 const initState = {
   item: {},
@@ -36,6 +36,11 @@ export default function(state = initState, action) {
     case actionTypes.PURCHASE_ORDER.FETCH_ITEM_STATUS:
       return Object.assign({}, state, {
         isItemFetching: action.payload.isFetching,
+      })
+
+    case actionTypes.PURCHASE_ORDER.STORE_RESET_PO:
+      return Object.assign({}, state, {
+        item: {},
       })
     default:
       return state

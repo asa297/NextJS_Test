@@ -56,7 +56,7 @@ module.exports = server => {
       discountPercent: discount,
       credit,
       creditCharge: grandTotalCreditCharge,
-      creditchargePercent: creditCharge,
+      creditChargePercent: creditCharge,
       receiveCash,
       changeCash,
       grandTotal,
@@ -69,21 +69,21 @@ module.exports = server => {
     }).save()
 
     if (!po) res.send({ message: 'Purchase Order is not inserted.' })
-    itemModel.bulkWrite(
-      listItems.map(item => {
-        const { _id, _qty } = item
-        return {
-          updateOne: {
-            filter: { _id },
-            update: {
-              $inc: { itemQty_Shop1: _qty * -1 },
-            },
-            upsert: true,
-          },
-        }
-      }),
-    )
+    // itemModel.bulkWrite(
+    //   listItems.map(item => {
+    //     const { _id, _qty } = item
+    //     return {
+    //       updateOne: {
+    //         filter: { _id },
+    //         update: {
+    //           $inc: { itemQty_Shop1: _qty * -1 },
+    //         },
+    //         upsert: true,
+    //       },
+    //     }
+    //   }),
+    // )
 
-    res.send({ message: 'Purchase Order is already inserted.' })
+    res.send({ data: po, message: 'Purchase Order is already inserted.' })
   })
 }

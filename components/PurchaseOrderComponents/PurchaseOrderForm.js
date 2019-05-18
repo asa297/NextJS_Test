@@ -134,6 +134,7 @@ class index extends React.PureComponent {
       values.listItems = [...listItems]
 
       await Insert(values)
+
       this.setState({ isSubmiting: false })
     })
   }
@@ -141,6 +142,7 @@ class index extends React.PureComponent {
   render() {
     const { values, setFieldValue, handleChange } = this.props
     const { isSubmiting, searchKey, listItems } = this.state
+
     return (
       <form>
         <Collapse defaultActiveKey={['1']}>
