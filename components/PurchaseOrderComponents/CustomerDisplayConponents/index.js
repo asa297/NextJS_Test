@@ -17,88 +17,86 @@ export default ({ items = [], grandTotal, price, Change, ...rest }) => {
         </LeftContainer>
         <RightContainer>
           <ListContainer>
-            <ListFlex>
-              <ProductList>
-                <h2
-                  style={{
-                    marginTop: '20px',
-                  }}
-                >
-                  PRODUCT
-                </h2>
+            <ProductList>
+              <h2
+                style={{
+                  marginTop: '20px',
+                }}
+              >
+                PRODUCT
+              </h2>
 
-                {items.map(({ item, item_price }, index) => {
-                  if (index <= 4) {
-                    return (
-                      <div key={index} style={{ marginLeft: '15px', width: '90%' }}>
-                        <h4
+              {items.map(({ item, item_price }, index) => {
+                if (index <= 4) {
+                  return (
+                    <div key={index} style={{ marginLeft: '15px', width: '90%' }}>
+                      <h4
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          fontSize: '26px',
+                        }}
+                      >
+                        <div
                           style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            fontSize: '26px',
+                            width: '60%',
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
                           }}
                         >
-                          <div
-                            style={{
-                              width: '60%',
-                              overflow: 'hidden',
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                            }}
-                          >
-                            {item}
-                          </div>
-                          <div>{numeral(item_price).format('0,0.00')} ฿</div>
-                        </h4>
-                      </div>
-                    )
-                  } else {
-                    return false
-                  }
-                })}
-              </ProductList>
+                          {item}
+                        </div>
+                        <div>{numeral(item_price).format('0,0.00')} ฿</div>
+                      </h4>
+                    </div>
+                  )
+                } else {
+                  return false
+                }
+              })}
+            </ProductList>
 
-              <FlexCenter>
-                <h3
-                  style={{
-                    marginTop: '20px',
-                    width: '55%',
-                  }}
-                >
-                  TOTAL
-                </h3>
-                <GrandTotalContainer>{numeral(grandTotal).format('0,0.00')} ฿</GrandTotalContainer>
-              </FlexCenter>
+            <FlexCenter>
+              <h3
+                style={{
+                  marginTop: '20px',
+                  width: '55%',
+                }}
+              >
+                TOTAL
+              </h3>
+              <GrandTotalContainer>{numeral(grandTotal).format('0,0.00')} ฿</GrandTotalContainer>
+            </FlexCenter>
 
-              <FlexCenter>
-                <h3
-                  style={{
-                    marginTop: '20px',
-                    width: '55%',
-                  }}
-                >
-                  CASH
-                </h3>
-                <PriceContainer>{numeral(price).format('0,0.00')} ฿</PriceContainer>
-              </FlexCenter>
+            <FlexCenter>
+              <h3
+                style={{
+                  marginTop: '20px',
+                  width: '55%',
+                }}
+              >
+                CASH
+              </h3>
+              <PriceContainer>{numeral(price).format('0,0.00')} ฿</PriceContainer>
+            </FlexCenter>
 
-              <FlexCenter>
-                <h3
-                  style={{
-                    marginTop: '20px',
-                    width: '55%',
-                  }}
-                >
-                  CHANGE
-                </h3>
-                <ChangeContainer>{numeral(Change).format('0,0.00')} ฿</ChangeContainer>
-              </FlexCenter>
+            <FlexCenter>
+              <h3
+                style={{
+                  marginTop: '20px',
+                  width: '55%',
+                }}
+              >
+                CHANGE
+              </h3>
+              <ChangeContainer>{numeral(Change).format('0,0.00')} ฿</ChangeContainer>
+            </FlexCenter>
 
-              <div style={{ height: '16%' }} />
-              <ThanksContainer>
-                <ThanksImage src="/static/images/customerDisplay/thanks.png" />
-              </ThanksContainer>
-            </ListFlex>
+            <div style={{ height: '16%' }} />
+            <ThanksContainer>
+              <ThanksImage src="/static/images/customerDisplay/thanks.png" />
+            </ThanksContainer>
           </ListContainer>
         </RightContainer>
       </BackgroundContainer>
@@ -170,11 +168,8 @@ const ListContainer = styled.div`
   width: 95%;
   height: 96%;
   border-radius: 50px 50px 50px 50px;
-`
 
-const ListFlex = styled.div`
   padding: 20px;
-  height: 100%;
   display: flex;
   flex-direction: column;
 `
