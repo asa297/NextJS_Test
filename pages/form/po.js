@@ -5,22 +5,47 @@ import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
 import { withAuth, ModalLoading, PurchaseOrderForm, PurchaseOrderBill } from '<components>'
-import Router from 'next/router'
 import isEmpty from 'lodash/isEmpty'
+import { Button } from 'antd'
+
+import io from 'socket.io-client'
 
 class index extends React.PureComponent {
+  state = {
+    socket: undefined,
+  }
+
   static async getInitialProps(ctx) {
     const { name } = await getPageNameFromReq(ctx)
-    return { pageName: name }
+    const host = process.env.HOST_URL
+
+    return { pageName: name, host }
   }
 
   componentWillMount() {
-    const { FetchGroups, FetchSellers, Reset } = this.props
+    const { FetchGroups, FetchSellers, Reset, host, auth } = this.props
+
+    const socket = io(host, {
+      transports: ['websocket'],
+      query: {
+        userSocket: auth.user.name,
+      },
+    })
+
+    socket.emit('joinroom')
+    socket.emit('openpo')
+
+    this.setState({ socket })
+
     Reset()
     FetchGroups()
     FetchSellers()
   }
 
+  componentWillUnmount() {
+    const { socket } = this.state
+    socket.disconnect()
+  }
   render() {
     const {
       poes: { isGroupsFetching, isSellersFetching, isItemFetching, sellers, groups, item },
@@ -29,11 +54,17 @@ class index extends React.PureComponent {
       Reset,
     } = this.props
 
+    const { socket } = this.state
+
     return (
       <>
         {isEmpty(item) && (
           <FormContainer>
-            <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} Insert={Insert} />
+            <CustomerScreenContainer>
+              <Button type="primary" icon="desktop" />
+            </CustomerScreenContainer>
+
+            <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} Insert={Insert} socket={socket} />
           </FormContainer>
         )}
 
@@ -62,4 +93,10 @@ const FormContainer = styled.div`
     padding: 5% 5% 60px 5%;
   }
   padding: 3% 5% 60px 5%;
+`
+
+const CustomerScreenContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 0;
 `

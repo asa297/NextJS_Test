@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Button, Input } from 'antd'
 import numeral from 'numeral'
 
-export default ({ listItems, onClick, onChange, ...rest }) => {
+export default ({ listItems, onClick, ...rest }) => {
   return (
     <div>
       <ColumnContainer>
@@ -28,9 +28,7 @@ export default ({ listItems, onClick, onChange, ...rest }) => {
                 {v.itemCode} ({v.itemName})
               </ItemColumnStyle>
               <UnitPriceColumnStyle>{numeral(v.itemPrice).format('0,0.00')}</UnitPriceColumnStyle>
-              <QtyColumnStyle>
-                <Input value={v._qty} onChange={e => onChange(v._id, e)} />
-              </QtyColumnStyle>
+              <QtyColumnStyle>{v._qty}</QtyColumnStyle>
 
               <TotalColumnStyle>{numeral(v.itemPrice * v._qty).format('0,0.00')}</TotalColumnStyle>
             </ListCard>

@@ -65,6 +65,7 @@ class index extends React.PureComponent {
 
   handleListClick(id, type) {
     const { listItems } = this.state
+    const { socket } = this.props
     let _listItems = [...listItems]
     const foundItem = listItems.findIndex(v => v._id === id)
     if (type === 'PLUS' && listItems[foundItem]._qty + 1 > listItems[foundItem].itemQty_Shop1) {
@@ -73,18 +74,26 @@ class index extends React.PureComponent {
     }
     if (type === 'MINUS' && listItems[foundItem]._qty - 1 === 0) {
       _listItems.splice(foundItem, 1)
+
+      socket.emit('showitem', { data: listItems[foundItem], status: 2 })
       this.setState({ listItems: [..._listItems] })
       return
     }
 
-    if (type === 'PLUS') _listItems[foundItem]._qty++
-    else _listItems[foundItem]._qty--
+    if (type === 'PLUS') {
+      _listItems[foundItem]._qty++
+      socket.emit('showitem', { data: _listItems[foundItem], status: 1 })
+    } else {
+      _listItems[foundItem]._qty--
+      socket.emit('showitem', { data: _listItems[foundItem], status: 2 })
+    }
+
     this.setState({ listItems: [..._listItems] })
   }
 
   async handleSearch(e) {
     const { listItems } = this.state
-    const { FindItem } = this.props
+    const { FindItem, socket } = this.props
 
     let _listItems = [...listItems]
     let item = await FindItem(e)
@@ -101,26 +110,33 @@ class index extends React.PureComponent {
       if (_listItems[foundItem]._qty === item.itemQty_Shop1) {
         message.error('This item quantity is maximum of inventory quantity.')
         return
-      } else _listItems[foundItem]._qty++
+      } else {
+        _listItems[foundItem]._qty++
+
+        socket.emit('showitem', { data: _listItems[foundItem], status: 1 })
+      }
     } else {
       item._qty = 1
       _listItems.push(item)
+
+      socket.emit('showitem', { data: item, status: 1 })
     }
 
     this.setState({ listItems: [..._listItems], searchKey: '' })
   }
 
-  handleQtyChange(id, e) {
-    const { listItems } = this.state
-    let _listItems = [...listItems]
-    const foundItem = listItems.findIndex(v => v._id === id)
+  // handleQtyChange(id, e) {
+  //   const { listItems } = this.state
+  //   const { socket } = this.props
+  //   let _listItems = [...listItems]
+  //   const foundItem = listItems.findIndex(v => v._id === id)
 
-    if (e.target.value > listItems[foundItem].itemQty_Shop1) _listItems[foundItem]._qty = listItems[foundItem].itemQty_Shop1
-    else if (e.target.value < 0) _listItems[foundItem]._qty = 0
-    else _listItems[foundItem]._qty = e.target.value
+  //   if (e.target.value > listItems[foundItem].itemQty_Shop1) _listItems[foundItem]._qty = listItems[foundItem].itemQty_Shop1
+  //   else if (e.target.value < 0) _listItems[foundItem]._qty = 0
+  //   else _listItems[foundItem]._qty = e.target.value
 
-    this.setState({ listItems: [..._listItems] })
-  }
+  //   this.setState({ listItems: [..._listItems] })
+  // }
 
   customHandleSubmit() {
     const { validateForm, isValid, Insert } = this.props
@@ -180,11 +196,7 @@ class index extends React.PureComponent {
               size="large"
             />
 
-            <PurchaseOrderItemLists
-              listItems={listItems}
-              onClick={(id, type) => this.handleListClick(id, type)}
-              onChange={(id, e) => this.handleQtyChange(id, e)}
-            />
+            <PurchaseOrderItemLists listItems={listItems} onClick={(id, type) => this.handleListClick(id, type)} />
           </Panel>
 
           <Panel header="ส่วนที่ 3 : รายละเอียดการชำระเงิน" key="3">

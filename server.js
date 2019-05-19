@@ -1,17 +1,18 @@
 const next = require('next')
-const express = require('express')
-const server = express()
+const app = require('express')()
+const server = require('http').Server(app)
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const io = require('socket.io')(server)
 
 const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const nextApp = next({ dev })
+const nextHandler = nextApp.getRequestHandler()
 
 const aws = require('aws-sdk')
 
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 //config initize
 require('dotenv').config()
@@ -24,6 +25,9 @@ aws.config.update({
   region: process.env.AWS_RESGION,
 })
 
+//Socket
+require('./services-backend/socket')(io)
+
 //Models
 require('./models/Organization')
 require('./models/Group')
@@ -32,20 +36,20 @@ require('./models/Item')
 require('./models/PO')
 
 //API
-require('./api/Organization')(server)
-require('./api/Group')(server)
-require('./api/Seller')(server)
-require('./api/Item')(server)
-require('./api/PurchaseOrder')(server)
+require('./api/Organization')(app)
+require('./api/Group')(app)
+require('./api/Seller')(app)
+require('./api/Item')(app)
+require('./api/PurchaseOrder')(app)
 
-app
+nextApp
   .prepare()
   .then(() => {
-    server.get('*', (req, res) => {
-      return handle(req, res)
+    app.get('*', (req, res) => {
+      return nextHandler(req, res)
     })
 
-    server.use((err, req, res, next) => {
+    app.use((err, req, res, next) => {
       if (err.name === 'UnauthorizedError') {
         res.status(401).send({ message: 'Unauthorized' })
       }
