@@ -11,7 +11,6 @@ module.exports = io => {
     })
 
     client.on('disconnect', () => {
-      console.log('Got disconnect!', userSocket)
       io.to(userSocket).emit('closepo', {})
     })
 
@@ -20,26 +19,18 @@ module.exports = io => {
     })
 
     client.on('dc', data => {
-      console.log('send dc')
-
       io.to(userSocket).emit('dc', data)
     })
 
     client.on('credit', data => {
-      console.log('send credit')
-
       io.to(userSocket).emit('credit', data)
     })
 
     client.on('creditcharge', data => {
-      console.log('send creditcharge')
-
       io.to(userSocket).emit('creditcharge', data)
     })
 
     client.on('submitpo', data => {
-      console.log('submitpo')
-
       io.to(userSocket).emit('submitpo', data)
     })
   })
