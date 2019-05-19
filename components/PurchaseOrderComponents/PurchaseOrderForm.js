@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field, withFormik } from 'formik'
 import { PurchaseOrderValidation } from '<helpers>/validate'
+import { FieldIsPercentRange, FieldIsMoreThan } from '<helpers>/validators'
 import { InputItem, SelectItem, ActionBar, SearchBar, PurchaseOrderItemLists } from '<components>'
 import { Collapse, message } from 'antd'
 import sumBy from 'lodash/sumBy'
@@ -75,17 +76,17 @@ class index extends React.PureComponent {
     if (type === 'MINUS' && listItems[foundItem]._qty - 1 === 0) {
       _listItems.splice(foundItem, 1)
 
-      socket.emit('showitem', { data: listItems[foundItem], status: 2 })
+      socket.emit('sendItem', { data: listItems[foundItem], status: 2 })
       this.setState({ listItems: [..._listItems] })
       return
     }
 
     if (type === 'PLUS') {
       _listItems[foundItem]._qty++
-      socket.emit('showitem', { data: _listItems[foundItem], status: 1 })
+      socket.emit('sendItem', { data: _listItems[foundItem], status: 1 })
     } else {
       _listItems[foundItem]._qty--
-      socket.emit('showitem', { data: _listItems[foundItem], status: 2 })
+      socket.emit('sendItem', { data: _listItems[foundItem], status: 2 })
     }
 
     this.setState({ listItems: [..._listItems] })
@@ -113,39 +114,29 @@ class index extends React.PureComponent {
       } else {
         _listItems[foundItem]._qty++
 
-        socket.emit('showitem', { data: _listItems[foundItem], status: 1 })
+        socket.emit('sendItem', { data: _listItems[foundItem], status: 1 })
       }
     } else {
       item._qty = 1
       _listItems.push(item)
 
-      socket.emit('showitem', { data: item, status: 1 })
+      socket.emit('sendItem', { data: item, status: 1 })
     }
 
     this.setState({ listItems: [..._listItems], searchKey: '' })
   }
 
-  // handleQtyChange(id, e) {
-  //   const { listItems } = this.state
-  //   const { socket } = this.props
-  //   let _listItems = [...listItems]
-  //   const foundItem = listItems.findIndex(v => v._id === id)
-
-  //   if (e.target.value > listItems[foundItem].itemQty_Shop1) _listItems[foundItem]._qty = listItems[foundItem].itemQty_Shop1
-  //   else if (e.target.value < 0) _listItems[foundItem]._qty = 0
-  //   else _listItems[foundItem]._qty = e.target.value
-
-  //   this.setState({ listItems: [..._listItems] })
-  // }
-
   customHandleSubmit() {
-    const { validateForm, isValid, Insert } = this.props
+    const { validateForm, isValid, Insert, socket } = this.props
+    let { values } = this.props
 
     validateForm().then(async () => {
       if (!isValid) return
 
+      socket.emit('submitpo', { receiveCash: values.receiveCash, grandTotal: values.grandTotal })
+
       this.setState({ isSubmiting: true })
-      let { values } = this.props
+
       const { listItems } = this.state
       values.listItems = [...listItems]
 
@@ -153,6 +144,31 @@ class index extends React.PureComponent {
 
       this.setState({ isSubmiting: false })
     })
+  }
+
+  handleBlurDiscount(e) {
+    const { socket } = this.props
+    const { value } = e.target
+    const validateDiscount = FieldIsPercentRange(value)
+    if (validateDiscount) return
+    socket.emit('dc', value)
+  }
+
+  handleBlurCredit(e) {
+    const { socket, values } = this.props
+    const { value } = e.target
+
+    const validateCredit = FieldIsMoreThan(value, values.subTotal - values.grandTotalDiscount)
+    if (validateCredit) return
+    socket.emit('credit', value)
+  }
+
+  handleBlurCreditCharge(e) {
+    const { socket } = this.props
+    const { value } = e.target
+    const validateCreditCharge = FieldIsPercentRange(value)
+    if (validateCreditCharge) return
+    socket.emit('creditcharge', value)
   }
 
   render() {
@@ -200,8 +216,24 @@ class index extends React.PureComponent {
           </Panel>
 
           <Panel header="ส่วนที่ 3 : รายละเอียดการชำระเงิน" key="3">
-            <Field label="ส่วนลด" type="number" name="discount" component={InputItem} value={values.discount} onChange={handleChange} />
-            <Field label="ชำระเป็นเครดิต" type="number" name="credit" component={InputItem} value={values.credit} onChange={handleChange} />
+            <Field
+              label="ส่วนลด"
+              type="number"
+              name="discount"
+              component={InputItem}
+              value={values.discount}
+              onChange={handleChange}
+              onBlur={e => this.handleBlurDiscount(e)}
+            />
+            <Field
+              label="ชำระเป็นเครดิต"
+              type="number"
+              name="credit"
+              component={InputItem}
+              value={values.credit}
+              onChange={handleChange}
+              onBlur={e => this.handleBlurCredit(e)}
+            />
 
             {values.credit && (
               <Field
@@ -211,6 +243,7 @@ class index extends React.PureComponent {
                 component={InputItem}
                 value={values.creditCharge}
                 onChange={handleChange}
+                onBlur={e => this.handleBlurCreditCharge(e)}
               />
             )}
           </Panel>

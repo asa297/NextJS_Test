@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import numeral from 'numeral'
 
-export default ({ items = [], grandTotal, price, Change, ...rest }) => {
+export default ({ items, grandTotal, showPrice, showChange, ...rest }) => {
   return (
     <Container>
       <BackgroundContainer>
@@ -26,7 +26,7 @@ export default ({ items = [], grandTotal, price, Change, ...rest }) => {
                 PRODUCT
               </h2>
 
-              {items.map(({ item, item_price }, index) => {
+              {items.map(({ item, itemPrice }, index) => {
                 if (index <= 4) {
                   return (
                     <div key={index} style={{ marginLeft: '15px', width: '90%' }}>
@@ -47,7 +47,7 @@ export default ({ items = [], grandTotal, price, Change, ...rest }) => {
                         >
                           {item}
                         </div>
-                        <div>{numeral(item_price).format('0,0.00')} ฿</div>
+                        <div>{numeral(itemPrice).format('0,0.00')} ฿</div>
                       </h4>
                     </div>
                   )
@@ -78,7 +78,7 @@ export default ({ items = [], grandTotal, price, Change, ...rest }) => {
               >
                 CASH
               </h3>
-              <PriceContainer>{numeral(price).format('0,0.00')} ฿</PriceContainer>
+              <PriceContainer>{numeral(showPrice).format('0,0.00')} ฿</PriceContainer>
             </FlexCenter>
 
             <FlexCenter>
@@ -90,7 +90,7 @@ export default ({ items = [], grandTotal, price, Change, ...rest }) => {
               >
                 CHANGE
               </h3>
-              <ChangeContainer>{numeral(Change).format('0,0.00')} ฿</ChangeContainer>
+              <ChangeContainer>{numeral(showChange).format('0,0.00')} ฿</ChangeContainer>
             </FlexCenter>
 
             <div style={{ height: '16%' }} />

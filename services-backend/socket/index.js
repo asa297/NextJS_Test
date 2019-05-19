@@ -15,61 +15,32 @@ module.exports = io => {
       io.to(userSocket).emit('closepo', {})
     })
 
-    client.on('showitem', item => {
-      // console.log('send item', userSocket, item)
-      io.to(userSocket).emit('showitem', item)
+    client.on('sendItem', item => {
+      io.to(userSocket).emit('sendItem', item)
     })
 
-    // client.on('dc', function(data) {
-    //   console.log('send dc')
+    client.on('dc', data => {
+      console.log('send dc')
 
-    //   const {
-    //     auth: { _id },
-    //     value,
-    //   } = data
+      io.to(userSocket).emit('dc', data)
+    })
 
-    //   io.to(_id).emit('dc', value)
-    // })
+    client.on('credit', data => {
+      console.log('send credit')
 
-    // client.on('credit', function(data) {
-    //   console.log('send credit')
+      io.to(userSocket).emit('credit', data)
+    })
 
-    //   const {
-    //     auth: { _id },
-    //     value,
-    //   } = data
+    client.on('creditcharge', data => {
+      console.log('send creditcharge')
 
-    //   io.to(_id).emit('credit', value)
-    // })
+      io.to(userSocket).emit('creditcharge', data)
+    })
 
-    // client.on('creditcharge', function(data) {
-    //   console.log('send creditcharge')
-    //   const {
-    //     auth: { _id },
-    //     value,
-    //   } = data
+    client.on('submitpo', data => {
+      console.log('submitpo')
 
-    //   io.to(_id).emit('creditcharge', value)
-    // })
-
-    // client.on('closepo', function(data) {
-    //   console.log('closepo')
-    //   const {
-    //     auth: { _id },
-    //   } = data
-
-    //   io.to(_id).emit('closepo', {})
-    // })
-
-    // client.on('submitpo', function(data) {
-    //   console.log('submitpo')
-    //   const {
-    //     auth: { _id },
-    //     receivecash,
-    //     grandtotal,
-    //   } = data
-
-    //   io.to(_id).emit('submitpo', { receivecash, grandtotal })
-    // })
+      io.to(userSocket).emit('submitpo', data)
+    })
   })
 }
