@@ -3,11 +3,11 @@ import { Tooltip } from 'antd'
 import styled from 'styled-components'
 import { MenuSlider } from '<components>'
 
-export default ({ page, auth, pageName, ...rest }) => {
+export default ({ page, auth, pageName, noHeader, ...rest }) => {
   const [visible, setVisible] = useState(false)
   const titleDrawer = `Hi, ${auth.user ? auth.user.nickname : 'Guest'}`
   return (
-    <>
+    <Container noHeader={noHeader}>
       <HeaderContainer>
         <MainContainer>
           <MenuContainer onClick={() => setVisible(true)}>
@@ -24,9 +24,13 @@ export default ({ page, auth, pageName, ...rest }) => {
         </UserNameContainer>
       </HeaderContainer>
       <MenuSlider visible={visible} onClose={() => setVisible(!visible)} closable={false} placement={'left'} title={titleDrawer} auth={auth} />
-    </>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  display: ${props => (props.noHeader ? 'none' : 'block')};
+`
 
 const HeaderContainer = styled.header`
   position: sticky;

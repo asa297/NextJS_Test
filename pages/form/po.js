@@ -7,6 +7,7 @@ import { getPageNameFromReq } from '<helpers>/utils'
 import { withAuth, ModalLoading, PurchaseOrderForm, PurchaseOrderBill } from '<components>'
 import isEmpty from 'lodash/isEmpty'
 import { Button } from 'antd'
+import Link from 'next/link'
 
 import io from 'socket.io-client'
 
@@ -23,7 +24,15 @@ class index extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { FetchGroups, FetchSellers, Reset, host, auth } = this.props
+    const { FetchGroups, FetchSellers, Reset } = this.props
+
+    Reset()
+    FetchGroups()
+    FetchSellers()
+  }
+
+  componentDidMount() {
+    const { host, auth } = this.props
 
     const socket = io(host, {
       transports: ['websocket'],
@@ -36,10 +45,6 @@ class index extends React.PureComponent {
     socket.emit('openpo')
 
     this.setState({ socket })
-
-    Reset()
-    FetchGroups()
-    FetchSellers()
   }
 
   componentWillUnmount() {
@@ -61,7 +66,9 @@ class index extends React.PureComponent {
         {isEmpty(item) && (
           <FormContainer>
             <CustomerScreenContainer>
-              <Button type="primary" icon="desktop" />
+              <Link href="/display/customer">
+                <a target="_blank">Purchase Display </a>
+              </Link>
             </CustomerScreenContainer>
 
             <PurchaseOrderForm FindItem={FindItem} sellers={sellers} groups={groups} Insert={Insert} socket={socket} />

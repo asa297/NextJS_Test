@@ -11,7 +11,7 @@ module.exports = io => {
     })
 
     client.on('disconnect', () => {
-      // console.log('Got disconnect!', userSocket)
+      console.log('Got disconnect!', userSocket)
       io.to(userSocket).emit('closepo', {})
     })
 
