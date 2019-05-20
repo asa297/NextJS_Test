@@ -23,7 +23,7 @@ const upload = multer({
     },
     key: function(req, file, cb) {
       const newFileName = Date.now() + '-' + file.originalname
-      const fullPath = `GN/user-upload/${newFileName}`
+      const fullPath = `user-upload/${newFileName}`
       cb(null, fullPath)
     },
   }),
