@@ -67,7 +67,7 @@ export default [
   },
   {
     Header: 'Total',
-    accessor: 'total',
+    accessor: 'subTotal',
     Cell: row => <div>{numeral(row.value).format('0,0.00')}</div>,
     style: { textAlign: 'right' },
   },
@@ -85,25 +85,25 @@ export default [
   },
   {
     Header: 'Credit Charge',
-    accessor: 'creditcharge',
+    accessor: 'creditCharge',
     Cell: row => <div>{numeral(row.value).format('0,0.00')}</div>,
     style: { textAlign: 'right' },
   },
   {
     Header: 'Grand Total',
-    accessor: 'grandtotal',
+    accessor: 'grandTotal',
     Cell: row => <div>{numeral(row.value).format('0,0.00')}</div>,
     style: { textAlign: 'right', fontWeight: 'bold', color: 'blue' },
   },
   {
     Header: 'Receive Cash',
-    accessor: 'receivecash',
+    accessor: 'receiveCash',
     Cell: row => <div>{numeral(row.value).format('0,0.00')}</div>,
     style: { textAlign: 'right', fontWeight: 'bold', color: 'green' },
   },
   {
     Header: 'Change Cash',
-    accessor: 'changecash',
+    accessor: 'changeCash',
     Cell: row => <div>{numeral(row.value).format('0,0.00')}</div>,
     style: { textAlign: 'right', fontWeight: 'bold', color: 'red' },
   },
