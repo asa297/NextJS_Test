@@ -41,6 +41,7 @@ require('./api/Group')(app)
 require('./api/Seller')(app)
 require('./api/Item')(app)
 require('./api/PurchaseOrder')(app)
+require('./api/Report')(app)
 
 nextApp
   .prepare()

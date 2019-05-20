@@ -1,25 +1,5 @@
-// export default [
-//   {
-//     Header: 'Name',
-//     accessor: 'name', // String-based value accessors!
-//   },
-//   {
-//     Header: 'Age',
-//     accessor: 'age',
-//     Cell: props => <span className="number">{props.value}</span>, // Custom cell components!
-//   },
-//   {
-//     id: 'friendName', // Required because our accessor is not a string
-//     Header: 'Friend Name',
-//     accessor: d => d.friend.name, // Custom value accessors!
-//   },
-//   {
-//     Header: props => <span>Friend Age</span>, // Custom header components!
-//     accessor: 'friend.age',
-//   },
-// ]
-
 import numeral from 'numeral'
+import moment from 'moment'
 
 export default [
   {
@@ -37,11 +17,12 @@ export default [
     Header: 'Order Id',
     accessor: 'orderId',
     width: 150,
-    style: { fontWeight: 'bold' },
+    style: { fontWeight: 'bold', textAlign: 'center' },
   },
   {
     Header: 'Date',
-    accessor: 'RecordDate_moment',
+    accessor: 'RecordDate',
+    Cell: row => <div>{moment(row.value).format('DD-MM-YYYY (HH:mm:ss)')}</div>,
     style: { textAlign: 'center' },
   },
   {

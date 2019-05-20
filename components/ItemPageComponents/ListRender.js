@@ -6,7 +6,7 @@ import { List, Avatar } from 'antd'
 export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
   const src = '/static/images/item/item.png'
   const text = `${data[index]['itemCode']} (${data[index]['itemName']})`
-  const des = `Last Modify : ${moment(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:MM)')}`
+  const des = `Last Modify : ${moment(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:mm:ss)')}`
   return (
     <ListView onClick={() => onClick(data[index])} {...rest}>
       <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={des} />

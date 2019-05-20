@@ -46,8 +46,6 @@ export default class Content extends React.PureComponent {
     } = this.props
 
     const { listItems } = this.state
-
-    console.log(listItems)
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div style={{ width: '90%' }}>

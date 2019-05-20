@@ -17,7 +17,7 @@ const IconOrganzation = orgTypeId => {
 export default ({ data, index, onClick, isScrolling, isVisible, ...rest }) => {
   const src = IconOrganzation(data[index]['orgTypeId'])
   const text = `${data[index]['orgName']} (${data[index]['orgCode']})`
-  const des = `Last Modify : ${moment(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:MM)')}`
+  const des = `Last Modify : ${moment(data[index]['LastModifyDate']).format('DD-MM-YYYY (HH:mm:ss)')}`
   return (
     <ListView onClick={() => onClick(data[index])} {...rest}>
       <ListItemMeta avatar={<Avatar src={src} />} title={<Text>{text}</Text>} description={des} />

@@ -12,32 +12,28 @@ class index extends React.PureComponent {
     return { pageName: name }
   }
 
-  render() {
-    const {} = this.props
+  componentWillMount() {
+    const { FetchPurchaseOrder } = this.props
+    FetchPurchaseOrder()
+  }
 
-    const data = [
-      {
-        name: 'Tanner Linsley',
-        age: 26,
-        friend: {
-          name: 'Jason Maurer',
-          age: 23,
-        },
-      },
-    ]
+  render() {
+    const {
+      reports: { isFetching, purchaseOrder },
+    } = this.props
 
     return (
       <ReportContainer>
-        <PurchaseOrderReportTable data={data} />
-        <ModalLoading loading={false} text={'Loading...'} />
+        <PurchaseOrderReportTable data={purchaseOrder} />
+        <ModalLoading loading={isFetching} text={'Loading...'} />
       </ReportContainer>
     )
   }
 }
 
 index = connect(
-  ({ items }) => ({ items }),
-  { Fetch: Action.FetchItem },
+  ({ reports }) => ({ reports }),
+  { FetchPurchaseOrder: Action.FetchPurchaseOrder },
 )(index)
 
 export default withAuth([admin])(index)
