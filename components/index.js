@@ -40,3 +40,6 @@ export { default as PurchaseOrderForm } from './PurchaseOrderComponents/Purchase
 export { default as PurchaseOrderBill } from './PurchaseOrderComponents/PurchaseOrderBill'
 export { default as PurchaseOrderItemLists } from './PurchaseOrderComponents/ItemLists'
 export { default as CustomerDisplayConponents } from './PurchaseOrderComponents/CustomerDisplayConponents'
+
+//Shared:ReportComponents
+export { default as PurchaseOrderReportTable } from './ReportComponents/PurchaseOrder'

@@ -39,6 +39,10 @@
     {
       "name": "Purchase Order Form",
       "path": "/form/po"
+    },
+    {
+      "name": "Purchase Order Report",
+      "path": "/report/po"
     }
   ]
 }
