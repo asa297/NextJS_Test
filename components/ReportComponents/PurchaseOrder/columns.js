@@ -3,12 +3,6 @@ import moment from 'moment'
 
 export default [
   {
-    Header: '#',
-    accessor: 'index',
-    width: 30,
-    style: { textAlign: 'center' },
-  },
-  {
     accessor: 'orderId',
     width: 50,
     Cell: row => <div>test</div>,

@@ -18,6 +18,7 @@ export { default as ActionBar } from './Shared/FormComponents/ActionBar'
 export { default as InputItem } from './Shared/FieldItems/InputItem'
 export { default as SelectItem } from './Shared/FieldItems/SelectItem'
 export { default as InputUploadFile } from './Shared/FieldItems/InputUploadFile'
+export { default as InputDatePickerRange } from './Shared/FieldItems/InputDatePickerRange'
 
 //Shared:OrganationPageComponents
 export { default as OrgListRender } from './OrganizationPageComponents/ListRender'
