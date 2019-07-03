@@ -1,13 +1,14 @@
 import { useState } from 'react'
+import { connect } from 'react-redux'
 import { Tooltip } from 'antd'
 import styled from 'styled-components'
 import { MenuSlider } from '<components>'
 
-export default ({ page, auth, pageName, noHeader, ...rest }) => {
+const index = ({ page, pageName, auth, ...rest }) => {
   const [visible, setVisible] = useState(false)
-  const titleDrawer = `Hi, ${auth.user ? auth.user.nickname : 'Guest'}`
+  const titleDrawer = `Hi, ${auth.User ? auth.User.email : 'Guest'}`
   return (
-    <Container noHeader={noHeader}>
+    <Container>
       <HeaderContainer>
         <MainContainer>
           <MenuContainer onClick={() => setVisible(true)}>
@@ -18,8 +19,8 @@ export default ({ page, auth, pageName, noHeader, ...rest }) => {
         </MainContainer>
 
         <UserNameContainer>
-          <Tooltip placement="leftTop" title={auth.user ? auth.user.nickname : 'Guest'}>
-            <UserNameLabel>{auth.user ? auth.user.nickname : 'Guest'}</UserNameLabel>
+          <Tooltip placement="leftTop" title={auth.User ? auth.User.email : ''}>
+            <UserNameLabel>{auth.User ? auth.User.email : ''}</UserNameLabel>
           </Tooltip>
         </UserNameContainer>
       </HeaderContainer>
@@ -27,6 +28,8 @@ export default ({ page, auth, pageName, noHeader, ...rest }) => {
     </Container>
   )
 }
+
+export default connect(({ auth }) => ({ auth }))(index)
 
 const Container = styled.div`
   display: ${props => (props.noHeader ? 'none' : 'block')};

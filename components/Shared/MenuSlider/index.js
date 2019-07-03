@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { reportMenu, mainMenu } from './menuContent'
 import { Icon, Drawer, Menu } from 'antd'
-import { Auth } from '<services>'
 import Router from 'next/router'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 const SubMenu = Menu.SubMenu
 
@@ -23,16 +24,15 @@ export default ({ auth, ...rest }) => {
     else if (key === '/logout') Auth.logout()
     else Router.push({ pathname: key })
   }
-
   const renderMainMenu = () => mainMenu.map(menu => <MenuItem name={menu.name} key={menu.path} type={menu.type} />)
-  const { isAuthenticated } = auth
+
   return (
     <DrawerWrapper {...rest}>
       <MenuWrapper onClick={e => MenuFunction(e)} mode="inline">
         <MenuItem name="Home" key="/" type="home" />
 
-        {isAuthenticated && renderMainMenu()}
-        {isAuthenticated && (
+        {auth.User && renderMainMenu()}
+        {auth.User && (
           <SubMenu
             key="sub1"
             title={
@@ -48,7 +48,7 @@ export default ({ auth, ...rest }) => {
           </SubMenu>
         )}
 
-        {!isAuthenticated ? <MenuItem name="Login" key="/login" type="lock" /> : <MenuItem name="Logout" key="/logout" type="unlock" />}
+        {!auth.User ? <MenuItem name="Login" key="/login" type="lock" /> : <MenuItem name="Logout" key="/logout" type="unlock" />}
       </MenuWrapper>
     </DrawerWrapper>
   )

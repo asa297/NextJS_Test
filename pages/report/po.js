@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, PurchaseOrderReportTable, SearchBar, InputDatePickerRange } from '<components>'
+import { withAuthFirebase, ModalLoading, PurchaseOrderReportTable, SearchBar, InputDatePickerRange } from '<components>'
 
 class index extends React.PureComponent {
   static async getInitialProps(ctx) {
@@ -45,7 +45,7 @@ index = connect(
   { FetchPurchaseOrder: Action.FetchPurchaseOrder },
 )(index)
 
-export default withAuth([admin])(index)
+export default withAuthFirebase([admin])(index)
 
 const ReportContainer = styled.div`
   @media (max-width: 576px) {

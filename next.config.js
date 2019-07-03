@@ -5,6 +5,7 @@ const withPlugins = require('next-compose-plugins')
 const path = require('path')
 const withSass = require('@zeit/next-sass')
 const Dotenv = require('dotenv-webpack')
+const webpack = require('webpack')
 
 // fix: prevents error when .css files are required by node
 if (typeof require !== 'undefined') {
@@ -17,6 +18,12 @@ const nextConfig = {
     // Perform customizations to webpack config
     // Important: return the modified config
 
+    const env = Object.keys(process.env).reduce((acc, curr) => {
+      acc[`process.env.${curr}`] = JSON.stringify(process.env[curr])
+      return acc
+    }, {})
+    config.plugins.push(new webpack.DefinePlugin(env))
+
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '<components>': path.resolve(__dirname, './components'),
@@ -25,7 +32,6 @@ const nextConfig = {
       '<utils>': path.resolve(__dirname, './utils'),
       '<action_types>': path.resolve(__dirname, './stores/type'),
       '<styles>': path.resolve(__dirname, './styles'),
-      '<services>': path.resolve(__dirname, './services'),
       '<helpers>': path.resolve(__dirname, './helpers'),
       '<static>': path.resolve(__dirname, './static'),
     }

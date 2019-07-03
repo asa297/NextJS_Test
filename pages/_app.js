@@ -9,9 +9,9 @@ import Router from 'next/router'
 
 import { Header } from '<components>'
 
-import { Auth } from '<services>'
-
 import '../styles/main.scss'
+
+import '../firebase'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -20,26 +20,26 @@ Router.events.on('routeChangeError', () => NProgress.done())
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {}
-    const user = process.browser ? await Auth.clientAuth() : await Auth.serverAuth(ctx.req)
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    const auth = { user, isAuthenticated: !!user }
-    return { pageProps, auth }
+    return { pageProps }
   }
   render() {
-    const { Component, pageProps, reduxStore, auth } = this.props
+    const { Component, pageProps, reduxStore } = this.props
     return (
       <Container>
         <Head>
           <title>Giornie</title>
         </Head>
 
-        <Header {...pageProps} auth={auth} />
         <Provider store={reduxStore}>
-          <Component {...pageProps} auth={auth} />
+          <>
+            <Header {...pageProps} />
+            <Component {...pageProps} />
+          </>
         </Provider>
       </Container>
     )

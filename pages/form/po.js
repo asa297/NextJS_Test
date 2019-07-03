@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, PurchaseOrderForm, PurchaseOrderBill } from '<components>'
+import { withAuthFirebase, ModalLoading, PurchaseOrderForm, PurchaseOrderBill } from '<components>'
 import isEmpty from 'lodash/isEmpty'
 import { Button } from 'antd'
 import Link from 'next/link'
@@ -93,7 +93,7 @@ index = connect(
   },
 )(index)
 
-export default withAuth([admin])(index)
+export default withAuthFirebase([admin])(index)
 
 const FormContainer = styled.div`
   @media (max-width: 576px) {

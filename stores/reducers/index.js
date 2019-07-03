@@ -6,6 +6,7 @@ import sellerReducer from './sellerReducer'
 import itemReducer from './itemReducer'
 import purchaseOrderReducer from './purchaseOrderReducer'
 import reportReducer from './reportReducer'
+import authReducer from './authReducer'
 
 export default combineReducers({
   organizations: organizationReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   items: itemReducer,
   poes: purchaseOrderReducer,
   reports: reportReducer,
+  auth: authReducer,
 })

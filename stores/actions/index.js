@@ -4,6 +4,7 @@ import * as sellerAction from './sellerAction'
 import * as itemAction from './itemAction'
 import * as purchaseOrderAction from './purchaseOrderAction'
 import * as reportAction from './reportAction'
+import * as authAction from './authAction'
 
 export default {
   ...organizationAction,
@@ -12,4 +13,5 @@ export default {
   ...itemAction,
   ...purchaseOrderAction,
   ...reportAction,
+  ...authAction,
 }

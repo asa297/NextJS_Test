@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, ButtonNew, ListVirtualized, SellerListRender, SearchBar } from '<components>'
+import { withAuthFirebase, ModalLoading, ButtonNew, ListVirtualized, SellerListRender, SearchBar } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
@@ -76,7 +76,7 @@ index = connect(
   { Fetch: Action.FetchSeller },
 )(index)
 
-export default withAuth([admin])(index)
+export default withAuthFirebase([admin])(index)
 
 const ListContainer = styled.div`
   display: flex;

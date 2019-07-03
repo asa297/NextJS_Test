@@ -4,7 +4,7 @@ import { default as Action } from '<actions>'
 import styled from 'styled-components'
 import { admin } from '<helpers>/role'
 import { getPageNameFromReq } from '<helpers>/utils'
-import { withAuth, ModalLoading, GroupFormRender } from '<components>'
+import { withAuthFirebase, ModalLoading, GroupFormRender } from '<components>'
 import Router from 'next/router'
 
 class index extends React.PureComponent {
@@ -61,7 +61,7 @@ index = connect(
   },
 )(index)
 
-export default withAuth([admin])(index)
+export default withAuthFirebase([admin])(index)
 
 const FormContainer = styled.div`
   @media (max-width: 576px) {

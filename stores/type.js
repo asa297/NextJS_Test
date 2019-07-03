@@ -51,4 +51,7 @@ export const actionTypes = {
     FETCH_PURCASE_ORDER: `FETCH_PURCASE_ORDER_${REPORT_MODULE}`,
     FETCH_STATUS: `FETCH_STATUS_${REPORT_MODULE}`,
   },
+  AUTH: {
+    TEST: 'TESTNA',
+  },
 }
