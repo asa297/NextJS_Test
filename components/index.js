@@ -1,5 +1,4 @@
 //HOC
-export { default as withAuth } from './HOC/withAuth'
 export { default as withAuthFirebase } from './HOC/withAuthFirebase'
 
 //Shared

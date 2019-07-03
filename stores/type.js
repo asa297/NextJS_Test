@@ -52,6 +52,6 @@ export const actionTypes = {
     FETCH_STATUS: `FETCH_STATUS_${REPORT_MODULE}`,
   },
   AUTH: {
-    TEST: 'TESTNA',
+    STORE_AUTH: 'STORE_AUTH',
   },
 }

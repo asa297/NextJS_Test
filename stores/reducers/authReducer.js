@@ -6,7 +6,7 @@ const initState = {
 
 export default function(state = initState, action) {
   switch (action.type) {
-    case actionTypes.AUTH.TEST:
+    case actionTypes.AUTH.STORE_AUTH:
       return Object.assign({}, state, {
         User: { ...action.payload },
       })
